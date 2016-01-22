@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="e6cef5a2-2211-4fcb-85c0-f6cc001e1b33" name="Remote" url="http://ftp.xfinityhosting.com">
+        <fileTransfer host="ftp.xfinityhosting.com" port="21" password="dfe7dfcedf9fdffcdfecdffbdfcedfdcdfe7dfeedff0df9d" username="planmyevent">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
