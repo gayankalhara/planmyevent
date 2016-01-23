@@ -8,6 +8,9 @@
             <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
             <mapping deploy="/public_html" local="$PROJECT_DIR$/public" web="/public_html" />
           </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/public/.htaccess" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

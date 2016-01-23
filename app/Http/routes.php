@@ -11,8 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('sendmail', function () {
+    Mail::raw('Laravel with Mailgun is easy!', function($message)
+    {
+        $message->to('gayan.csnc@gmail.com')->subject('Learning Laravel test email');;
+    });
+
+    return "Your email has been sent successfully";
 });
 
 /*
@@ -27,5 +32,6 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+    Route::auth();
+    Route::get('/', 'HomeController@index');
 });

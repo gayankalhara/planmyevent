@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
+        'domain' => env('mail.planmyevent.me'),
+        'secret' => env('key-a4fa8d0084f56c1817f764e31fae7cf9'),
     ],
 
     'mandrill' => [
