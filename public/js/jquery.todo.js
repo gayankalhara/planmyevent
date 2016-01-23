@@ -23,32 +23,32 @@
         this.$todoData = [
         {
             'id': '1',
-            'text': 'Design One page theme',
+            'text': 'Generate Payment Receipts of Photographers',
             'done': false
         },
         {
             'id': '2',
-            'text': 'Build a js based app',
+            'text': 'Create monthly sales report of events',
             'done': true
         },
         {
             'id': '3',
-            'text': 'Creating component page',
+            'text': 'Contact Mr. Lakmal about payment of Event #3255236',
             'done': true
         },
         {
             'id': '4',
-            'text': 'Testing??',
+            'text': 'Contact GH Photographers to register as a service provider',
             'done': true
         },
         {
             'id': '5',
-            'text': 'Hehe!! This is looks cool!',
+            'text': 'Refund payment of PAYMENT #458476',
             'done': false
         },
         {
             'id': '6',
-            'text': 'Build an angular app',
+            'text': 'Book Hotel for Event #264452',
             'done': true
         }];
 

@@ -157,7 +157,7 @@
             slotDuration: '00:15:00', /* If we want to split day time each 15minutes */
             minTime: '08:00:00',
             maxTime: '19:00:00',  
-            defaultView: 'month',  
+            defaultView: 'month',
             handleWindowResize: true,   
             height: $(window).height() - 200,   
             header: {
