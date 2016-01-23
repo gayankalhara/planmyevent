@@ -57,7 +57,7 @@
         <!-- LOGO -->
         <div class="topbar-left">
             <div class="text-center">
-                <a href="index.html" class="logo"><i class="md md-event"></i> <span>PLAN MY EVENT </span></a>
+                <a href="{{ url('/') }}" class="logo"><i class="md md-event"></i> <span>PLAN MY EVENT </span></a>
             </div>
         </div>
         <!-- Button mobile view to collapse sidebar menu -->
