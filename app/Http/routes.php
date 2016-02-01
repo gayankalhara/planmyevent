@@ -52,14 +52,38 @@ Route::get('/all-notifications', function () {
     return 'All Notifications';
 });
 
-Route::get('/mails/new', function () {
-    return 'New Message';
+Route::get('/events/view-all', function () {
+    return view('events.view-all');
 });
 
-Route::get('/mails/inbox', function () {
-    return 'Inbox';
+Route::get('/messages/new', function () {
+    return view('messages.new');
 });
 
-Route::get('/mails/sent', function () {
-    return 'Sent Messages';
+Route::get('/messages/inbox', function () {
+    return view('messages.inbox');
+});
+
+Route::get('/messages/sent', function () {
+    return view('messages.sent');
+});
+
+Route::get('/calendar', function () {
+    return view('calendar');
+});
+
+Route::get('/customers', function () {
+    return view('customers');
+});
+
+Route::get('/team-members', function () {
+    return view('team-members');
+});
+
+Route::get('/about-us', function () {
+    return view('about-us');
+});
+
+Route::get('/team-members/add-new', function () {
+    return view('team-add-new');
 });

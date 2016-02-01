@@ -35,4 +35,13 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'google' => [
+        'client_id'     => env('694991796270-fdqrf2d8aj0kmsu5qm6uj6ri64vg6cer.apps.googleusercontent.com'),
+        'client_secret' => env('88b6ZcwnVFCRobbgJwTL3O3f'),
+        'redirect'      => env('http://www.planmyevent.me/social/handle/google')
+    ],
+
+
 ];
+
+ 

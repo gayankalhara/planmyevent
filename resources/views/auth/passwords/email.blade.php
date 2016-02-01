@@ -59,10 +59,6 @@
 
             <form method="post" action="{{ url('/password/email') }}" role="form" class="text-center">
                 {!! csrf_field() !!}
-                <div class="alert alert-info alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    Enter your <b>Email</b> and instructions will be sent to you!
-                </div>
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                     <div class="input-group">
                         <input type="email" class="form-control input-lg" alue="{{ old('email') }}" name="email" placeholder="Enter Email" required="">

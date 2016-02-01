@@ -138,16 +138,16 @@
         var today = new Date($.now());
 
         var defaultEvents =  [{
-                title: 'Hey!',
+                title: 'Contact GH Photographers to register as a service provider',
                 start: new Date($.now() + 158000000),
                 className: 'bg-purple'
             }, {
-                title: 'See John Deo',
+                title: 'Book Hotel for Event #264452',
                 start: today,
                 end: today,
                 className: 'bg-danger'
             }, {
-                title: 'Buy a Moltran',
+                title: 'Refund payment of PAYMENT #458476',
                 start: new Date($.now() + 338000000),
                 className: 'bg-primary'
             }];

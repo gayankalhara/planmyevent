@@ -102,6 +102,17 @@
                         <a href="{{ url('/register') }}">Create an account</a>
                     </div>
                 </div>
+
+                <div class="form-group m-t-30">
+                    <div class="col-sm-6">
+                        <button type="button" style="width: 100%; height: 50px; background-color: #43609c; border: 1px solid #43609c;" class="btn btn-primary btn-rounded waves-effect waves-light m-b-5"><i class="fa fa-facebook m-r-5"></i> Facebook Login</button>
+                    </div>
+
+                    <div class="col-sm-6 text-right">
+                        <button type="button" style="width: 100%; height: 50px; background-color: #df4a32;  border: 1px solid #df4a32;" class="btn btn-primary btn-rounded waves-effect waves-light m-b-5"><i class="fa fa-google-plus m-r-5"></i> Google+ Login</button>
+                    </div>
+                </div>
+
             </form>
         </div>
 
