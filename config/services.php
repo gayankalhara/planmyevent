@@ -36,10 +36,16 @@ return [
     ],
 
     'google' => [
-        'client_id'     => env('694991796270-fdqrf2d8aj0kmsu5qm6uj6ri64vg6cer.apps.googleusercontent.com'),
-        'client_secret' => env('88b6ZcwnVFCRobbgJwTL3O3f'),
-        'redirect'      => env('http://www.planmyevent.me/social/handle/google')
+        'client_id'     => '694991796270-fdqrf2d8aj0kmsu5qm6uj6ri64vg6cer.apps.googleusercontent.com',
+        'client_secret' => '7Als8vhVF97uOok7uNJbjmUn',
+        'redirect'      => 'http://www.planmyevent.me/auth/google/callback'
     ],
+
+    'facebook' => [
+        'client_id'     => '1072410062809779',
+        'client_secret' => '86f1b03b9c679ffbd02f9d5f52699f55',
+        'redirect'      => 'http://www.planmyevent.me/auth/facebook/callback'
+    ]
 
 
 ];

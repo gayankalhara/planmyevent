@@ -110,7 +110,7 @@
                             <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="md md-crop-free"></i></a>
                         </li>
                         <li class="dropdown">
-                            <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="{{asset('images/avatar-1.jpg')}}" alt="user-img" class="img-circle"> </a>
+                            <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="{{ Auth::user()->avatar }}" alt="user-img" class="img-circle"> </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url('/profile') }}"><i class="md md-face-unlock"></i> Profile</a></li>
                                 <li><a href="{{ url('/settings') }}"><i class="md md-settings"></i> Settings</a></li>
@@ -132,11 +132,11 @@
         <div class="sidebar-inner slimscrollleft">
             <div class="user-details">
                 <div class="pull-left">
-                    <img src="{{asset('images/users/avatar-1.jpg')}}" alt="" class="thumb-md img-circle">
+                    <img src="{{ Auth::user()->avatar }}" alt="" class="thumb-md img-circle">
                 </div>
                 <div class="user-info">
                     <div class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Gayan Kalhara <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{{ Auth::user()->name }}} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:void(0)"><i class="md md-face-unlock"></i> Profile<div class="ripple-wrapper"></div></a></li>
                             <li><a href="javascript:void(0)"><i class="md md-settings"></i> Settings</a></li>
@@ -144,7 +144,7 @@
                         </ul>
                     </div>
 
-                    <p class="text-muted m-0">Super Admin</p>
+                    <p class="text-muted m-0">{{{ Auth::user()->email }}}</p>
                 </div>
             </div>
             <!--- Divider -->

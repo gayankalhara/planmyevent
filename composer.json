@@ -6,7 +6,9 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.2.*"
+        "laravel/framework": "5.2.*",
+        "laravel/socialite": "~2.0",
+        "filp/whoops": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -14,12 +16,6 @@
         "phpunit/phpunit": "~4.0",
         "symfony/css-selector": "2.8.*|3.0.*",
         "symfony/dom-crawler": "2.8.*|3.0.*"
-    },
-    "require": {
-        "php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
-        "illuminate/html": "5.*",
-        "laravel/socialite": "^2.0"
     },
     "autoload": {
         "classmap": [
@@ -55,6 +51,4 @@
     "config": {
         "preferred-install": "dist"
     }
-    "guzzlehttp/guzzle": "~5.3|~6.0"
 }
-

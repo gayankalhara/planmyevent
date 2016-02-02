@@ -31,10 +31,6 @@ Route::get('sendmail', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    Route::auth();
-    Route::get('/', 'HomeController@index');
-});
 
 Route::get('/terms', function () {
     return 'Terms and Conditions';
@@ -87,3 +83,11 @@ Route::get('/about-us', function () {
 Route::get('/team-members/add-new', function () {
     return view('team-add-new');
 });
+
+Route::group(['middleware' => ['web']], function () {
+    Route::auth();
+    Route::get('/', 'HomeController@index');
+    Route::get('auth/{provider?}', 'Auth\AuthController@redirectToProvider');
+    Route::get('auth/{provider?}/callback', 'Auth\AuthController@handleProviderCallback');
+});
+

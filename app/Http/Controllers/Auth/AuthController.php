@@ -7,6 +7,8 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Auth;
+use Socialite;
 
 class AuthController extends Controller
 {
@@ -61,12 +63,63 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
+
+
+
+    /**
+     * Redirect the user to the Facebook authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider($provider = null)
     {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    /**
+     * Obtain the user information from Facebook.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback($provider = null)
+    {
+        try {
+            $user = Socialite::driver($provider)->user();
+        } catch (Exception $e) {
+            return redirect('auth/' . $provider);
+        }
+
+        $authUser = $this->findOrCreateUser($user, $provider);
+
+        Auth::login($authUser, true);
+
+        return redirect()->action('HomeController@index');
+    }
+
+    /**
+     * Return user if exists; create and return if doesn't
+     *
+     * @param $user
+     * @return User
+     */
+    private function findOrCreateUser($user, $provider)
+    {
+        $authUser = User::where('email', $user->email)->first();
+
+        if ($authUser){
+            return $authUser;
+        }
+
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'name' => $user->name,
+            'email' => $user->email,
+            'provider_id' => $user->id,
+            'avatar' => $user->avatar,
+            'provider' => $provider,
+            'provider_id' => $user->id,
+            'role' => 'customer',
+
         ]);
     }
+
 }
