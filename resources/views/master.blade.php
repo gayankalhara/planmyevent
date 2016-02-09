@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -154,8 +156,31 @@
                             <li><a href="{{ url('/logout') }}"><i class="md md-settings-power"></i> Logout</a></li>
                         </ul>
                     </div>
+                    <?php
+                        switch (session()->get('user_role')){
+                            case "customer":
+                                $userRole = "Customer";
+                                break;
 
-                    <p class="text-muted m-0">{{{ Auth::user()->email }}}</p>
+                            case "admin":
+                                $userRole = "Administrator";
+                                break;
+
+                            case "event-planner":
+                                $userRole = "Event Planner";
+                                break;
+
+                            case "team-member":
+                                $userRole = "Team Member";
+                                break;
+
+                            default:
+                                $userRole = "Unknown User";
+                        }
+                    ?>
+
+
+                    <p class="text-muted m-0"><?php echo $userRole; ?></p>
                 </div>
             </div>
             <!--- Divider -->
@@ -164,69 +189,95 @@
                     <li>
                         <a href="{{ url('/') }}" class="waves-effect {{ Request::is('/') ? 'active' : null }}"><i class="md md-event"></i><span> Dashboard </span></a>
                     </li>
+                    
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('/events/view-all') }}" class="waves-effect {{ Request::is('events*') && !(Request::is('events/categories*'))  ? 'active' : null }}"><i class="md md-event"></i><span> All Events </span></a>
+                        </li>
+                    <?php }; ?>
+                    
+                    <?php if($userRole == "Administrator"){?>
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect {{ Request::is('messages*') ? 'active' : null }}"><i class="md md-mail"></i><span> Messages </span><span class="pull-right"><i class="md md-add"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li class="{{ Request::is('messages/new*') ? 'active' : null }}"><a href="{{ url('/messages/new') }}">New Message</a></li>
+                                <li class="{{ Request::is('messages/inbox*') ? 'active' : null }}"><a href="{{ url('/messages/inbox') }}">Inbox</a></li>
+                                <li class="{{ Request::is('messages/sent*') ? 'active' : null }}"><a href="{{ url('/messages/sent') }}">Sent Items</a></li>
+                            </ul>
+                        </li>
+                    <?php }; ?>
+                    
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('/calendar') }}" class="waves-effect {{ Request::is('calendar*') ? 'active' : null }}"><i class="md md-event"></i><span> Calendar </span></a>
+                        </li>
+                    <?php }; ?>
+                    
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('/customers') }}" class="waves-effect {{ Request::is('customers*') ? 'active' : null }}"><i class="md md-person"></i><span> Customers </span></a>
+                        </li>
+                    <?php }; ?>
 
-                    <li>
-                        <a href="{{ url('/events/view-all') }}" class="waves-effect {{ Request::is('events*') && !(Request::is('events/categories*'))  ? 'active' : null }}"><i class="md md-event"></i><span> All Events </span></a>
-                    </li>
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('/team-members') }}" class="waves-effect {{ Request::is('team-members*') ? 'active' : null }}"><i class="md md-people"></i><span> Team Members </span></a>
+                        </li>
+                    <?php }; ?>
 
-                    <li class="has_sub">
-                        <a href="#" class="waves-effect {{ Request::is('messages*') ? 'active' : null }}"><i class="md md-mail"></i><span> Messages </span><span class="pull-right"><i class="md md-add"></i></span></a>
-                        <ul class="list-unstyled">
-                            <li class="{{ Request::is('messages/new*') ? 'active' : null }}"><a href="{{ url('/messages/new') }}">New Message</a></li>
-                            <li class="{{ Request::is('messages/inbox*') ? 'active' : null }}"><a href="{{ url('/messages/inbox') }}">Inbox</a></li>
-                            <li class="{{ Request::is('messages/sent*') ? 'active' : null }}"><a href="{{ url('/messages/sent') }}">Sent Items</a></li>
-                        </ul>
-                    </li>
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('/events/categories') }}" class="waves-effect {{ Request::is('events/categories*') ? 'active' : null }}"><i class="md md-event-note"></i><span> Event Categories </span></a>
+                        </li>
+                    <?php }; ?>
+                    
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('/service-providers') }}" class="waves-effect {{ Request::is('service-providers*') ? 'active' : null }}"><i class="md md-business"></i><span> Service Providers </span></a>
+                        </li>
+                     <?php }; ?>
 
-                    <li>
-                        <a href="{{ url('/calendar') }}" class="waves-effect {{ Request::is('calendar*') ? 'active' : null }}"><i class="md md-event"></i><span> Calendar </span></a>
-                    </li>
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('/reviews') }}" class="waves-effect {{ Request::is('reviews*') ? 'active' : null }}"><i class="md  md-star"></i><span> Reviews </span></a>
+                        </li>
+                    <?php }; ?>
+                    
+                    <?php if($userRole == "Customer"){?>
+                        <li>
+                            <a href="{{ url('/request-a-quote') }}" class="waves-effect {{ Request::is('request-a-quote*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Request a Quote </span></a>
+                        </li>
+                    <?php }; ?>
+                    
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('/quote-requests') }}" class="waves-effect {{ Request::is('quote-requests*') ? 'active' : null }}"><i class="md md-content-copy"></i><span> Quote Requests </span></a>
+                        </li>
+                    <?php }; ?>
 
-                    <li>
-                        <a href="{{ url('/customers') }}" class="waves-effect {{ Request::is('customers*') ? 'active' : null }}"><i class="md md-person"></i><span> Customers </span></a>
-                    </li>
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('/invoices') }}" class="waves-effect {{ Request::is('invoices*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Invoices </span></a>
+                        </li>
+                    <?php }; ?>
+                    
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('/payments') }}" class="waves-effect {{ Request::is('payments*') ? 'active' : null }}"><i class="md md-payment"></i><span> Payments </span></a>
+                        </li>
+                    <?php }; ?>
 
-                    <li>
-                        <a href="{{ url('/team-members') }}" class="waves-effect {{ Request::is('team-members*') ? 'active' : null }}"><i class="md md-people"></i><span> Team Members </span></a>
-                    </li>
-
-                    <li>
-                        <a href="{{ url('/events/categories') }}" class="waves-effect {{ Request::is('events/categories*') ? 'active' : null }}"><i class="md md-event-note"></i><span> Event Categories </span></a>
-                    </li>
-
-                    <li>
-                        <a href="{{ url('/service-providers') }}" class="waves-effect {{ Request::is('service-providers*') ? 'active' : null }}"><i class="md md-business"></i><span> Service Providers </span></a>
-                    </li>
-
-                    <li>
-                        <a href="{{ url('/reviews') }}" class="waves-effect {{ Request::is('reviews*') ? 'active' : null }}"><i class="md  md-star"></i><span> Reviews </span></a>
-                    </li>
-
-                    <li>
-                        <a href="{{ url('/request-a-quote') }}" class="waves-effect {{ Request::is('request-a-quote*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Request a Quote </span></a>
-                    </li>
-
-                    <li>
-                        <a href="{{ url('/quote-requests') }}" class="waves-effect {{ Request::is('quote-requests*') ? 'active' : null }}"><i class="md md-content-copy"></i><span> Quote Requests </span></a>
-                    </li>
-
-                    <li>
-                        <a href="{{ url('/invoices') }}" class="waves-effect {{ Request::is('invoices*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Invoices </span></a>
-                    </li>
-
-                    <li>
-                        <a href="{{ url('/payments') }}" class="waves-effect {{ Request::is('payments*') ? 'active' : null }}"><i class="md md-payment"></i><span> Payments </span></a>
-                    </li>
-
-                    <li>
-                        <a href="{{ url('/statistics') }}" class="waves-effect {{ Request::is('statistics*') ? 'active' : null }}"><i class="md md-insert-chart"></i><span> Statistics </span></a>
-                    </li>
-
-                    <li>
-                        <a href="{{ url('/about-us') }}" class="waves-effect {{ Request::is('about-us*') ? 'active' : null }}"><i class="md md-mood"></i><span> About Us</span></a>
-                    </li>
-
-
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('/statistics') }}" class="waves-effect {{ Request::is('statistics*') ? 'active' : null }}"><i class="md md-insert-chart"></i><span> Statistics </span></a>
+                        </li>
+                    <?php }; ?>
+                    
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('/about-us') }}" class="waves-effect {{ Request::is('about-us*') ? 'active' : null }}"><i class="md md-mood"></i><span> About Us</span></a>
+                        </li>
+                    <?php }; ?>
 
                 </ul>
                 <div class="clearfix"></div>
@@ -246,22 +297,22 @@
                 <p style="text-align: center;">Click on the user role below to switch.</p>
                 
                 <div class="row" style="margin-top: 15px; margin-bottom: 20px;">
-                    <a href="#"><div class="col-sm-3">
+                    <a href="{{ url('/users/role/switch/admin') }}"><div class="col-sm-3">
                         <img src="{{asset('images/roles/admin.png')}}">
                         <p style="text-align: center;">Admin</p>
                     </div></a>
 
-                    <a href="#"><div class="col-sm-3">
+                    <a href="{{ url('/users/role/switch/customer') }}"><div class="col-sm-3">
                         <img src="{{asset('images/roles/customer.png')}}">
                         <p style="text-align: center;">Customer</p>
                     </div></a>
 
-                    <a href="#"><div class="col-sm-3">
+                    <a href="{{ url('/users/role/switch/event-planner') }}"><div class="col-sm-3">
                         <img src="{{asset('images/roles/event-planner.png')}}">
                         <p style="text-align: center;">Event Planner</p>
                     </div></a>
 
-                    <a href="#"><div class="col-sm-3">
+                    <a href="{{ url('/users/role/switch/team-member') }}"><div class="col-sm-3">
                         <img src="{{asset('images/roles/team-member.png')}}">
                         <p style="text-align: center;">Team Member</p>
                     </div></a>

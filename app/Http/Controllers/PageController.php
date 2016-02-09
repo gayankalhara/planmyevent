@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use Illuminate\Session\SessionServiceProvider;
+use Illuminate\Session\DatabaseSessionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Input;
@@ -129,17 +129,9 @@ class PageController extends Controller
 
     public function SwitchUser($role)
     {
-        //$value = session('key');
-        //$request->session()->put('user_role', 'customer');
+        Session::put('user_role', $role);
 
-        // SessionHandler::create([
-        //     'user_id' => Auth::user()->id,
-        // ]);
-
-        Session::put('user_id', 'test');
-
-
-        return 'customer';
+        return redirect('/');
     }
 
     public function SwitchUserReset()

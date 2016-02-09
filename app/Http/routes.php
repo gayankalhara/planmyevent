@@ -85,7 +85,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get( '/users/role/switch/{role}', 'PageController@SwitchUser' );
     Route::get( '/users/role/switch/reset', 'PageController@SwitchUserReset' );
         
-    
+    Route::get('dbmigrate', 'DbmigrateController@index');
     /**
      * Udesh Routes
      */

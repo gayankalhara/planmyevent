@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Auth;
 use Socialite;
+use Session;
 
 class AuthController extends Controller
 {
@@ -65,6 +66,8 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        Session::put('user_role', 'customer');
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -115,8 +118,11 @@ class AuthController extends Controller
         $authUser = User::where('email', $user->email)->first();
 
         if ($authUser){
+            Session::put('user_role', $authUser->role);
             return $authUser;
         }
+
+        Session::put('user_role', 'customer');
 
         return User::create([
             'name' => $user->name,
