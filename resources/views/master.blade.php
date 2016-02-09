@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
-    <meta name="author" content="Coderthemes">
+    <meta name="author" content="Coderthemes{{ Auth::user()->role }}">
 
     <link rel="shortcut icon" href="{{asset('images/favicon_1.ico')}}">
 
@@ -33,6 +32,17 @@
     <!-- Custom Files -->
     <link href="{{asset('css/helper.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css" />
+
+    <!-- Plugins css -->
+    <link href="{{asset('assets/modal-effect/css/component.css')}}" rel="stylesheet">
+
+    <style>
+        #modal-11 a, #modal-11 p{
+            color: #fff !important;
+        }
+    </style>
+        
+    @yield('header-js')
 
     @yield('header-css')
 
@@ -110,10 +120,11 @@
                             <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="md md-crop-free"></i></a>
                         </li>
                         <li class="dropdown">
-                            <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="{{ Auth::user()->avatar }}" alt="user-img" class="img-circle"> </a>
+                            <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="{{ (empty(Auth::user()->avatar)) ? URL::to('/images/users/avatar.png') : Auth::user()->avatar }}" alt="user-img" class="img-circle"> </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url('/profile') }}"><i class="md md-face-unlock"></i> Profile</a></li>
                                 <li><a href="{{ url('/settings') }}"><i class="md md-settings"></i> Settings</a></li>
+                                <li><a href="javascript:;" class="md-trigger" style="font-family: 'Nunito', sans-serif;" data-modal="modal-11"><i class="md md-loop"></i> Change Role</a></li>                                                   
                                 <li><a href="{{ url('/logout') }}"><i class="md md-settings-power"></i> Logout</a></li>
                             </ul>
                         </li>
@@ -132,15 +143,15 @@
         <div class="sidebar-inner slimscrollleft">
             <div class="user-details">
                 <div class="pull-left">
-                    <img src="{{ Auth::user()->avatar }}" alt="" class="thumb-md img-circle">
+                    <img src="{{ (empty(Auth::user()->avatar)) ? URL::to('/images/users/avatar.png') : Auth::user()->avatar }}" alt="" class="thumb-md img-circle">
                 </div>
                 <div class="user-info">
                     <div class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{{ Auth::user()->name }}} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="javascript:void(0)"><i class="md md-face-unlock"></i> Profile<div class="ripple-wrapper"></div></a></li>
-                            <li><a href="javascript:void(0)"><i class="md md-settings"></i> Settings</a></li>
-                            <li><a href="javascript:void(0)"><i class="md md-settings-power"></i> Logout</a></li>
+                            <li><a href="{{ url('/profile') }}"><i class="md md-face-unlock"></i> Profile<div class="ripple-wrapper"></div></a></li>
+                            <li><a href="{{ url('/settings') }}"><i class="md md-settings"></i> Settings</a></li>
+                            <li><a href="{{ url('/logout') }}"><i class="md md-settings-power"></i> Logout</a></li>
                         </ul>
                     </div>
 
@@ -151,64 +162,68 @@
             <div id="sidebar-menu">
                 <ul>
                     <li>
-                        <a href="{{ url('/') }}" class="waves-effect active"><i class="md md-event"></i><span> Dashboard </span></a>
+                        <a href="{{ url('/') }}" class="waves-effect {{ Request::is('/') ? 'active' : null }}"><i class="md md-event"></i><span> Dashboard </span></a>
                     </li>
 
                     <li>
-                        <a href="{{ url('/events/view-all') }}" class="waves-effect"><i class="md md-event"></i><span> All Events </span></a>
+                        <a href="{{ url('/events/view-all') }}" class="waves-effect {{ Request::is('events*') && !(Request::is('events/categories*'))  ? 'active' : null }}"><i class="md md-event"></i><span> All Events </span></a>
                     </li>
 
                     <li class="has_sub">
-                        <a href="#" class="waves-effect"><i class="md md-mail"></i><span> Messages </span><span class="pull-right"><i class="md md-add"></i></span></a>
+                        <a href="#" class="waves-effect {{ Request::is('messages*') ? 'active' : null }}"><i class="md md-mail"></i><span> Messages </span><span class="pull-right"><i class="md md-add"></i></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="{{ url('/messages/new') }}">New Message</a></li>
-                            <li><a href="{{ url('/messages/inbox') }}">Inbox</a></li>
-                            <li><a href="{{ url('/messages/sent') }}">Sent Items</a></li>
+                            <li class="{{ Request::is('messages/new*') ? 'active' : null }}"><a href="{{ url('/messages/new') }}">New Message</a></li>
+                            <li class="{{ Request::is('messages/inbox*') ? 'active' : null }}"><a href="{{ url('/messages/inbox') }}">Inbox</a></li>
+                            <li class="{{ Request::is('messages/sent*') ? 'active' : null }}"><a href="{{ url('/messages/sent') }}">Sent Items</a></li>
                         </ul>
                     </li>
 
                     <li>
-                        <a href="{{ url('/calendar') }}" class="waves-effect"><i class="md md-event"></i><span> Calendar </span></a>
+                        <a href="{{ url('/calendar') }}" class="waves-effect {{ Request::is('calendar*') ? 'active' : null }}"><i class="md md-event"></i><span> Calendar </span></a>
                     </li>
 
                     <li>
-                        <a href="{{ url('/customers') }}" class="waves-effect"><i class="md md-person"></i><span> Customers </span></a>
+                        <a href="{{ url('/customers') }}" class="waves-effect {{ Request::is('customers*') ? 'active' : null }}"><i class="md md-person"></i><span> Customers </span></a>
                     </li>
 
                     <li>
-                        <a href="{{ url('/team-members') }}" class="waves-effect"><i class="md md-people"></i><span> Team Members </span></a>
+                        <a href="{{ url('/team-members') }}" class="waves-effect {{ Request::is('team-members*') ? 'active' : null }}"><i class="md md-people"></i><span> Team Members </span></a>
                     </li>
 
                     <li>
-                        <a href="{{ url('/events/categories') }}" class="waves-effect"><i class="md md-event-note"></i><span> Event Categories </span></a>
+                        <a href="{{ url('/events/categories') }}" class="waves-effect {{ Request::is('events/categories*') ? 'active' : null }}"><i class="md md-event-note"></i><span> Event Categories </span></a>
                     </li>
 
                     <li>
-                        <a href="{{ url('/service-providers') }}" class="waves-effect"><i class="md md-business"></i><span> Service Providers </span></a>
+                        <a href="{{ url('/service-providers') }}" class="waves-effect {{ Request::is('service-providers*') ? 'active' : null }}"><i class="md md-business"></i><span> Service Providers </span></a>
                     </li>
 
                     <li>
-                        <a href="{{ url('/reviews') }}" class="waves-effect"><i class="md  md-star"></i><span> Reviews </span></a>
+                        <a href="{{ url('/reviews') }}" class="waves-effect {{ Request::is('reviews*') ? 'active' : null }}"><i class="md  md-star"></i><span> Reviews </span></a>
                     </li>
 
                     <li>
-                        <a href="{{ url('/quote-requests') }}" class="waves-effect"><i class="md md-content-copy"></i><span> Quote Requests </span></a>
+                        <a href="{{ url('/request-a-quote') }}" class="waves-effect {{ Request::is('request-a-quote*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Request a Quote </span></a>
                     </li>
 
                     <li>
-                        <a href="{{ url('/Invoices') }}" class="waves-effect"><i class="md md-content-paste"></i><span> Invoices </span></a>
+                        <a href="{{ url('/quote-requests') }}" class="waves-effect {{ Request::is('quote-requests*') ? 'active' : null }}"><i class="md md-content-copy"></i><span> Quote Requests </span></a>
                     </li>
 
                     <li>
-                        <a href="{{ url('/payments') }}" class="waves-effect"><i class="md md-payment"></i><span> Payments </span></a>
+                        <a href="{{ url('/invoices') }}" class="waves-effect {{ Request::is('invoices*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Invoices </span></a>
                     </li>
 
                     <li>
-                        <a href="{{ url('/statistics') }}" class="waves-effect"><i class="md md-insert-chart"></i><span> Statistics </span></a>
+                        <a href="{{ url('/payments') }}" class="waves-effect {{ Request::is('payments*') ? 'active' : null }}"><i class="md md-payment"></i><span> Payments </span></a>
                     </li>
 
                     <li>
-                        <a href="{{ url('/about-us') }}" class="waves-effect"><i class="md md-mood"></i><span> About Us</span></a>
+                        <a href="{{ url('/statistics') }}" class="waves-effect {{ Request::is('statistics*') ? 'active' : null }}"><i class="md md-insert-chart"></i><span> Statistics </span></a>
+                    </li>
+
+                    <li>
+                        <a href="{{ url('/about-us') }}" class="waves-effect {{ Request::is('about-us*') ? 'active' : null }}"><i class="md md-mood"></i><span> About Us</span></a>
                     </li>
 
 
@@ -222,10 +237,46 @@
     <!-- Left Sidebar End -->
 
     <div class="content-page">
+    
+    <div class="md-modal md-effect-11" id="modal-11">
+        <div class="md-content" style="background-color: #2379CE;">
+            
+            <div style="color: #fff;">
+            <h2 style="color: #fff; text-align: center;">Change User Role</h2>
+                <p style="text-align: center;">Click on the user role below to switch.</p>
+                
+                <div class="row" style="margin-top: 15px; margin-bottom: 20px;">
+                    <a href="#"><div class="col-sm-3">
+                        <img src="{{asset('images/roles/admin.png')}}">
+                        <p style="text-align: center;">Admin</p>
+                    </div></a>
+
+                    <a href="#"><div class="col-sm-3">
+                        <img src="{{asset('images/roles/customer.png')}}">
+                        <p style="text-align: center;">Customer</p>
+                    </div></a>
+
+                    <a href="#"><div class="col-sm-3">
+                        <img src="{{asset('images/roles/event-planner.png')}}">
+                        <p style="text-align: center;">Event Planner</p>
+                    </div></a>
+
+                    <a href="#"><div class="col-sm-3">
+                        <img src="{{asset('images/roles/team-member.png')}}">
+                        <p style="text-align: center;">Team Member</p>
+                    </div></a>
+                </div>
+
+                <div class="row" style="text-align: center;"><button class="md-close btn-sm btn-success waves-effect waves-light">Close</button></div>
+            </div>
+        </div>
+    </div>
+
+
         @yield('content')
         <footer class="footer text-right">
             © 2016 Sri Lanka Institute of Information Technology. All Rights Reserved.<br>
-            <strong>Team Members:</strong> Gayan, Udesh, Hasitha, Lasanthi
+            <strong>Team Members:</strong> <a href="{{ url('/developers') }}">Gayan</a>, <a href="{{ url('/developers') }}">Udesh</a>, <a href="{{ url('/developers') }}">Hasitha</a>, <a href="{{ url('/developers') }}">Lasanthi</a>
         </footer>
     </div>
 <!-- END wrapper -->
@@ -241,7 +292,6 @@
 <script src="{{asset('js/wow.min.js')}}"></script>
 <script src="{{asset('js/jquery.nicescroll.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/jquery.scrollTo.min.js')}}"></script>
-<script src="{{asset('assets/chat/moment-2.2.1.js')}}"></script>
 <script src="{{asset('assets/jquery-sparkline/jquery.sparkline.min.js')}}"></script>
 <script src="{{asset('assets/jquery-detectmobile/detect.js')}}"></script>
 <script src="{{asset('assets/fastclick/fastclick.js')}}"></script>
@@ -251,16 +301,6 @@
 <!-- sweet alerts -->
 <script src="{{asset('assets/sweet-alert/sweet-alert.min.js')}}"></script>
 <script src="{{asset('assets/sweet-alert/sweet-alert.init.js')}}"></script>
-
-<!-- flot Chart -->
-<script src="{{asset('assets/flot-chart/jquery.flot.js')}}"></script>
-<script src="{{asset('assets/flot-chart/jquery.flot.time.js')}}"></script>
-<script src="{{asset('assets/flot-chart/jquery.flot.tooltip.min.js')}}"></script>
-<script src="{{asset('assets/flot-chart/jquery.flot.resize.js')}}"></script>
-<script src="{{asset('assets/flot-chart/jquery.flot.pie.js')}}"></script>
-<script src="{{asset('assets/flot-chart/jquery.flot.selection.js')}}"></script>
-<script src="{{asset('assets/flot-chart/jquery.flot.stack.js')}}"></script>
-<script src="{{asset('assets/flot-chart/jquery.flot.crosshair.js')}}"></script>
 
 <!-- Calendar -->
 <script src="{{asset('assets/fullcalendar/moment.min.js')}}"></script>
@@ -277,9 +317,6 @@
 <!-- Dashboard -->
 <script src="{{asset('js/jquery.dashboard.js')}}"></script>
 
-<!-- Chat -->
-<script src="{{asset('js/jquery.chat.js')}}"></script>
-
 <!-- Todo -->
 <script src="{{asset('js/jquery.todo.js')}}"></script>
 
@@ -290,16 +327,13 @@
      Counter Up
      =============================================== */
     jQuery(document).ready(function($) {
-        $('.counter').counterUp({
-            delay: 100,
-            time: 1200
-        });
-
-        $('#calendar').fullCalendar( 'changeView', 'agendaWeek');
-
         @yield('jquery')
     });
+
 </script>
 
+<!-- Modal-Effect -->
+        <script src="{{asset('assets/modal-effect/js/classie.js')}}"></script>
+        <script src="{{asset('assets/modal-effect/js/modalEffects.js')}}"></script>
 </body>
 </html>

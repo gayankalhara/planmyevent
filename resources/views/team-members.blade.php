@@ -1,174 +1,81 @@
-{{-- Home Page --}}
-
+<!-- Load the master page -->
 @extends('master')
 
+<!-- Header CSS -->
+@section('header-css')
+    <link href="{{asset('assets/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
+@endsection
+
+<!-- Header JavaScript -->
+@section('header-js')
+    
+@endsection
+
+<!-- Header Content -->
 @section('content')
 <div class="content">
-                    <div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="pull-left page-title">Team Members</h4>
+                <ol class="breadcrumb pull-right">
+                       <a href="{{ url('/team-members/add-new') }}"> <button class="btn btn-success waves-effect waves-light" id="btnsub" type="submit">Add New</button></a>
+                </ol>
+            </div>
+        </div>
 
-                        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
                         <div class="row">
-                            <div class="col-sm-12">
-                                <h4 class="pull-left page-title">Team Members</h4>
-                                <ol class="breadcrumb pull-right">
-                                    <li class="active">Team Members</li>
-                                </ol>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                <table id="datatable" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Address</th>
+                                            <th style="width: 10%">Actions</th>
+                                            
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    
+
+                           <?php $result = DB::select('SELECT * FROM team_members') ;
+
+
+                                    foreach($result as $team_member)
+                                    {
+                                        echo '<tr>';
+                                        echo '<td>'.$team_member->Name.'</td>';
+                                        echo '<td>'.$team_member->Email.'</td>';
+                                        echo '<td>'.$team_member->Address.'</td>';
+                                        echo '<td><button class="btn btn-success waves-effect waves-light">View Specializations</button></td>';
+                                        //echo '<td><a href="{{ url(\'/service-providers/edit\')}}?CompanyName='.$sevice->CompanyName.'&Service='.$sevice->Service.'">xx</a></td>';
+                                        //echo '<td><a href ="service-providers/edit?CompanyName='.$sevice->CompanyName.'&Service='.$sevice->Service.'" ><i class="fa fa-edit"></i></td>';
+                                        ?> 
+                                        
+                                        <?php
+                                        //echo '<td><a href ="{{url(/service-providers/edit?CompanyName='.$sevice->CompanyName.'&Service='.$sevice->Service.')}}" ><i class="fa fa-edit"></i></td>';
+                                        echo '</tr>';
+                                                }
+                                                
+
+                                        ?>
+                                    </tbody>
+                                </table>
+
                             </div>
                         </div>
-
-                        <div class="row">
-                            
-                            <!-- Right Sidebar -->
-                            <div class="col-md-12 col-lg-12">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <a href="{{ url('/team-members/add-new') }}"><button type="button" class="btn btn-success waves-effect waves-light m-r-5"> <span>Add New</span> <i class="fa fa-plus m-l-10"></i></button></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="panel panel-default m-t-20">
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover mails">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="mail-select">
-                                                            <div class="checkbox checkbox-success">
-                                                                <input id="checkbox1" type="checkbox">
-                                                                <label for="checkbox1">
-                                                                    
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">Udesh Hewagama</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">udeshcheawagama@gmail.com</a>
-                                                        </td>
-                                                        <td class="text-right">
-                                                            Wedding Organizer
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td class="mail-select">
-                                                            <div class="checkbox checkbox-success">
-                                                                <input id="checkbox1" type="checkbox">
-                                                                <label for="checkbox1">
-                                                                    
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">Hasitha Jayasinghe</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">hasitha.aja@gmail.com</a>
-                                                        </td>
-                                                        <td class="text-right">
-                                                            Decorator
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td class="mail-select">
-                                                            <div class="checkbox checkbox-success">
-                                                                <input id="checkbox1" type="checkbox">
-                                                                <label for="checkbox1">
-                                                                    
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">Udesh Hewagama</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">udeshcheawagama@gmail.com</a>
-                                                        </td>
-                                                        <td class="text-right">
-                                                            Wedding Organizer
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td class="mail-select">
-                                                            <div class="checkbox checkbox-success">
-                                                                <input id="checkbox1" type="checkbox">
-                                                                <label for="checkbox1">
-                                                                    
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">Udesh Hewagama</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">udeshcheawagama@gmail.com</a>
-                                                        </td>
-                                                        <td class="text-right">
-                                                            Wedding Organizer
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td class="mail-select">
-                                                            <div class="checkbox checkbox-success">
-                                                                <input id="checkbox1" type="checkbox">
-                                                                <label for="checkbox1">
-                                                                    
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">Udesh Hewagama</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#">udeshcheawagama@gmail.com</a>
-                                                        </td>
-                                                        <td class="text-right">
-                                                            Wedding Organizer
-                                                        </td>
-                                                    </tr>
-
-                                                    
-
-                                                    
-                                                
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        
-                                        <hr>
-                                        
-                                        <div class="row">
-                                            <div class="col-xs-7">
-                                                Showing 1 - 5 of 1
-                                            </div>
-                                            <div class="col-xs-5">
-                                                <div class="btn-group pull-right">
-                                                  <button type="button" class="btn btn-default waves-effect"><i class="fa fa-chevron-left"></i></button>
-                                                  <button type="button" class="btn btn-default waves-effect"><i class="fa fa-chevron-right"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    
-                                    </div> <!-- panel body -->
-                                </div> <!-- panel -->
-
-
-
-                            </div> <!-- End Rightsidebar -->
-                        
-                        </div><!-- End row -->
-
-
-
-                    </div> <!-- container -->
-                               
-                </div> <!-- content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

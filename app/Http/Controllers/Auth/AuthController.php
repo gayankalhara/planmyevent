@@ -30,7 +30,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/' ;
 
     /**
      * Create a new authentication controller instance.
@@ -56,18 +56,26 @@ class AuthController extends Controller
             'password' => 'required|confirmed|min:6',
         ]);
     }
-
+    
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
      * @return User
      */
-
+    protected function create(array $data)
+    {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'role' => 'customer',
+        ]);
+    }
 
 
     /**
-     * Redirect the user to the Facebook authentication page.
+     * Redirect the user to the Provider authentication page.
      *
      * @return Response
      */
@@ -77,7 +85,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Obtain the user information from Facebook.
+     * Obtain the user information from Provider.
      *
      * @return Response
      */
@@ -93,7 +101,7 @@ class AuthController extends Controller
 
         Auth::login($authUser, true);
 
-        return redirect()->action('HomeController@index');
+        return redirect()->action('PageController@index');
     }
 
     /**

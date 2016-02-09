@@ -160,3 +160,13 @@
 </div> <!-- content -->
 
 @endsection
+
+
+@section('jquery')
+    $('.counter').counterUp({
+            delay: 100,
+            time: 1200
+        });
+
+        $('#calendar').fullCalendar( 'changeView', 'agendaWeek');
+@endsection

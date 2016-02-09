@@ -23,4 +23,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    /**
+     * A user can have many roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles() {
+
+        return $this->belongsToMany('App\Role')->withTimestamps();
+    }
+
+     /**
+     * Check if user has admin role.
+     *
+     * @return mixed
+     */
+    public function isAdmin() {
+
+        return 1; //what i am looking for!
+    }
 }
