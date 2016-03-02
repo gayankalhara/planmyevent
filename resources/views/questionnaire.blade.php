@@ -101,7 +101,13 @@
                                                 <div class="build-form">
                                                   <h3><strong>Build The Questionnaire</strong></h3>
                                                   <form action="">
-                                                    <textarea style="display: none" name="form-builder-template" id="form-builder-template" cols="30" rows="10"></textarea>
+                                                    <textarea style="visibility: hidden;" name="form-builder-template" id="form-builder-template" cols="30" rows="10">
+                                                      <form-template>
+  <fields>
+    <field type="date" name="date-input-1456911585064" label="Date Field"/>
+  </fields>
+</form-template>
+                                                    </textarea>
                                                   </form>
                                                   <br style="clear:both">
                                                 </div>
@@ -219,10 +225,14 @@
   $('#selectEventTypes').val('{{ app('request')->input('category') }}').change();
 @endif
 
-  // Select2
-  jQuery(".select2").select2({
-      width: '250px'
-  });
+
+  $('#selectEventTypes').select2({
+    width: '250px'
+  })
+        .on("change", function(e) {
+          // mostly used event, fired to the original element when the value changes
+          alert("Changed");
+  })
   </script>
 
 
