@@ -51,6 +51,8 @@ class ControllerU extends Controller
       {
          $input = Request::all();
          $iName = $input['ename'];
+         $iSlug = strtolower($iName);
+         $iSlug = str_replace(" ","-",$iSlug);
          $iTasks = array();
 
          if($_FILES["img"]["error"] == 0)
@@ -63,13 +65,14 @@ class ControllerU extends Controller
               $filefull=$iName.'.'.$fileext;
               $filefull = str_replace(' ', '_', $filefull);
               Request::file('img')->move(base_path() . '/public/images/event-icons', $filefull);
-
+              
             try 
             {
+                \DB::insert('insert into event_types (EventName , Icon , EventSlug) values (? , ? , ?)',[$iName , $filefull , $iSlug]);
                 foreach( $input['eservices']  as $x) 
                 {
                   $iTasks[]=$x;
-                  \DB::insert('insert into event_types (EventName, Task , Icon) values (?, ? , ?)',[$iName , $x , $filefull]);
+                  \DB::insert('insert into event_services (EventName, Service) values (? , ?)',[$iName , $x ]);
                 }
                 return redirect('events/categories')->with('message', 'Record Added Successfully');
             }

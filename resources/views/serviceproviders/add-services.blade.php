@@ -65,7 +65,7 @@
                                             </div>
                                             <div class="form-group">
                                             	<button class="btn btn-success waves-effect waves-light"  id="btnsub" type="submit">Add</button>
-
+                                                
                                             </div>
                                         </form>
 
@@ -93,12 +93,9 @@
     <script href="{{asset('assets/summernote/summernote.min.js')}}"></script>
 
     <script type="text/javascript">
-
-
-
+    
 
       $(document).ready(function() {
-            
             
             //the min chars for username
             var min_chars = 3;
@@ -185,6 +182,7 @@
                         $('#availability_result').html('<span class="is_not_available"><b> This combination is already in the Database</span>');
                         
                         $('#btnsub').attr("disabled", true);
+
                     }
             });
 

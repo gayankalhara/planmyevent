@@ -61,7 +61,7 @@
                                      <div class="form-group ">
                                         <label for="exampleInputPassword1">Services</label>
                                         <select style="height:150px" multiple name="eservices[]" class="form-control" aria-required="true" required="">
-                                            <?php $services = DB::select('SELECT distinct Service FROM services') ;
+                                            <?php $services = DB::select('SELECT distinct Service FROM event_services') ;
                                                 $serv = array();
     										      foreach($services  as $x) 
                                                   {
