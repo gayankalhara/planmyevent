@@ -52,7 +52,8 @@ class ControllerU extends Controller
          $input = Request::all();
          $iName = $input['ename'];
          $iTasks = array();
-
+          $iSlug = str_replace(" ", "-", $iName);
+          $iSlug = strtolower($iSlug);
          if($_FILES["img"]["error"] == 0)
           {
               $iIcon = $input['img'];
@@ -64,12 +65,14 @@ class ControllerU extends Controller
               $filefull = str_replace(' ', '_', $filefull);
               Request::file('img')->move(base_path() . '/public/images/event-icons', $filefull);
 
+
             try 
             {
+              \DB::insert('insert into event_types (EventName , Icon , EventSlug ) values (?, ? , ?)',[$iName , $filefull , $iSlug]);
                 foreach( $input['eservices']  as $x) 
                 {
                   $iTasks[]=$x;
-                  \DB::insert('insert into event_types (EventName, Task , Icon) values (?, ? , ?)',[$iName , $x , $filefull]);
+                  \DB::insert('insert into event_services (EventName , Service ) values (?, ? )',[$iName , $x]);
                 }
                 return redirect('events/categories')->with('message', 'Record Added Successfully');
             }
@@ -123,21 +126,18 @@ public function EditEventCategoriesPost()
        if(isset($_POST['deltype'])){
         $deliName = $input['evnamedel'];
           \DB::delete('delete from event_types where EventName = ?' , [$deliName]);
+          \DB::delete('delete from event_services where EventName = ?' , [$deliName]);
           return redirect('events/categories')->with('message', 'Record Deleted Successfully');
         }
         else{
           $iName = $input['evname'];
           try{
-              $result = \DB::select('SELECT Icon FROM event_types where EventName = ?' , [$iName]);
-              foreach($result as $etype)
-                {
-                  $ic = $etype->Icon;
-                }
-                  \DB::delete('delete from event_types where EventName = ?' , [$iName]);
+              
+                \DB::delete('delete from event_services where EventName = ?' , [$iName]);
                 foreach( $input['eservices']  as $x) 
                 {
                   $iTasks[]=$x;
-                  \DB::insert('insert into event_types  (EventName, Task , Icon) values (?, ? , ?) ON DUPLICATE KEY UPDATE Task = ?',[$iName , $x, $ic , $x ]);
+                  \DB::insert('insert into event_services  (EventName, Service ) values (?, ? ) ON DUPLICATE KEY UPDATE Service = ?',[$iName , $x , $x ]);
                 }     
 
                 if($_FILES["img"]["error"] == 0)
@@ -147,6 +147,7 @@ public function EditEventCategoriesPost()
                     if($fileext!='png')
                       return redirect('events/categories')->with('message', 'Record Update Failed');
                     $filename = Request::file('img')->getClientOriginalName();
+                    $iName = $input['evname'];
                     $filefull=$iName.'.'.$fileext;
                     $filefull = str_replace(' ', '_', $filefull);
                     Request::file('img')->move(base_path() . '/public/images/event-icons', $filefull);

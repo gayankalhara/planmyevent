@@ -16,38 +16,7 @@
 
     function init2() 
     {
-
-        var overlay = document.querySelector( '.md-overlay' );
-
-        [].slice.call( document.querySelectorAll( '.md-trigger2' ) ).forEach( function( el, i ) 
-        {
-
-            var modal = document.querySelector( '#' + el.getAttribute( 'data-modal' ) ),
-            close = modal.querySelector( '.md-close' );
-            classie.add( document.documentElement, 'md-perspective' );
-
-            function removeModal( hasPerspective ) 
-            {
-                classie.remove( modal, 'md-show' );
-                //if( hasPerspective ) 
-               // {
-                classie.remove( document.documentElement, 'md-perspective' );
-                //}
-            }
-
-            function removeModalHandler() 
-            {
-                removeModal( classie.has( el, 'md-setperspective' ) ); 
-            }
-
-                classie.add( modal, 'md-show' );
-                close.addEventListener( 'click', function( ev ) 
-                {
-                ev.stopPropagation();
-                removeModalHandler();
-                });
-
-        } );
+        <?php if(Session::get('message')=='Record Update Failed') {echo 'sweetAlert("Oops...", "You forgot to add some elements.", "error");';} else { echo 'sweetAlert("Updated successfully!", "Your record is updated...", "success");';} ?>
     }
 
 @if(Session::has('message'))
@@ -74,10 +43,11 @@
 </div>
 <div class="eventtypescontainer">
 <?php 
-	$EventTypeQuery = DB::select('SELECT distinct EventName FROM event_types') ;
+	$EventTypeQuery = DB::select('SELECT EventName FROM event_types') ;
 	$types = array();
 	foreach($EventTypeQuery  as $x) {
 	    $types[] = $x->EventName;
+        
 	}
 
 foreach($types as $y => $y_value)
@@ -109,11 +79,11 @@ foreach($types as $y => $y_value)
 						<ul class="sf-list pr-list">
 						<?php
 						
-                        $ServicesQuery = DB::select('SELECT Task FROM event_types where EventName = ?', [$y_value]);
+                        $ServicesQuery = DB::select('SELECT Service FROM event_services where EventName = ?', [$y_value]);
 						
 						if ($ServicesQuery!=null) {
     						foreach($ServicesQuery as $service) {
-    							echo "<li style='padding:2px 20px'>".$service->Task."</li>";
+    							echo "<li style='padding:2px 20px'>".$service->Service."</li>";
     						}
     					}
 
@@ -126,6 +96,15 @@ foreach($types as $y => $y_value)
                     <form method="get" action="/events/categories/edit">
                     <input hidden type="text" name="EventName" id="EventName" value="<?php echo $y_value ;?>">
                         <button type ="submit" class="btn btn-success w-md waves-effect waves-light">Edit</button>
+                    <?php $EventSlugQuery = DB::select('SELECT EventSlug FROM event_types where EventName = ?' , [$y_value]) ;
+                        foreach($EventSlugQuery as $islug)
+                        $slug = $islug->EventSlug;
+                    ?>
+
+                    <?php echo '<a href ="question-builder?category='.$slug.'" ><button class="btn btn-success w-md waves-effect waves-light">Edit Questions</button></a>';?>
+
+
+
                     </form>
 
 
@@ -139,28 +118,6 @@ foreach($types as $y => $y_value)
 }
 ?>
 </div>
-  <div  class="md-modal md-effect-1" id="data-modal-add">
-        <div class="md-content" <?php if(Session::get('message')=='Record Update Failed') {echo 'style="background-color: #ff3333 ;"';} else { echo 'style="background-color:#2379CE;"';} ?>>
-
-            <div style="color: #fff;">
-            <h2 style="color: #fff; text-align: center;">Message</h2>
-                <p style="text-align: center;">{{ Session::get('message') }}</p>
-                 
-                <div class="row" style="margin-top: 15px; margin-bottom: 20px;">
-                            
-                </div>
-
-                <div class="row" style="text-align: center;"><button class="md-close btn-sm btn-inverse waves-effect waves-light">Close</button></div>
-            </div>
-        </div>
-    </div> 
-
-
-
-
-
-
-
 </div>
 </div>
                       <!-- End Pricing Item -->

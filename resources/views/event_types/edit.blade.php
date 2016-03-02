@@ -127,12 +127,12 @@ input{
                                                     <select style="height:150px" multiple name="eservices[]" class="form-control" aria-required="true" required="">
                                                     <?php 
                                                     $services = DB::select('SELECT distinct Service FROM services') ;
-                                                   $result4= DB::select('select Task from event_types where EventName = ?',[$EventName]);
+                                                   $result4= DB::select('select Service from event_services where EventName = ?',[$EventName]);
                                                     $tasks = array();    
 
                                                         foreach($result4 as $x)
                                                         {
-                                                           $tasks[]= $x->Task;
+                                                           $tasks[]= $x->Service;
                                                         }
                                                     foreach($services as $y)
                                                     {

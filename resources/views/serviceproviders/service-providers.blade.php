@@ -76,21 +76,6 @@
             </div>
         </div> 
 
-        <div  class="md-modal md-effect-11" id="data-modal-add">
-            <div class="md-content" <?php if(Session::get('message')=='Record Update Failed') {echo 'style="background-color: #ff3333 ;"';} else { echo 'style="background-color:#2379CE;"';} ?>>
-                
-                <div style="color: #fff;">
-                <h2 style="color: #fff; text-align: center;">Message</h2>
-                    <p style="text-align: center;">{{ Session::get('message') }}</p>
-                    
-                    <div class="row" style="margin-top: 15px; margin-bottom: 20px;">
-                                
-                    </div>
-
-                    <div class="row" style="text-align: center;"><button class="md-close btn-sm btn-inverse waves-effect waves-light">Close</button></div>
-                </div>
-            </div>
-        </div>
 
     </div>
 </div>
@@ -115,37 +100,7 @@
         function init2() 
         {
 
-            var overlay = document.querySelector( '.md-overlay' );
-
-            [].slice.call( document.querySelectorAll( '.md-trigger2' ) ).forEach( function( el, i ) 
-            {
-
-                var modal = document.querySelector( '#' + el.getAttribute( 'data-modal' ) ),
-                close = modal.querySelector( '.md-close' );
-                classie.add( document.documentElement, 'md-perspective' );
-
-                function removeModal( hasPerspective ) 
-                {
-                    classie.remove( modal, 'md-show' );
-                    //if( hasPerspective ) 
-                   // {
-                    classie.remove( document.documentElement, 'md-perspective' );
-                    //}
-                }
-
-                function removeModalHandler() 
-                {
-                    removeModal( classie.has( el, 'md-setperspective' ) ); 
-                }
-
-                    classie.add( modal, 'md-show' );
-                    close.addEventListener( 'click', function( ev ) 
-                    {
-                    ev.stopPropagation();
-                    removeModalHandler();
-                    });
-
-            } );
+            <?php if(Session::get('message')=='Record Update Failed') {echo 'sweetAlert("Oops...", "You forgot to add some elements.", "error");';} else { echo 'sweetAlert("Updated successfully!", "Your record is updated...", "success");';} ?>
         }
 
         @if(Session::has('message'))
