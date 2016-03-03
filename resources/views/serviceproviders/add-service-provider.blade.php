@@ -86,11 +86,10 @@
                                             <div class="form-group">
                                             <div class="col-lg-offset-3 col-lg-9">
                                             	<button class="btn btn-success waves-effect waves-light"  id="btnsub" type="submit">Add</button>
-<<<<<<< HEAD
-                                                </div>
-=======
 
->>>>>>> udesh
+                                                </div>
+
+
                                             </div>
                                         </form>
                                     </div><!--form class div -->
