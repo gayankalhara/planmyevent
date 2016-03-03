@@ -91,6 +91,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/question-builder','PageController@Questionnaire');   
 
+    Route::post('/question-builder/xml-post','PageController@XmlPost');   
+
     /**
      * Udesh Routes
      */
