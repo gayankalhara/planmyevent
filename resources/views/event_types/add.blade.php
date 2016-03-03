@@ -69,10 +69,16 @@
                                                
                                     
                                      <div class="form-group ">
+<<<<<<< HEAD
                                         <label class="control-label col-lg-3" for="eservices[]">Services</label>
                                         <div class="col-lg-9">
                                         <select style="height:200px" multiple name="eservices[]" class="form-control" aria-required="true" required="">
                                             <?php $services = DB::select('SELECT distinct Service FROM services') ;
+=======
+                                        <label for="exampleInputPassword1">Services</label>
+                                        <select style="height:150px" multiple name="eservices[]" class="form-control" aria-required="true" required="">
+                                            <?php $services = DB::select('SELECT distinct Service FROM event_services') ;
+>>>>>>> udesh
                                                 $serv = array();
     										      foreach($services  as $x) 
                                                   {

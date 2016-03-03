@@ -28,82 +28,54 @@
 @section('content')
 
 
-    <div class="content">
+ <div class="content">
     <div class="container">
-    
+    <h3>Add Service Provider </h3>
                         <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                    <div class="panel panel-default"> 
-                    <div class="col-md-12">
-                        <br/>
-                        <center><h1>Add Service Provider</h1></center>
-                        <br/>
-                    </div>
                         <div class="col-md-12">
                                 <div class="panel panel-default">
                                     
                                     <div class="panel-body">
-                                    <div class="form">
                                         <form role="form" name="frm_upload" class="cmxform form-horizontal tasi-form" action = "add" onSubmit="getPath();" method="post">
                                         {!! csrf_field() !!}
                                             <div class="form-group">
-                                             <label class="control-label col-lg-3" for="cname">Company Name</label>
-                                             <div class="col-lg-9">
+                                             <label for="exampleInputPassword1">Company Name</label>
                                              <input type="text" class="form-control" id="cname" required name="cname">
                                              <div id='availability_result2'></div>
-                                             </div>
-                                             
                                                 
                                             </div>
                                             <div class="form-group">
-                                               <label class="control-label col-lg-3" for="sname">Service</label>
-                                               <div class="col-lg-9">
+                                               <label for="exampleInputPassword1">Service</label>
                                                 <input type="text" class="form-control" id="sname" required name="sname">
                                                 <div id='availability_result'></div>
-                                                </div>
-                                                
                                             </div>
                                             <div class="form-group ">
-                                            <label class="control-label col-lg-3" for="address">Address</label>
-                                            <div class="col-lg-9">
+                                            <label for="exampleInputPassword1">Address</label>
                                                 <input type="text" class="form-control" id="address" required name="address">
-                                                </div>
                                             </div>
                                             <div class="form-group ">
-                                            <label class="control-label col-lg-3" for="telno">Telephone No</label>
-                                            <div class="col-lg-9">
+                                            <label for="exampleInputPassword1">Telephone No</label>
                                                 <input type="text" class="form-control" id="telno" required name="telno">
-                                                </div>
                                                 <div id="telno_result"></div>
                                             </div>
                                             <div class="form-group ">
-                                            <label class="control-label col-lg-3" for="email">E-mail</label>
-                                            <div class="col-lg-9">
+                                            <label for="exampleInputPassword1">E-mail</label>
                                                 <input type="text" class="form-control" id="email" required name="email">
-                                                </div>
                                                 <div id="email_result"></div>
                                             </div>
                                             <div class="form-group">
-                                            <div class="col-lg-offset-3 col-lg-9">
                                             	<button class="btn btn-success waves-effect waves-light"  id="btnsub" type="submit">Add</button>
-<<<<<<< HEAD
-                                                </div>
-=======
-
->>>>>>> udesh
+                                                
                                             </div>
                                         </form>
-                                    </div><!--form class div -->
-                                    </div><!-- panel-body -->
 
+                                        </div> <!-- .form -->
+                                    </div> <!-- panel-body -->
                                 </div> <!-- panel -->
                             </div> <!-- col -->
-                            </div>
-                            </div>
 
                         </div> <!-- End row -->
-
-</div>
+    </div>
 </div>
 
 
@@ -121,12 +93,9 @@
     <script href="{{asset('assets/summernote/summernote.min.js')}}"></script>
 
     <script type="text/javascript">
-
-
-
+    
 
       $(document).ready(function() {
-            
             
             //the min chars for username
             var min_chars = 3;
@@ -213,6 +182,7 @@
                         $('#availability_result').html('<span class="is_not_available"><b> This combination is already in the Database</span>');
                         
                         $('#btnsub').attr("disabled", true);
+
                     }
             });
 
