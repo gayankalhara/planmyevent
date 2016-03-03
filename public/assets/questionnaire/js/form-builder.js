@@ -1333,6 +1333,7 @@ Author: Kevin Chappell <kevin.b.chappell@gmail.com>
 
     // Toggle Edit XML
     $(document.getElementById(frmbID + '-edit-xml')).click(function (e) {
+      document.getElementById('form-builder-template').style.visibility = "visible";
       e.preventDefault();
       $(this).toggleClass('active');
       $('textarea.idea-template').show();

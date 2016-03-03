@@ -93,20 +93,32 @@ foreach($types as $y => $y_value)
                                         
                                 <!-- Button -->                     
                     <div class="pr-button">
-                    <form method="get" action="/events/categories/edit">
+                    <form name="myForm" method="get" action="/events/categories/edit">
                     <input hidden type="text" name="EventName" id="EventName" value="<?php echo $y_value ;?>">
+<<<<<<< HEAD
                         <button type ="submit" class="btn btn-success w-md waves-effect waves-light">Edit</button>
+=======
+                        
+>>>>>>> origin/master
                     <?php $EventSlugQuery = DB::select('SELECT EventSlug FROM event_types where EventName = ?' , [$y_value]) ;
                         foreach($EventSlugQuery as $islug)
                         $slug = $islug->EventSlug;
                     ?>
+<<<<<<< HEAD
 
                     <?php echo '<a href ="../question-builder?category='.$slug.'" ><button class="btn btn-success w-md waves-effect waves-light">Edit Questions</button></a>';?>
 
 
 
+=======
+                    <button id="eventEdit" type="submit" class="btn btn-success w-md waves-effect waves-light">Edit</button>
+                    <?php echo '<a class="btn btn-success w-md waves-effect waves-light" href ="../question-builder?category='.$slug.'" >Edit Questions</a>';?>
+>>>>>>> origin/master
                     </form>
 
+                    
+
+                    
 
                     </div>
                 </div>

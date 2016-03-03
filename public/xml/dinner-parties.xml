@@ -1,0 +1,5 @@
+<form-template>
+	<fields>
+		<field type="checkbox" name="checkbox-1457001012523" label="Checkbox"/>
+	</fields>
+</form-template>

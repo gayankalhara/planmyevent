@@ -10,6 +10,8 @@
   <!-- Only include on form render page -->
   <link rel="stylesheet" type="text/css" media="screen" href="{{asset('assets/questionnaire/css/form-render.min.css')}}">
 
+  <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/loaders.min.css')}}">
+
   <link href="{{asset('assets/select2/select2.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
@@ -34,6 +36,7 @@
                                     <span style="display: inline-block; color: #fff; margin-right: 10px;  font-size: 16px;">Event Category</span>
 
                                     <select id="selectEventTypes" class="select2" style="margin-right: 8px; text-align: center; display: inline-block;">
+                                      <option value="not-selected">-- Select a Category --</option>
                                       @foreach ($event_types as $eventType)
                                           <option value="{{ $eventType -> EventSlug }}">{{ $eventType -> EventName }}</option>
                                       @endforeach
@@ -65,15 +68,31 @@
                         </div>
                         <div class="col-lg-6 col-md-3 col-sm-3 hidden-xs">
                             <div class="pull-right">
-                                <button class="btn btn-success waves-effect waves-light" id="render-form-button" type="submit">Render</button>
+                            @if (app('request')->input('category') != null)
+                              <button class="btn btn-success waves-effect waves-light" id="render-form-button" type="submit">Render</button>
 
                               <button class="btn btn-success waves-effect waves-light" id="save-template" type="submit">Save Template</button>
+
+                              <button class="btn btn-success waves-effect waves-light" id="refresh-button" type="submit">Refresh</button>
 
                               <button class="btn btn-success waves-effect waves-light" id="frmb-0-edit-xml" type="submit">Edit XML</button>
 
                               <button class="btn btn-success waves-effect waves-light" id="frmb-0-export-xml" type="submit">View XML</button>
 
                               <button class="btn btn-success waves-effect waves-light" id="frmb-0-clear-all" type="submit">Clear All</button>
+                            @else
+                              <button disabled class="btn btn-success waves-effect waves-light" id="render-form-button" type="submit">Render</button>
+
+                              <button disabled class="btn btn-success waves-effect waves-light" id="save-template" type="submit">Save Template</button>
+
+                              <button class="btn btn-success waves-effect waves-light" id="refresh-button" type="submit">Refresh</button>
+
+                              <button disabled class="btn btn-success waves-effect waves-light" id="frmb-0-edit-xml" type="submit">Edit XML</button>
+
+                              <button disabled class="btn btn-success waves-effect waves-light" id="frmb-0-export-xml" type="submit">View XML</button>
+
+                              <button disabled class="btn btn-success waves-effect waves-light" id="frmb-0-clear-all" type="submit">Clear All</button>
+                            @endif
                             </div>
                         </div>
                     </div>
@@ -99,11 +118,29 @@
                                               <!-- MAIN CONTENT -->
                                               <section id="main_content" class="inner">
                                                 <div class="build-form">
+                                                @if (app('request')->input('category') == null)
+                                                  <h3 id="preview-quiz"><strong>You have to select an event category first.</strong></h3>
+                                                @else
                                                   <h3><strong>Build The Questionnaire</strong></h3>
                                                   <form action="">
-                                                    <textarea style="display: none" name="form-builder-template" id="form-builder-template" cols="30" rows="10"></textarea>
+                                                  <?php 
+                                                  $fileName = "";
+                                                  $fileContents = "";
+
+                                                  if( app('request')->input('category') != null){
+                                                      if (File::exists("xml/" . app('request')->input('category') .  ".xml"))
+                                                          {
+                                                              $fileName = "xml/" . app('request')->input('category') .  ".xml";
+                                                              $fileContents = File::get($fileName);
+                                                      }
+                                                  }                                                
+
+                                                   ?>
+
+                                                    <textarea style="visibility: hidden;" name="form-builder-template" id="form-builder-template" cols="30" rows="10"><?php echo $fileContents; ?></textarea>
                                                   </form>
                                                   <br style="clear:both">
+                                                @endif
                                                 </div>
 
                                               </section>
@@ -141,10 +178,14 @@
 
 
                                                 <div class="render-form">
+                                                @if (app('request')->input('category') == null)
+                                                  <h3 id="preview-quiz"><strong>You have to select an event category first.</strong></h3>
+                                                @else
                                                   <h3 id="preview-quiz"><strong>Questionnaire Preview</strong></h3>
                                                   <form id="rendered-form">
                                                     <p class="cta">Add some fields to the Questionnaire Builder above and render them here.</p>
                                                   </form>
+                                                @endif
                                                 </div>
 
                                               </section>
@@ -190,6 +231,8 @@
 
   <script src="{{asset('assets/select2/select2.min.js')}}" type="text/javascript"></script>
 
+  <script src="{{asset('js/jquery.query-object.js')}}" type="text/javascript"></script>
+
 
   <script>
   jQuery(document).ready(function($) {
@@ -207,8 +250,43 @@
     });
   });
 
+
+  $("#refresh-button").click(function(){
+    var selectedCat = $('#selectEventTypes').select2('data').id;
+    if(selectedCat == "not-selected"){
+      window.location = window.location.href.split('?')[0];
+    } else{
+      var selectedCat = $('#selectEventTypes').select2('data').id;
+      window.location.search = jQuery.query.set("category", selectedCat);
+    }
+  });
+
+
   $("#save-template").click(function(){
-  alert("Test");
+            
+            var xmlData = document.getElementById('form-builder-template').value;
+            var selectedCat = $('#selectEventTypes').select2('data').id;
+
+            if(selectedCat == "not-selected"){
+                sweetAlert("Oops...", "You haven't selected a event category to save.", "error");
+            } else{
+              document.getElementById('preloader').style.visibility="visible";
+
+              $.post("question-builder/xml-post", { xmlData: xmlData, fileName: "xml/" + selectedCat + ".xml", '_token': '{!! csrf_token() !!}'},
+                  function(result){
+
+                      document.getElementById('preloader').style.visibility="hidden";
+
+                      if(result == 1){
+                          sweetAlert("Done!", "Questions Successfully saved!", "success");
+                      }else{
+                          sweetAlert("Oops...", "Something went wrong!", "error");
+                      }
+
+              });
+            }
+
+
   });
 
   $("#frmb-0-edit-xml").click(function(){
@@ -219,10 +297,20 @@
   $('#selectEventTypes').val('{{ app('request')->input('category') }}').change();
 @endif
 
-  // Select2
-  jQuery(".select2").select2({
-      width: '250px'
-  });
+  
+
+  $('#selectEventTypes').select2({
+    width: '250px'
+  })
+        .on("change", function(e) {
+          var selectedCat = $('#selectEventTypes').select2('data').id;
+
+          if(selectedCat != "not-selected"){
+            window.location.search = jQuery.query.set("category", selectedCat);
+          }else{
+            window.location = window.location.href.split('?')[0];
+          }
+        })
   </script>
 
 

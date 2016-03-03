@@ -11,6 +11,7 @@ use Validator;
 use Redirect;
 use Session;
 use App\event_types;
+use File;
 
 
 use Auth;
@@ -170,6 +171,21 @@ class PageController extends Controller
             'XmlFile' => $input['XmlFile']
           );
           return view('question-builder')->with('data',$data);
+    }
+
+    public function XmlPost()
+    {
+        $xmlData = $_POST['xmlData'];
+        $fileName = $_POST['fileName'];
+
+        $bytes_written = File::put($fileName, $xmlData);
+
+        if ($bytes_written === false)
+        {
+            echo 0;
+        } else{
+            echo 1;
+        }
     }
 
 

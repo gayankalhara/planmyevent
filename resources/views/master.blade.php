@@ -70,6 +70,15 @@
 </head>
 
 <body class="fixed-left">
+<div id="preloader">
+    <div id="loader" class="loader-inner line-scale">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+</div>
 
 <!-- Begin page -->
 <div id="wrapper">

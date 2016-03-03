@@ -69,9 +69,11 @@ class ControllerU extends Controller
 <<<<<<< HEAD
 
 
+
             try 
             {
               \DB::insert('insert into event_types (EventName , Icon , EventSlug ) values (?, ? , ?)',[$iName , $filefull , $iSlug]);
+<<<<<<< HEAD
                 foreach( $input['eservices']  as $x) 
                 {
                   $iTasks[]=$x;
@@ -86,6 +88,12 @@ class ControllerU extends Controller
                   $iTasks[]=$x;
                   \DB::insert('insert into event_services (EventName, Service) values (? , ?)',[$iName , $x ]);
 >>>>>>> udesh
+=======
+                foreach( $input['eservices']  as $x) 
+                {
+                  $iTasks[]=$x;
+                  \DB::insert('insert into event_services (EventName , Service ) values (?, ? )',[$iName , $x]);
+>>>>>>> origin/master
                 }
                 return redirect('events/categories')->with('message', 'Record Added Successfully');
             }
