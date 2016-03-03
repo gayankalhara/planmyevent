@@ -114,31 +114,42 @@ input{
 .is_available{
     color:green;
 }
-.is_not_available{
+.is_not_available{ 
     color:red;
 }
 </style>
 @section('content')
-<div class="content">
+    <div class="content">
     <div class="container">
-    <h3 class="panel-title">Edit Service Provider  : {{$company}} : ( {{$service}} )</h3>
- <div class="row">
-                            <div class="col-md-12">
+    
+                        <div class="row">
+                    <div class="col-md-8 col-md-offset-1">
+                    <div class="panel panel-default"> 
+                    <div class="col-md-12">
+                        <br/>
+                        <center><h1>Edit Service Provider  : {{$company}} : ( {{$service}} )</h1></center>
+                        <br/>
+                    </div>
+                        <div class="col-md-12">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading"></div>
+                                    
                                     <div class="panel-body">
-                                        <div class=" form">
+                                    <div class="form">
                                             <form class="cmxform form-horizontal tasi-form" id="commentForm" method="post" action="edit" novalidate="novalidate">
                                             {!! csrf_field() !!}
                                                 <div class="form-group ">
-                                                    <label for="cname" >Company Name</label>
+                                                    <label class="control-label col-lg-3" for="cname" >Company Name</label>
+                                                    <div class="col-lg-9">
                                                     <input readonly class=" form-control" id="cname" value="<?php echo $company; ?>" name="cname" type="text" required="" aria-required="true">
+                                                    </div>
                                                     <div id='availability_result2'></div>
                                                 </div>
 
                                                 <div class="form-group ">
-                                                    <label for="cemail" >Service</label>
+                                                    <label class="control-label col-lg-3" for="cemail" >Service</label>
+                                                    <div class="col-lg-9">
                                                     <input readonly class="form-control " id="sname" value="<?php echo $service; ?>" type="text" name="sname" required="" aria-required="true">
+                                                    </div>
                                                     <div id='availability_result'></div>
                                                 </div>
 											<?php 
@@ -153,17 +164,23 @@ input{
 											?>
 
                                                 <div class="form-group ">
-                                            <label for="exampleInputPassword1">Address</label>
+                                            <label class="control-label col-lg-3" for="address">Address</label>
+                                                <div class="col-lg-9">
                                                 <input type="text" value = "<?php echo $address ;?>" class="form-control" id="address" name="address">
+                                                </div>
                                             </div>
                                             <div class="form-group ">
-                                            <label for="exampleInputPassword1">Telephone No</label>
+                                            <label class="control-label col-lg-3" for="telno">Telephone No</label>
+                                                <div class="col-lg-9">
                                                 <input type="text" value = "<?php echo $telno ;?>" class="form-control" id="telno" name="telno">
+                                                </div>
                                                 <div id="telno_result"></div>
                                             </div>
                                             <div class="form-group ">
-                                            <label for="exampleInputPassword1">E-mail</label>
+                                            <label class="control-label col-lg-3" for="email">E-mail</label>
+                                                <div class="col-lg-9">
                                                 <input type="text" value = "<?php echo $email ;?>" class="form-control" id="email" name="email">
+                                                </div>
                                                 <div id="email_result"></div>
 
                                             </div>
@@ -175,12 +192,18 @@ input{
                                                     </div>
                                                 </div>
                                             </form>
-                                        </div> <!-- .form -->
-                                    </div> <!-- panel-body -->
+                                    </div><!--form class div -->
+                                    </div><!-- panel-body -->
+
                                 </div> <!-- panel -->
                             </div> <!-- col -->
+                            </div>
+                            </div>
 
                         </div> <!-- End row -->
+
+</div>
+</div>
 <div  class="md-modal md-effect-1" id="data-modal-sure">
         <div class="md-content" style="background-color: #ff3333 ;">
 
@@ -205,13 +228,7 @@ input{
                 </div>
             </div>
         </div>
-</div> 
-
-
-
 </div>
-</div>
-
 @endsection
 
 @section('footer-css')

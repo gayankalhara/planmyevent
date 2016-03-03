@@ -65,7 +65,7 @@ foreach($types as $y => $y_value)
                     foreach($IconQuery as $iconite)
                         $imgurl = $iconite->Icon;
                     ?>
-                    <img src="{{asset('images/event-icons').'/'.$imgurl}}" alt="N/A" onError="this.onerror=null;this.src='{{asset('images/event-icons/na.png')}}';" height="50" width="50">
+                    <img src="{{asset('images/event-icons').'/'.$imgurl}}"  onError="this.onerror=null;this.src='{{asset('images/event-icons/na.png')}}';" height="50" width="50">
                          
 
                     </div>
@@ -101,7 +101,7 @@ foreach($types as $y => $y_value)
                         $slug = $islug->EventSlug;
                     ?>
 
-                    <?php echo '<a href ="question-builder?category='.$slug.'" ><button class="btn btn-success w-md waves-effect waves-light">Edit Questions</button></a>';?>
+                    <?php echo '<a href ="../question-builder?category='.$slug.'" ><button class="btn btn-success w-md waves-effect waves-light">Edit Questions</button></a>';?>
 
 
 

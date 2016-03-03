@@ -1,129 +1,66 @@
 @extends('master')
 @section('header-css')
+    <style type='text/css'>
+        input{
+            padding:5px;
+            font-family: 'tahoma';
+        }
 
+        .is_available{
+            color:green;
+        }
+
+        .is_not_available{
+            color:red;
+        }
+    </style>
 @endsection
 @section('header-js')
 
 @endsection
 @section('content')
 
-<script>
 
-    var ModalEffects = (function() 
-    {
-
-    function init2() 
-    {
-
-        var overlay = document.querySelector( '.md-overlay' );
-
-        [].slice.call( document.querySelectorAll( '.md-trigger' ) ).forEach( function( el, i ) 
-        {
-
-            var modal = document.querySelector( '#' + el.getAttribute( 'data-modal' ) ),
-            close = modal.querySelector( '.md-close' );
-            del = modal.querySelector( '.md-delete' );
-
-          
-            
-            
-        
-            classie.add( document.documentElement, 'md-perspective' );
-
-            function removeModal( hasPerspective ) 
-            {
-                classie.remove( modal, 'md-show' );
-                //if( hasPerspective ) 
-               // {
-                classie.remove( document.documentElement, 'md-perspective' );
-                //}
-            }
-
-            function removeModalHandler() 
-            {
-                removeModal( classie.has( el, 'md-setperspective' ) ); 
-            }
-
-                classie.add( modal, 'md-show' );
-                close.addEventListener( 'click', function( ev ) 
-                {
-                ev.stopPropagation();
-                removeModalHandler();
-                });
-
-                close.addEventListener( 'click', function( ev ) 
-                {
-                ev.$('#frm_upload').submit();
-                removeModalHandler();
-                });
-                
-                
-
-        } );
-    }
-
-     
-
-
-            init2();
-
-        
-
-
-
-
-
-</script>
-
-<style type='text/css'>
-
-body{
-    font-family: 'tahoma';
-}
-input{
-    padding:5px;
-    font-family: 'tahoma';
-}
-.is_available{
-    color:green;
-}
-.is_not_available{
-    color:red;
-}
-</style>
     <div class="content">
     <div class="container">
-    <h3>Edit Event : {{ $EventName }}</h3>
+    
                         <div class="row">
-                            <div class="col-md-12">
+                    <div class="col-md-8 col-md-offset-1">
+                    <div class="panel panel-default"> 
+                    <div class="col-md-12">
+                        <br/>
+                        <center><h1>Edit Event Type : {{ $EventName }}</h1></center>
+                        <br/>
+                    </div>
+                        <div class="col-md-12">
                                 <div class="panel panel-default">
-                                
-                                    <div class="panel-heading"><h3 class="panel-title"></h3></div>
+                                    
                                     <div class="panel-body">
+                                    <div class="form">
                                         
                                             <form role="form" name="frm_upload" enctype="multipart/form-data" class="cmxform form-horizontal tasi-form" action = "edit"  method="post">
                                             {!! csrf_field() !!}
                                                 <div class="form-group ">
-                                                    <label for="exampleInputPassword1">Event Name</label>
+                                                    <label class="control-label col-lg-3" for="evname">Event Name</label>
+                                                        <div class="col-lg-9">
                                                         <input class=" form-control" id="evname" value="<?php echo $EventName ?>" readonly name="evname" type="text" required="" aria-required="true">
+                                                        </div>
                                                         <div id='availability_result'></div>
                                                 </div>
                                                 <div class="form-group">
-                                               <label for="exampleInputPassword1">Icon Image</label>
-                                                <div style="float:bottom" class="fileUpload btn btn-primary waves-effect waves-light">
+                                               <label class="control-label col-lg-3" for="img">Icon Image</label>
+                                               <div class="col-lg-9">
+                                                    <div style="float:bottom" class="fileUpload btn btn-primary waves-effect waves-light">
                                                     <span>Upload</span>
                                                     <input onChange="img_pathUrl(this);" class="upload" type="file" id="img" accept=".png" name="img">
-                                                    
                                                 </div>
-                                               
-                                                <div>
-                                                <img id="prew" style="margin-left:20px" src="#" width="40px" height="40px" alt=""/>
+                                                <img id="prew" style="margin-left:20px" src="" width="50px" height="50px" alt="" title="" >
                                                 </div>
-                                                
-                                               
                                                 </div>
+
                                                 <div class="form-group ">
-                                                <label for="exampleInputPassword1">Services</label>
+                                                <label class="control-label col-lg-3" for="eservices[]">Services</label>
+                                                <div class="col-lg-9">
                                                     <select style="height:150px" multiple name="eservices[]" class="form-control" aria-required="true" required="">
                                                     <?php 
                                                     $services = DB::select('SELECT distinct Service FROM services') ;
@@ -148,6 +85,7 @@ input{
                                                     ?>
 
                                                     </select>
+                                                    </div>
                                                 </div>
                                                 
                                                 
@@ -159,11 +97,16 @@ input{
                                                 </div>
                                             </form>
                                         
-                                    </div> <!-- panel-body -->
+                                    </div><!--form class div -->
+                                    </div><!-- panel-body -->
+
                                 </div> <!-- panel -->
                             </div> <!-- col -->
+                            </div>
+                            </div>
 
                         </div> <!-- End row -->
+
 </div>
 </div>
 

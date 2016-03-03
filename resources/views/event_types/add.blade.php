@@ -31,36 +31,47 @@
 
     <div class="content">
     <div class="container">
-    <h3>Add Event </h3>
+    
                         <div class="row">
+                    <div class="col-md-8 col-md-offset-1">
+                    <div class="panel panel-default"> 
+                    <div class="col-md-12">
+                        <br/>
+                        <center><h1>Add Event Type</h1></center>
+                        <br/>
+                    </div>
                         <div class="col-md-12">
                                 <div class="panel panel-default">
                                     
                                     <div class="panel-body">
-                                        <form role="form" name="frm_upload" enctype="multipart/form-data" class="cmxform form-horizontal tasi-form" action = "add"  method="post">
+                                    <div class="form">
+                                        <form role="form" name="frm_upload" enctype="multipart/form-data" class="form-horizontal" action = "add"  method="post">
                                         {!! csrf_field() !!}
                                             <div class="form-group">
-                                               <label for="exampleInputPassword1">Event Name</label>
-                                                <input type="text" required class="form-control" id="ename" name="ename">
-                                                <div id='availability_result'></div>
+                                               <label class="control-label col-lg-3" for="ename">Event Name</label>
+                                               <div class="col-lg-9">
+                                                    <input type="text" required class="form-control" id="ename" name="ename">
+                                                    <div id='availability_result'></div>
+                                                </div>
+                                                
+                                                
                                             </div>
                                             <div class="form-group">
-                                            <label for="exampleInputPassword1">Icon Image</label>
+                                            <label class="control-label col-lg-3" for="img">Icon Image</label>
+                                            <div class="col-lg-9">
                                             <div style="float:bottom" class="fileUpload btn btn-primary waves-effect waves-light">
                                                     <span>Upload</span>
-                                                    <input required onChange="img_pathUrl(this);" class="upload" type="file" id="img" accept=".png" name="img">
-                                                    
+                                                    <input  onChange="img_pathUrl(this);" class="upload" type="file" id="img" accept=".png" name="img">   
                                             </div>
-                                               
-                                            <div>
-                                                <img id="prew" style="margin-left:20px" src="#" width="40px" height="40px" alt=""/>
-                                            </div>
+                                           </div>
+                                                <img id="prew" style="margin-left:20px"  width="50px" height="50px" src='{{asset('images/event-icons/na.png')}}'/>
                                             </div>
                                                
                                     
                                      <div class="form-group ">
-                                        <label for="exampleInputPassword1">Services</label>
-                                        <select style="height:150px" multiple name="eservices[]" class="form-control" aria-required="true" required="">
+                                        <label class="control-label col-lg-3" for="eservices[]">Services</label>
+                                        <div class="col-lg-9">
+                                        <select style="height:200px" multiple name="eservices[]" class="form-control" aria-required="true" required="">
                                             <?php $services = DB::select('SELECT distinct Service FROM services') ;
                                                 $serv = array();
     										      foreach($services  as $x) 
@@ -74,16 +85,21 @@
     										      }
                                             ?>
                                         </select>
-                                                    
+                                         </div>           
                                     </div>
                                     <div class="form-group">
+                                    <div class="col-lg-offset-3 col-lg-9">
                                         <button class="btn btn-success waves-effect waves-light" id="btnsub" type="submit">Add</button>
                                     </div>
+                                    </div>
                                     </form>
+                                    </div><!--form class div -->
                                     </div><!-- panel-body -->
 
                                 </div> <!-- panel -->
                             </div> <!-- col -->
+                            </div>
+                            </div>
 
                         </div> <!-- End row -->
 
