@@ -10,12 +10,9 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Auth;
 use Socialite;
 use Session;
-<<<<<<< HEAD
 use Mail;
 
 use Illuminate\Support\Facades\Hash;
-=======
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
 class AuthController extends Controller
 {
@@ -25,12 +22,7 @@ class AuthController extends Controller
     |--------------------------------------------------------------------------
     |
     | This controller handles the registration of new users, as well as the
-<<<<<<< HEAD
     | authentication of existing users.
-=======
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
     |
     */
 
@@ -41,11 +33,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-<<<<<<< HEAD
     protected $redirectTo = '/dashboard' ;
-=======
-    protected $redirectTo = '/' ;
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
     /**
      * Create a new authentication controller instance.
@@ -75,40 +63,27 @@ class AuthController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-<<<<<<< HEAD
      * @param  array $data
-=======
-     * @param  array  $data
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
      * @return User
      */
     protected function create(array $data)
     {
         Session::put('user_role', 'customer');
 
-<<<<<<< HEAD
         Mail::send('emails.register-success', [], function($message) use ($data) {
             $message->to($data['email'])
                 ->subject('Welcome to PlanMyEvent.me');
         });
 
-=======
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role' => 'customer',
         ]);
-<<<<<<< HEAD
 
     }
 
-=======
-    }
-
-
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
     /**
      * Redirect the user to the Provider authentication page.
      *
@@ -136,11 +111,7 @@ class AuthController extends Controller
 
         Auth::login($authUser, true);
 
-<<<<<<< HEAD
         return redirect()->action('AdminPageController@Dashboard');
-=======
-        return redirect()->action('PageController@index');
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
     }
 
     /**
@@ -160,7 +131,6 @@ class AuthController extends Controller
 
         Session::put('user_role', 'customer');
 
-<<<<<<< HEAD
         /**
          * Random Generated Password for Social Logged Users
          *
@@ -200,20 +170,11 @@ class AuthController extends Controller
             'name' => $user->name,
             'email' => $user->email,
             'password' => bcrypt($pwd),
-=======
-        return User::create([
-            'name' => $user->name,
-            'email' => $user->email,
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
             'provider_id' => $user->id,
             'avatar' => $user->avatar,
             'provider' => $provider,
             'provider_id' => $user->id,
             'role' => 'customer',
-<<<<<<< HEAD
-=======
-
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
         ]);
     }
 

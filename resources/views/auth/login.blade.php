@@ -111,13 +111,10 @@
                     <div class="col-sm-6 text-right">
                         <a href="{{ url('/auth/google') }}"><button type="button" style="width: 100%; height: 50px; background-color: #df4a32;  border: 1px solid #df4a32;" class="btn btn-primary btn-rounded waves-effect waves-light m-b-5"><i class="fa fa-google-plus m-r-5"></i> Google+ Login</button></a>
                     </div>
-<<<<<<< HEAD
                     
                     <div class="col-sm-12 text-center" style="margin-top: 20px;">
                         <a href="{{ url('/') }}">← Back to Plan My Event</a>
                     </div>
-=======
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                 </div>
 
             </form>

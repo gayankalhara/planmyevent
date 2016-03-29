@@ -60,11 +60,7 @@
     <div class="col-sm-12">
         <h4 class="pull-left page-title">Event Categories</h4>
         <ol class="breadcrumb pull-right">
-<<<<<<< HEAD
             <a href="{{ url('dashboard/events/categories/add') }}"> <button class="btn btn-success waves-effect waves-light" id="btnsub" >Add New</button></a>
-=======
-            <a href="{{ url('/events/categories/add') }}"> <button class="btn btn-success waves-effect waves-light" id="btnsub" >Add New</button></a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
         </ol>          
         <ol hidden>
             <li><a href="javascript:;" class="md-trigger2" style="font-family: 'Nunito', sans-serif;" data-modal="data-modal-add"><i class="md md-loop"></i> Click Here</a></li>

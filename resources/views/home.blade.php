@@ -52,11 +52,7 @@
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-<<<<<<< HEAD
                         <h4 class="panel-title">Your Incoming Messages</h4>
-=======
-                        <h4 class="panel-title">Inbox</h4>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                     </div>
                     <div class="panel-body">
                         <div class="inbox-widget nicescroll mx-box">
@@ -117,11 +113,7 @@
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-<<<<<<< HEAD
                         <h3 class="panel-title">Things you have to do</h3>
-=======
-                        <h3 class="panel-title">Todo</h3>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                     </div>
                     <div class="panel-body todoapp">
                         <div class="row">
@@ -177,12 +169,9 @@
         });
 
         $('#calendar').fullCalendar( 'changeView', 'agendaWeek');
-<<<<<<< HEAD
 @endsection
 
 @section('footer-js')
 <!-- Todo -->
 <script src="{{asset('js/jquery.todo.js')}}"></script>
-=======
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 @endsection

@@ -4,10 +4,7 @@
 
 @section('content')
 
-<<<<<<< HEAD
 @foreach ($userDetails as $userDetail)
-=======
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 <div class="content">
                     <div class="container">
 
@@ -16,7 +13,6 @@
                                         <h3 class="panel-title">Edit Profile</h3> 
                                     </div> 
                                     <div class="panel-body"> 
-<<<<<<< HEAD
                                         <form role="form" method="post" action="{{ url('/dashboard/settings') }}" lpformnum="1">
                                         {!! csrf_field() !!}
                                             <div class="form-group">
@@ -72,29 +68,6 @@
                                                     </div>
                                             @endif
 
-=======
-                                        <form role="form" lpformnum="1">
-                                            <div class="form-group">
-                                                <label for="FullName">Name</label>
-                                                <input type="text" value="Gayan Kalhara" id="FullName" class="form-control" style="cursor: auto;">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Email">Email</label>
-                                                <input type="email" value="gayan.csnc@gmail.com" id="Email" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Username">Username</label>
-                                                <input type="text" value="gayankalhara" id="Username" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Password">Password</label>
-                                                <input type="password" placeholder="6 - 15 Characters" id="Password" class="form-control" style="cursor: auto; background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="RePassword">Re-Password</label>
-                                                <input type="password" placeholder="6 - 15 Characters" id="RePassword" class="form-control" style=" background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
-                                            </div>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                                             
                                             <button class="btn btn-primary waves-effect waves-light w-md" type="submit">Save</button>
                                         </form>
@@ -123,9 +96,6 @@
     </div>
 </div>
 
-<<<<<<< HEAD
 @endforeach
 
-=======
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 @endsection

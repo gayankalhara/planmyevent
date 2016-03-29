@@ -10,11 +10,6 @@
   <!-- Only include on form render page -->
   <link rel="stylesheet" type="text/css" media="screen" href="{{asset('assets/questionnaire/css/form-render.min.css')}}">
 
-<<<<<<< HEAD
-=======
-  <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/loaders.min.css')}}">
-
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
   <link href="{{asset('assets/select2/select2.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
@@ -31,19 +26,11 @@
                                 <div class="bg-picture-overlay">
                                   
 
-<<<<<<< HEAD
                                   <div class="col-lg-6">
                                     <h3 class="text-white" style="text-align: left; margin-left: 20px;     margin-top: 20px;">Question Builder</h3>
                                   </div>
 
                                   <div class="col-lg-6" style="text-align: right; margin-top: 15px;">
-=======
-                                  <div class="col-lg-8">
-                                    <h3 class="text-white" style="text-align: left; margin-left: 20px;     margin-top: 20px;">Question Builder</h3>
-                                  </div>
-
-                                  <div class="col-lg-4" style="text-align: right; margin-top: 15px;">
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                                     <span style="display: inline-block; color: #fff; margin-right: 10px;  font-size: 16px;">Event Category</span>
 
                                     <select id="selectEventTypes" class="select2" style="margin-right: 8px; text-align: center; display: inline-block;">
@@ -82,11 +69,7 @@
                             @if (app('request')->input('category') != null)
                               <button class="btn btn-success waves-effect waves-light" id="render-form-button" type="submit">Render</button>
 
-<<<<<<< HEAD
                               <button class="btn btn-success waves-effect waves-light" id="save-template" type="submit">Save</button>
-=======
-                              <button class="btn btn-success waves-effect waves-light" id="save-template" type="submit">Save Template</button>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
                               <button class="btn btn-success waves-effect waves-light" id="refresh-button" type="submit">Refresh</button>
 
@@ -98,11 +81,7 @@
                             @else
                               <button disabled class="btn btn-success waves-effect waves-light" id="render-form-button" type="submit">Render</button>
 
-<<<<<<< HEAD
                               <button disabled class="btn btn-success waves-effect waves-light" id="save-template" type="submit">Save</button>
-=======
-                              <button disabled class="btn btn-success waves-effect waves-light" id="save-template" type="submit">Save Template</button>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
                               <button class="btn btn-success waves-effect waves-light" id="refresh-button" type="submit">Refresh</button>
 

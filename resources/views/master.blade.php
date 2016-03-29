@@ -1,4 +1,3 @@
-<<<<<<< HEAD
  <?php
                         switch (session()->get('user_role')){
                             case "customer":
@@ -23,20 +22,14 @@
                     ?>
 
 
-=======
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <meta name="author" content="SLIIT">
 
     @yield('meta')
-=======
-    <meta name="author" content="Coderthemes{{ Auth::user()->role }}">
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
     <link rel="shortcut icon" href="{{asset('images/favicon_1.ico')}}">
 
@@ -69,12 +62,9 @@
     <!-- Plugins css -->
     <link href="{{asset('assets/modal-effect/css/component.css')}}" rel="stylesheet">
 
-<<<<<<< HEAD
     <!-- Preloader -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/loaders.min.css')}}">
 
-=======
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
     <style>
         #modal-11 a, #modal-11 p{
             color: #fff !important;
@@ -135,11 +125,7 @@
         <!-- LOGO -->
         <div class="topbar-left">
             <div class="text-center">
-<<<<<<< HEAD
                 <a href="{{ url('/dashboard') }}" class="logo"><i class="md md-event"></i> <span>PLAN MY EVENT </span></a>
-=======
-                <a href="{{ url('/') }}" class="logo"><i class="md md-event"></i> <span>PLAN MY EVENT </span></a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
             </div>
         </div>
         <!-- Button mobile view to collapse sidebar menu -->
@@ -157,20 +143,14 @@
                     </div>
 
                     <ul class="nav navbar-nav navbar-right pull-right">
-<<<<<<< HEAD
                         <li class="hidden-xs">
                             <a href="{{ url('/') }}" class="waves-effect waves-light"><i class="md md-home"></i></a>
                         </li>
-=======
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         <li class="dropdown hidden-xs">
                             <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
                                 <i class="md md-notifications"></i>
                             </a>
-<<<<<<< HEAD
 
-=======
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                             <ul class="dropdown-menu dropdown-menu-lg">
                                 <li class="text-center notifi-title">Notification</li>
                                 <li class="list-group">
@@ -190,27 +170,19 @@
                                     </a>
                                     <!-- list item-->
 
-<<<<<<< HEAD
                                     <a href="{{ url('/dashboard/all-notifications') }}" class="list-group-item">
-=======
-                                    <a href="{{ url('/all-notifications') }}" class="list-group-item">
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                                         <small>See all notifications</small>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-<<<<<<< HEAD
                         
-=======
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         <li class="hidden-xs">
                             <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="md md-crop-free"></i></a>
                         </li>
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="{{ (empty(Auth::user()->avatar)) ? URL::to('/images/users/avatar.png') : Auth::user()->avatar }}" alt="user-img" class="img-circle"> </a>
                             <ul class="dropdown-menu">
-<<<<<<< HEAD
                                 <li><a href="{{ url('/dashboard/profile') }}"><i class="md md-face-unlock"></i> Profile</a></li>
                                 <li><a href="{{ url('/dashboard/settings') }}"><i class="md md-settings"></i> Settings</a></li>
                                 @if(Auth::user()->role == 'admin')
@@ -218,12 +190,6 @@
                                 
                                 @endif
                                 <li><a href="{{ url('logout') }}"><i class="md md-settings-power"></i> Logout</a></li>
-=======
-                                <li><a href="{{ url('/profile') }}"><i class="md md-face-unlock"></i> Profile</a></li>
-                                <li><a href="{{ url('/settings') }}"><i class="md md-settings"></i> Settings</a></li>
-                                <li><a href="javascript:;" class="md-trigger" style="font-family: 'Nunito', sans-serif;" data-modal="modal-11"><i class="md md-loop"></i> Change Role</a></li>                                                   
-                                <li><a href="{{ url('/logout') }}"><i class="md md-settings-power"></i> Logout</a></li>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                             </ul>
                         </li>
                     </ul>
@@ -247,42 +213,12 @@
                     <div class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{{ Auth::user()->name }}} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-<<<<<<< HEAD
                             <li><a href="{{ url('/dashboard/profile') }}"><i class="md md-face-unlock"></i> Profile<div class="ripple-wrapper"></div></a></li>
                             <li><a href="{{ url('/dashboard/settings') }}"><i class="md md-settings"></i> Settings</a></li>
                             <li><a href="{{ url('logout') }}"><i class="md md-settings-power"></i> Logout</a></li>
                         </ul>
                     </div>
                    
-=======
-                            <li><a href="{{ url('/profile') }}"><i class="md md-face-unlock"></i> Profile<div class="ripple-wrapper"></div></a></li>
-                            <li><a href="{{ url('/settings') }}"><i class="md md-settings"></i> Settings</a></li>
-                            <li><a href="{{ url('/logout') }}"><i class="md md-settings-power"></i> Logout</a></li>
-                        </ul>
-                    </div>
-                    <?php
-                        switch (session()->get('user_role')){
-                            case "customer":
-                                $userRole = "Customer";
-                                break;
-
-                            case "admin":
-                                $userRole = "Administrator";
-                                break;
-
-                            case "event-planner":
-                                $userRole = "Event Planner";
-                                break;
-
-                            case "team-member":
-                                $userRole = "Team Member";
-                                break;
-
-                            default:
-                                $userRole = "Unknown User";
-                        }
-                    ?>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
 
                     <p class="text-muted m-0"><?php echo $userRole; ?></p>
@@ -292,55 +228,34 @@
             <div id="sidebar-menu">
                 <ul>
                     <li>
-<<<<<<< HEAD
                         <a href="{{ url('dashboard') }}" class="waves-effect {{ Request::is('dashboard') ? 'active' : null }}"><i class="md md-dashboard"></i><span> Dashboard </span></a>
-=======
-                        <a href="{{ url('/') }}" class="waves-effect {{ Request::is('/') ? 'active' : null }}"><i class="md md-dashboard"></i><span> Dashboard </span></a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                     </li>
                     
                     <?php if($userRole == "Administrator"){?>
                         <li>
-<<<<<<< HEAD
                             <a href="{{ url('dashboard/events/view-all') }}" class="waves-effect {{ Request::is('events*') && !(Request::is('dashboard/events/categories*'))  ? 'active' : null }}"><i class="md md-event"></i><span> Events </span></a>
-=======
-                            <a href="{{ url('/events/view-all') }}" class="waves-effect {{ Request::is('events*') && !(Request::is('events/categories*'))  ? 'active' : null }}"><i class="md md-event"></i><span> Events </span></a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         </li>
                     <?php }; ?>
                     
                     <?php if($userRole == "Administrator"){?>
                         <li class="has_sub">
-<<<<<<< HEAD
                             <a class="disabled waves-effect {{ Request::is('dashboard/messages*') ? 'active' : null }}"><i class="md md-question-answer"></i><span> Messages </span><span class="pull-right"><i class="md md-add"></i></span></a>
                             <ul class="list-unstyled">
                                 <li class="{{ Request::is('dashboard/messages/new*') ? 'active' : null }}"><a href="{{ url('/dashboard/messages/new') }}">New Message</a></li>
                                 <li class="{{ Request::is('dashboard/messages/inbox*') ? 'active' : null }}"><a href="{{ url('/dashboard/messages/inbox') }}">Inbox</a></li>
                                 <li class="{{ Request::is('dashboard/messages/sent*') ? 'active' : null }}"><a href="{{ url('/dashboard/messages/sent') }}">Sent Items</a></li>
-=======
-                            <a href="#" class="waves-effect {{ Request::is('messages*') ? 'active' : null }}"><i class="md md-question-answer"></i><span> Messages </span><span class="pull-right"><i class="md md-add"></i></span></a>
-                            <ul class="list-unstyled">
-                                <li class="{{ Request::is('messages/new*') ? 'active' : null }}"><a href="{{ url('/messages/new') }}">New Message</a></li>
-                                <li class="{{ Request::is('messages/inbox*') ? 'active' : null }}"><a href="{{ url('/messages/inbox') }}">Inbox</a></li>
-                                <li class="{{ Request::is('messages/sent*') ? 'active' : null }}"><a href="{{ url('/messages/sent') }}">Sent Items</a></li>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                             </ul>
                         </li>
                     <?php }; ?>
                     
                     <?php if($userRole == "Administrator"){?>
                         <li>
-<<<<<<< HEAD
                             <a href="{{ url('dashboard/calendar') }}" class="disabled waves-effect {{ Request::is('dashboard/calendar*') ? 'active' : null }}"><i class="md md-event"></i><span> Calendar </span></a>
-=======
-                            <a href="{{ url('/calendar') }}" class="waves-effect {{ Request::is('calendar*') ? 'active' : null }}"><i class="md md-event"></i><span> Calendar </span></a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         </li>
                     <?php }; ?>
                     
                     <?php if($userRole == "Administrator"){?>
                         <li>
-<<<<<<< HEAD
                             <a href="{{ url('dashboard/users') }}" class="waves-effect {{ Request::is('dashboard/users*') ? 'active' : null }}"><i class="md md-people"></i><span> Users </span></a>
                         </li>
                     <?php }; ?>
@@ -350,21 +265,11 @@
                     <?php if($userRole == "Administrator"){?>
                         <li>
                             <a href="{{ url('dashboard/question-builder') }}" class="waves-effect {{ Request::is('dashboard/question-builder*') ? 'active' : null }}"><i class="md  md-live-help"></i><span> Question Builder </span></a>
-=======
-                            <a href="{{ url('/customers') }}" class="waves-effect {{ Request::is('customers*') ? 'active' : null }}"><i class="md md-person"></i><span> Customers </span></a>
                         </li>
                     <?php }; ?>
 
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a href="{{ url('/team-members') }}" class="waves-effect {{ Request::is('team-members*') ? 'active' : null }}"><i class="md md-people"></i><span> Team Members </span></a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
-                        </li>
-                    <?php }; ?>
-
-                    <?php if($userRole == "Administrator"){?>
-                        <li>
-<<<<<<< HEAD
                             <a class="waves-effect {{ Request::is('dashboard/services*') ? 'active' : null }}"><i class="md md-brightness-5"></i><span> Services </span></a>
                             <ul class="list-unstyled">
                                 <li class="{{ Request::is('dashboard/services') ? 'active' : null }}"><a href="{{ url('/dashboard/services') }}">View All</a></li>
@@ -403,99 +308,45 @@
                     <?php if($userRole == "Administrator"){?>
                         <li>
                             <a href="{{ url('dashboard/reviews') }}" class="disabled waves-effect {{ Request::is('dashboard/reviews*') ? 'active' : null }}"><i class="md  md-star"></i><span> Reviews </span></a>
-=======
-                            <a href="{{ url('/events/categories') }}" class="waves-effect {{ Request::is('events/categories*') ? 'active' : null }}"><i class="md md-event-note"></i><span> Event Categories </span></a>
-                        </li>
-                    <?php }; ?>
-
-                    <?php if($userRole == "Administrator"){?>
-                        <li>
-                            <a href="{{ url('/question-builder') }}" class="waves-effect {{ Request::is('question-builder*') ? 'active' : null }}"><i class="md  md-live-help"></i><span> Question Builder </span></a>
-                        </li>
-                    <?php }; ?>
-                    
-                    <?php if($userRole == "Administrator"){?>
-                        <li>
-                            <a href="{{ url('/service-providers') }}" class="waves-effect {{ Request::is('service-providers*') ? 'active' : null }}"><i class="md md-business"></i><span> Service Providers </span></a>
-                        </li>
-                     <?php }; ?>
-
-                    <?php if($userRole == "Administrator"){?>
-                        <li>
-                            <a href="{{ url('/reviews') }}" class="waves-effect {{ Request::is('reviews*') ? 'active' : null }}"><i class="md  md-star"></i><span> Reviews </span></a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         </li>
                     <?php }; ?>
                     
                     <?php if($userRole == "Customer"){?>
                         <li>
-<<<<<<< HEAD
                             <a href="{{ url('dashboard/request-a-quote') }}" class="waves-effect {{ Request::is('dashboard/request-a-quote*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Request a Quote </span></a>
-=======
-                            <a href="{{ url('/request-a-quote') }}" class="waves-effect {{ Request::is('request-a-quote*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Request a Quote </span></a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         </li>
                     <?php }; ?>
 
                     <?php if($userRole == "Customer"){?>
                         <li>
-<<<<<<< HEAD
                             <a href="{{ url('dashboard/view-quote-requests') }}" class="waves-effect {{ Request::is('dashboard/view-quote-requests*') ? 'active' : null }}"><i class="md md-my-library-books"></i><span> Quote Requests </span></a>
-=======
-                            <a href="{{ url('/view-quote-requests') }}" class="waves-effect {{ Request::is('view-quote-requests*') ? 'active' : null }}"><i class="md md-my-library-books"></i><span> Quote Requests </span></a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         </li>
                     <?php }; ?>
                     
                     <?php if($userRole == "Administrator"){?>
                         <li>
-<<<<<<< HEAD
                             <a href="{{ url('dashboard/quote-requests') }}" class="waves-effect {{ Request::is('dashboard/quote-requests*') ? 'active' : null }}"><i class="md md-my-library-books"></i><span> Quote Requests </span></a>
-=======
-                            <a href="{{ url('/quote-requests') }}" class="waves-effect {{ Request::is('quote-requests*') ? 'active' : null }}"><i class="md md-my-library-books"></i><span> Quote Requests </span></a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         </li>
                     <?php }; ?>
 
                     <?php if($userRole == "Administrator"){?>
                         <li>
-<<<<<<< HEAD
                             <a href="{{ url('dashboard/invoices') }}" class="disabled waves-effect {{ Request::is('dashboard/invoices*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Invoices </span></a>
-=======
-                            <a href="{{ url('/invoices') }}" class="waves-effect {{ Request::is('invoices*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Invoices </span></a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         </li>
                     <?php }; ?>
                     
                     <?php if($userRole == "Administrator"){?>
                         <li>
-<<<<<<< HEAD
                             <a href="{{ url('dashboard/payments') }}" class="disabled waves-effect {{ Request::is('dashboard/payments*') ? 'active' : null }}"><i class="md md-payment"></i><span> Payments </span></a>
-=======
-                            <a href="{{ url('/payments') }}" class="waves-effect {{ Request::is('payments*') ? 'active' : null }}"><i class="md md-payment"></i><span> Payments </span></a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         </li>
                     <?php }; ?>
 
                     <?php if($userRole == "Administrator"){?>
                         <li>
-<<<<<<< HEAD
                             <a href="{{ url('dashboard/statistics') }}" class="disabled waves-effect {{ Request::is('dashboard/statistics*') ? 'active' : null }}"><i class="md md-insert-chart"></i><span> Statistics </span></a>
                         </li>
                     <?php }; ?>
                     
-=======
-                            <a href="{{ url('/statistics') }}" class="waves-effect {{ Request::is('statistics*') ? 'active' : null }}"><i class="md md-insert-chart"></i><span> Statistics </span></a>
-                        </li>
-                    <?php }; ?>
-                    
-                    <?php if($userRole == "Administrator"){?>
-                        <li>
-                            <a href="{{ url('/about-us') }}" class="waves-effect {{ Request::is('about-us*') ? 'active' : null }}"><i class="md md-info"></i><span> About Us</span></a>
-                        </li>
-                    <?php }; ?>
-
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                 </ul>
                 <div class="clearfix"></div>
             </div>
@@ -514,38 +365,22 @@
                 <p style="text-align: center;">Click on the user role below to switch.</p>
                 
                 <div class="row" style="margin-top: 15px; margin-bottom: 20px;">
-<<<<<<< HEAD
                     <a href="{{ url('dashboard/users/role/switch/admin') }}"><div class="col-sm-3">
-=======
-                    <a href="{{ url('/users/role/switch/admin') }}"><div class="col-sm-3">
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         <img src="{{asset('images/roles/admin.png')}}">
                         <p style="text-align: center;">Admin</p>
                     </div></a>
 
-<<<<<<< HEAD
                     <a href="{{ url('dashboard/users/role/switch/customer') }}"><div class="col-sm-3">
-=======
-                    <a href="{{ url('/users/role/switch/customer') }}"><div class="col-sm-3">
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         <img src="{{asset('images/roles/customer.png')}}">
                         <p style="text-align: center;">Customer</p>
                     </div></a>
 
-<<<<<<< HEAD
                     <a href="{{ url('dashboard/users/role/switch/event-planner') }}"><div class="col-sm-3">
-=======
-                    <a href="{{ url('/users/role/switch/event-planner') }}"><div class="col-sm-3">
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         <img src="{{asset('images/roles/event-planner.png')}}">
                         <p style="text-align: center;">Event Planner</p>
                     </div></a>
 
-<<<<<<< HEAD
                     <a href="{{ url('dashboard/users/role/switch/team-member') }}"><div class="col-sm-3">
-=======
-                    <a href="{{ url('/users/role/switch/team-member') }}"><div class="col-sm-3">
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                         <img src="{{asset('images/roles/team-member.png')}}">
                         <p style="text-align: center;">Team Member</p>
                     </div></a>
@@ -560,11 +395,7 @@
         @yield('content')
         <footer class="footer text-right">
             © 2016 Sri Lanka Institute of Information Technology. All Rights Reserved.<br>
-<<<<<<< HEAD
             <strong>Team Members:</strong> <a href="{{ url('dashboard/developers') }}">Gayan</a>, <a href="{{ url('dashboard/developers') }}">Udesh</a>, <a href="{{ url('/developers') }}">Hasitha</a>, <a href="{{ url('/developers') }}">Lasanthi</a>
-=======
-            <strong>Team Members:</strong> <a href="{{ url('/developers') }}">Gayan</a>, <a href="{{ url('/developers') }}">Udesh</a>, <a href="{{ url('/developers') }}">Hasitha</a>, <a href="{{ url('/developers') }}">Lasanthi</a>
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
         </footer>
     </div>
 <!-- END wrapper -->
@@ -605,12 +436,6 @@
 <!-- Dashboard -->
 <script src="{{asset('js/jquery.dashboard.js')}}"></script>
 
-<<<<<<< HEAD
-=======
-<!-- Todo -->
-<script src="{{asset('js/jquery.todo.js')}}"></script>
-
->>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 @yield('footer-js')
 
 <script type="text/javascript">
