@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
 
+=======
+//H.A.U.C. Hewagama
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
@@ -8,6 +12,7 @@ use Illuminate\Http\Response;
 use Input;
 use Validator;
 use Redirect;
+<<<<<<< HEAD
 use Session;
  
 //use models
@@ -16,6 +21,9 @@ use App\Models\Event_Services;
 use App\Models\Services;
 use App\Models\Service_Providers;
 use App\Models\Task_Templates;
+=======
+
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 class ControllerU extends Controller
 {
 
@@ -30,6 +38,7 @@ class ControllerU extends Controller
 
 
 
+<<<<<<< HEAD
 // ------------------------------ Load Event Categories Page ------------------------------------------------------------
 /**
  * This function loads the event categories view.
@@ -43,11 +52,21 @@ class ControllerU extends Controller
         $EventQuery = Event_Types::select('*')->get();
         
       return view('event_types.categories')->with('EventTypeQuery',$EventQuery);
+=======
+
+
+// ------------------------------ Load Event Categories Page ------------------------------------------------------------
+
+    public function EventCategoriesLoad()
+    {
+        return view('event_types.categories');
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
     }
 
 // ----------------------------------------------------------------------------------------------------------------------
 
 
+<<<<<<< HEAD
 
 
 //  -------------------------------- Load Add New Event Category Page ----------------------------------------------------
@@ -62,11 +81,19 @@ class ControllerU extends Controller
     {
       $services = Services::distinct()->select('*')->groupBy('Service')->get();
       return view('event_types.add')->with('services',$services);
+=======
+//  -------------------------------- Load Add New Event Category Page ----------------------------------------------------
+
+    public function AddEventCategoriesLoad()
+    {
+      return view('event_types.add');
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
     }
 
 // -----------------------------------------------------------------------------------------------------------------------
 
 
+<<<<<<< HEAD
 
 
 //  -------------------------------- Add New Event Category Submit --------------------------------------------------------
@@ -144,6 +171,66 @@ class ControllerU extends Controller
           }
 
           
+=======
+//  -------------------------------- Add New Event Category Submit --------------------------------------------------------
+
+      public function AddEventCategoriesPost()
+      {
+         $input = Request::all();
+         $iName = $input['ename'];
+         $iSlug = strtolower($iName);
+         $iSlug = str_replace(" ","-",$iSlug);
+         $iTasks = array();
+          $iSlug = str_replace(" ", "-", $iName);
+          $iSlug = strtolower($iSlug);
+         if($_FILES["img"]["error"] == 0)
+          {
+              $iIcon = $input['img'];
+              $fileext = Request::file('img')->getClientOriginalExtension();
+              if($fileext!='png')
+                      return redirect('events/categories')->with('message', 'Record Update Failed');
+              $filename = Request::file('img')->getClientOriginalName();
+              $filefull=$iName.'.'.$fileext;
+              $filefull = str_replace(' ', '_', $filefull);
+              Request::file('img')->move(base_path() . '/public/images/event-icons', $filefull);
+<<<<<<< HEAD
+
+
+
+            try 
+            {
+              \DB::insert('insert into event_types (EventName , Icon , EventSlug ) values (?, ? , ?)',[$iName , $filefull , $iSlug]);
+<<<<<<< HEAD
+                foreach( $input['eservices']  as $x) 
+                {
+                  $iTasks[]=$x;
+                  \DB::insert('insert into event_services (EventName , Service ) values (?, ? )',[$iName , $x]);
+=======
+              
+            try 
+            {
+                \DB::insert('insert into event_types (EventName , Icon , EventSlug) values (? , ? , ?)',[$iName , $filefull , $iSlug]);
+                foreach( $input['eservices']  as $x) 
+                {
+                  $iTasks[]=$x;
+                  \DB::insert('insert into event_services (EventName, Service) values (? , ?)',[$iName , $x ]);
+>>>>>>> udesh
+=======
+                foreach( $input['eservices']  as $x) 
+                {
+                  $iTasks[]=$x;
+                  \DB::insert('insert into event_services (EventName , Service ) values (?, ? )',[$iName , $x]);
+>>>>>>> origin/master
+                }
+                return redirect('events/categories')->with('message', 'Record Added Successfully');
+            }
+            catch(\Illuminate\Database\QueryException $e)
+            {
+                return redirect('events/categories')->with('message', 'Record Update Failed');
+            }
+
+          }
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
       }
 
 //-----------------------------------------------------------------------------------------------------------------------
@@ -152,6 +239,7 @@ class ControllerU extends Controller
 
 
 // ------------------------------------ Load Edit Event Categories Page ------------------------------------------------
+<<<<<<< HEAD
 /**
  * This function loads the edit event category page.
  *
@@ -178,6 +266,23 @@ class ControllerU extends Controller
           //get inputs to variables
           $input = $input['EventName'];
           //return edit category page with event_type table data
+=======
+
+      public function EditEventCategoriesLoad()
+      {
+          $input = Request::all();
+          if ($input == null)
+          {
+            return redirect('events/categories');
+          }
+
+          $ename = $_GET['EventName'];
+          $result = \DB::select('select * from event_types where EventName = ?' , [$ename]);
+          if($result==null)
+            return redirect('events/categories');
+          
+          $input = $input['EventName'];
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
           return view('event_types.edit')->with('EventName',$input);
           
       }
@@ -189,6 +294,7 @@ class ControllerU extends Controller
 
 
 //----------------------------------- Edit Event Category Submit---------------------------------------------------------
+<<<<<<< HEAD
 /**
  * This function takes care of the post method in edit event category page.
  *
@@ -252,10 +358,56 @@ public function EditEventCategoriesPost()
         catch(\Illuminate\Database\QueryException $e)
           {
              return redirect('dashboard/events/categories/')->with('message', 'Record Update Failed '.$e->getCode());
+=======
+
+public function EditEventCategoriesPost()
+    {
+         $input = Request::all();
+         
+         
+         $iTasks = array();
+       if(isset($_POST['deltype'])){
+        $deliName = $input['evnamedel'];
+          \DB::delete('delete from event_types where EventName = ?' , [$deliName]);
+          \DB::delete('delete from event_services where EventName = ?' , [$deliName]);
+          return redirect('events/categories')->with('message', 'Record Deleted Successfully');
+        }
+        else{
+          $iName = $input['evname'];
+          try{
+              
+                \DB::delete('delete from event_services where EventName = ?' , [$iName]);
+                foreach( $input['eservices']  as $x) 
+                {
+                  $iTasks[]=$x;
+                  \DB::insert('insert into event_services  (EventName, Service ) values (?, ? ) ON DUPLICATE KEY UPDATE Service = ?',[$iName , $x , $x ]);
+                }     
+
+                if($_FILES["img"]["error"] == 0)
+                {
+                    $iIcon = $input['img'];
+                    $fileext = Request::file('img')->getClientOriginalExtension();
+                    if($fileext!='png')
+                      return redirect('events/categories')->with('message', 'Record Update Failed');
+                    $filename = Request::file('img')->getClientOriginalName();
+                    $iName = $input['evname'];
+                    $filefull=$iName.'.'.$fileext;
+                    $filefull = str_replace(' ', '_', $filefull);
+                    Request::file('img')->move(base_path() . '/public/images/event-icons', $filefull);
+                    \DB::update('update event_types set Icon = ? where EventName = ? ',[$filefull,$iName]);
+                }
+
+                return redirect('events/categories/')->with('message', 'Record Updated Successfully');
+              }
+          catch(\Illuminate\Database\QueryException $e)
+          {
+             return redirect('events/categories/')->with('message', 'Record Update Failed '.$e->getCode());
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
           }
         }
       }
 
+<<<<<<< HEAD
 // -----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -268,10 +420,16 @@ public function EditEventCategoriesPost()
  *
  * @return  0 | 1
  */
+=======
+// -----------------------------------------------------------------------------------------------------------------------
+
+
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
 
 public function CheckEventCatName()
   {
+<<<<<<< HEAD
         //get post data to variable
         $catname = $_POST['catname'];
 
@@ -280,6 +438,11 @@ public function CheckEventCatName()
 
         //if exsists 0, else 1
         if ($result=='[]')
+=======
+        $catname = $_POST['catname'];
+        $result = \DB::select('select * from event_types where EventName = ?',[$catname]);
+        if ($result==null)
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
         echo 1;
         else 
         echo 0;    
@@ -288,6 +451,7 @@ public function CheckEventCatName()
 
 
 //---------------------------------------Load Service Providers Page----------------------------------------------------------------------
+<<<<<<< HEAD
 /**
  * This function loads the service providers page
  *
@@ -298,6 +462,12 @@ public function CheckEventCatName()
     {
         $result = Service_Providers::select('*')->get() ;
         return view('serviceproviders.service-providers')->with('result',$result);
+=======
+
+    public function ServiceProviders()
+    {
+        return view('serviceproviders.service-providers');
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
     }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
@@ -305,6 +475,7 @@ public function CheckEventCatName()
 
 
 //-----------------------------------------Load Add Service Provider Page----------------------------------------------------------------
+<<<<<<< HEAD
     /**
  * This function loads the add service providers page
  *
@@ -315,10 +486,16 @@ public function CheckEventCatName()
     {
         $result = Services::select('*')->get();
         return view('serviceproviders.add-service-provider')->with('result',$result);;
+=======
+    public function AddServiceProviderLoad()
+    {
+        return view('serviceproviders.add-service-provider');
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
     } 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
 
+<<<<<<< HEAD
 
 
 
@@ -340,6 +517,15 @@ public function CheckEventCatName()
 
         //if exsists 0, else 1$companyname = $_POST['companyname'];
         if ($result=='[]')
+=======
+///------------------------------------- Check Company Name and Service Availability ---------------------------------------------------------------------
+    public function CheckService()
+    {
+        $companyname = $_POST['companyname'];
+        $servicename = $_POST['servicename'];
+        $result = \DB::select('SELECT * FROM services where CompanyName = ? and Service = ?',[$companyname, $servicename]);
+        if ($result==null)
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
           echo 1;
         else 
           echo 0;
@@ -348,6 +534,7 @@ public function CheckEventCatName()
 
     
 //  -------------------------------- Add Service Provider Submit -------------------------------------------------------------------------
+<<<<<<< HEAD
 /**
  * This function takes care of the post method in add service provider page
  *
@@ -395,12 +582,33 @@ public function CheckEventCatName()
           {
             return redirect('dashboard/service-providers')->with('message', 'Record Update Failed');
           }
+=======
+
+    public function AddServiceProviderSubmit()
+      {
+             $input = Request::all();
+             $iCompanyName = $input['cname'];
+             $iServiceName = $input['sname'];
+             $iAddress = $input['address'];
+             $iTelNo = $input['telno'];
+             $iEmail = $input['email'];
+
+             try {    
+              \DB::insert('insert into services (CompanyName, Service, Address, TelNo, Email) values (?, ?, ?, ?, ?)',[$iCompanyName , $iServiceName, $iAddress , $iTelNo , $iEmail]);
+              return redirect('service-providers')->with('message', 'Record Added Successfully');
+              }
+
+              catch(\Illuminate\Database\QueryException $e2){
+              return redirect('service-providers')->with('message', 'Record Update Failed');
+              }
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
       }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
       
 //  -------------------------------- Edit  Service Provider Load -------------------------------------------------------------------------
+<<<<<<< HEAD
 /**
  * This function loads the edit service provider page
  *
@@ -431,6 +639,25 @@ public function CheckEventCatName()
             return redirect('dashboard/service-providers');
           
           return view('serviceproviders.edit-provider')->with('result',$result);
+=======
+      public function EditServiceProviderLoad()
+      {
+          $input = Request::all();
+          if ($input == null)
+          {
+            return redirect('service-providers');
+          }
+          $cname = $_GET['CompanyName'];
+          $sname = $_GET['Service'];
+          $result = \DB::select('select * from services where CompanyName = ? and  Service = ?' , [$cname , $sname]);
+          if($result==null)
+            return redirect('service-providers');
+          $data = array(
+            'CompanyName' => $input['CompanyName'],
+            'Service' => $input['Service']
+          );
+          return view('serviceproviders.edit-provider')->with('data',$data);
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
           return($input);
       }
 
@@ -438,6 +665,7 @@ public function CheckEventCatName()
 
 
 //  -------------------------------- Edit  Service Provider Submit -------------------------------------------------------------------------
+<<<<<<< HEAD
 /**
  * This function takes care of the post method in edit Service Provider page.
  *
@@ -905,13 +1133,47 @@ public function CheckEventCatName()
             //insert the data to services table
             Services::where('Service', $iServiceName)->update(['Description' => $iDescription]);
             return redirect('dashboard/services')->with('message', 'Record Updated Successfully');
+=======
+      public function EditServiceProviderSubmit()
+      {
+          $input = Request::all();
+         
+          
+        if(isset($_POST['delprov']))
+        {
+          $iCompanyName = $input['delcname'];
+          $iServiceName = $input['delsname'];
+          \DB::delete('delete from services where CompanyName = ? and  Service = ?' , [$iCompanyName , $iServiceName]);
+          return redirect('service-providers')->with('message', 'Record Deleted Successfully');
+        }
+        else
+        {
+          
+         $iCompanyName = $input['cname'];
+         $iServiceName = $input['sname'];
+         $iAddress = $input['address'];
+         $iTelNo = $input['telno'];
+         $iEmail = $input['email'];
+         try {    
+          \DB::update('update services set Address = ? , TelNo = ? , Email = ? where CompanyName = ? and Service = ?',[$iAddress , $iTelNo , $iEmail ,$iCompanyName,$iServiceName ]);
+            return redirect('service-providers')->with('message', 'Record Updated Successfully');
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
           }
 
           catch(\Illuminate\Database\QueryException $e2)
           {
+<<<<<<< HEAD
             return redirect('dashboard/services')->with('message', 'Record Update Failed');
           }
         }
       }
+=======
+            return redirect('service-providers')->with('message', 'Record Update Failed');
+          }
+        }
+      }
+//-----------------------------------------------------------------------------------------------------------------------------------------
+      
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
 }

@@ -29,6 +29,9 @@ class PasswordController extends Controller
     {
         $this->middleware('guest');
     }
+<<<<<<< HEAD
 
     
+=======
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 }

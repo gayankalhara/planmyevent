@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var todoAjax = [];
 
 (function($){
@@ -27,6 +28,15 @@ var todoAjax = [];
 })(window.jQuery),
 
 function($) {
+=======
+/**
+* Theme: Velonic Admin Template
+* Author: Coderthemes
+* Todo Application
+*/
+
+!function($) {
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
     "use strict";
 
     var TodoApp = function() {
@@ -42,9 +52,43 @@ function($) {
         this.$todoInput = $("#todo-input-text"),
         this.$todoBtn = $("#todo-btn-submit"),
 
+<<<<<<< HEAD
         console.log(todoAjax);
 
         this.$todoData = todoAjax ;
+=======
+        this.$todoData = [
+        {
+            'id': '1',
+            'text': 'Generate Payment Receipts of Photographers',
+            'done': false
+        },
+        {
+            'id': '2',
+            'text': 'Create monthly sales report of events',
+            'done': true
+        },
+        {
+            'id': '3',
+            'text': 'Contact Mr. Lakmal about payment of Event #3255236',
+            'done': true
+        },
+        {
+            'id': '4',
+            'text': 'Contact GH Photographers to register as a service provider',
+            'done': true
+        },
+        {
+            'id': '5',
+            'text': 'Refund payment of PAYMENT #458476',
+            'done': false
+        },
+        {
+            'id': '6',
+            'text': 'Book Hotel for Event #264452',
+            'done': true
+        }];
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
         this.$todoCompletedData = [];
         this.$todoUnCompletedData = [];
@@ -54,8 +98,11 @@ function($) {
     TodoApp.prototype.markTodo = function(todoId, complete) {
        for(var count=0; count<this.$todoData.length;count++) {
             if(this.$todoData[count].id == todoId) {
+<<<<<<< HEAD
                 //alert(this.$todoData[count].id);
                 //todoCompleteSuccess();
+=======
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                 this.$todoData[count].done = complete;
             }
        }
@@ -68,6 +115,7 @@ function($) {
     },
     //Archives the completed todos
     TodoApp.prototype.archives = function() {
+<<<<<<< HEAD
         swal({
           title: 'Are you sure?',
           text: "All your todo items that are marked as complete will be archieved. You can goto todo history page to see the deleted items.",
@@ -104,6 +152,22 @@ function($) {
         })
         
         
+=======
+    	this.$todoUnCompletedData = [];
+        for(var count=0; count<this.$todoData.length;count++) {
+            //geretaing html
+            var todoItem = this.$todoData[count];
+            if(todoItem.done == true) {
+                this.$todoCompletedData.push(todoItem);
+            } else {
+                this.$todoUnCompletedData.push(todoItem);
+            }
+        }
+        this.$todoData = [];
+        this.$todoData = [].concat(this.$todoUnCompletedData);
+        //regenerate todo list
+        this.generate();
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
     },
     //Generates todos
     TodoApp.prototype.generate = function() {
@@ -134,7 +198,11 @@ function($) {
 
         //binding archive
         this.$archiveBtn.on("click", function(e) {
+<<<<<<< HEAD
             e.preventDefault();
+=======
+        	e.preventDefault();
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
             $this.archives();
             return false;
         });
@@ -155,7 +223,10 @@ function($) {
                 sweetAlert("Oops...", "You forgot to enter todo text", "error");
                 $this.$todoInput.focus();
             } else {
+<<<<<<< HEAD
                 document.getElementById('preloader').style.visibility="visible";
+=======
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                 $this.addTodo($this.$todoInput.val());
             }
         });
@@ -168,6 +239,7 @@ function($) {
 //initializing todo app
 function($) {
     "use strict";
+<<<<<<< HEAD
        $.TodoApp.init()
 }(window.jQuery);
 
@@ -178,3 +250,7 @@ function todoCompleteSuccess(){
       'success'
     )
 }
+=======
+    $.TodoApp.init()
+}(window.jQuery);
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512

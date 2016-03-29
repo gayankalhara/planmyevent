@@ -93,7 +93,11 @@
 
                 <div class="form-group">
                     <div class="col-xs-12">
+<<<<<<< HEAD
                         <input class="form-control input-lg" type="password" required="" placeholder="Confirm Password" name="password_confirmation">
+=======
+                        <input class="form-control input-lg" type="password" required="" placeholder="Password" name="password_confirmation">
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
                         @if ($errors->has('password_confirmation'))
                             <span class="help-block">

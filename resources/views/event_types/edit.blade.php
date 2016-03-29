@@ -1,8 +1,12 @@
 @extends('master')
 @section('header-css')
     <style type='text/css'>
+<<<<<<< HEAD
         input
         {
+=======
+        input{
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
             padding:5px;
             font-family: 'tahoma';
         }
@@ -15,6 +19,7 @@
             color:red;
         }
     </style>
+<<<<<<< HEAD
     <?php
         use App\Models\Event_Types;
         use App\Models\Event_Services;
@@ -28,6 +33,8 @@
                $result3= $ic->Icon;
             }
     ?>
+=======
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 @endsection
 @section('header-js')
 
@@ -35,10 +42,17 @@
 @section('content')
 
 
+<<<<<<< HEAD
 <div class="content">
 <div class="container">
     
         <div class="row">
+=======
+    <div class="content">
+    <div class="container">
+    
+                        <div class="row">
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                     <div class="col-md-8 col-md-offset-1">
                     <div class="panel panel-default"> 
                     <div class="col-md-12">
@@ -54,6 +68,7 @@
                                         
                                             <form role="form" name="frm_upload" enctype="multipart/form-data" class="cmxform form-horizontal tasi-form" action = "edit"  method="post">
                                             {!! csrf_field() !!}
+<<<<<<< HEAD
 
 
                                                 <div class="form-group ">
@@ -102,6 +117,53 @@
                                                             ?>
 
                                                         </select>
+=======
+                                                <div class="form-group ">
+                                                    <label class="control-label col-lg-3" for="evname">Event Name</label>
+                                                        <div class="col-lg-9">
+                                                        <input class=" form-control" id="evname" value="<?php echo $EventName ?>" readonly name="evname" type="text" required="" aria-required="true">
+                                                        </div>
+                                                        <div id='availability_result'></div>
+                                                </div>
+                                                <div class="form-group">
+                                               <label class="control-label col-lg-3" for="img">Icon Image</label>
+                                               <div class="col-lg-9">
+                                                    <div style="float:bottom" class="fileUpload btn btn-primary waves-effect waves-light">
+                                                    <span>Upload</span>
+                                                    <input onChange="img_pathUrl(this);" class="upload" type="file" id="img" accept=".png" name="img">
+                                                </div>
+                                                <img id="prew" style="margin-left:20px" src="" width="50px" height="50px" alt="" title="" >
+                                                </div>
+                                                </div>
+
+                                                <div class="form-group ">
+                                                <label class="control-label col-lg-3" for="eservices[]">Services</label>
+                                                <div class="col-lg-9">
+                                                    <select style="height:150px" multiple name="eservices[]" class="form-control" aria-required="true" required="">
+                                                    <?php 
+                                                    $services = DB::select('SELECT distinct Service FROM services') ;
+                                                   $result4= DB::select('select Service from event_services where EventName = ?',[$EventName]);
+                                                    $tasks = array();    
+
+                                                        foreach($result4 as $x)
+                                                        {
+                                                           $tasks[]= $x->Service;
+                                                        }
+                                                    foreach($services as $y)
+                                                    {
+
+                                                        if(in_array($y->Service , $tasks))
+                                                       // echo '<option selected>'.$y->Service.'</option>';   
+                                                        echo '<option selected>'.$y->Service.'</option>'; 
+                                                    else 
+                                                        echo '<option>'.$y->Service.'</option>'; 
+                                                    //else
+                                                      //  echo '<option >'.$y->Service.'</option>';    
+                                                    }
+                                                    ?>
+
+                                                    </select>
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                                                     </div>
                                                 </div>
                                                 
@@ -112,6 +174,7 @@
                                                         <a href="javascript:;" class="md-trigger" data-modal="data-modal-sure"><button type="button" onclick="javascript:;" class="btn btn-danger waves-effect waves-light" data-modal="data-modal-sure">Delete</button></a>
                                                     </div>
                                                 </div>
+<<<<<<< HEAD
 
                                                 
                                             </form>
@@ -125,6 +188,19 @@
                 </div>
 
         </div> <!-- End row -->
+=======
+                                            </form>
+                                        
+                                    </div><!--form class div -->
+                                    </div><!-- panel-body -->
+
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+                            </div>
+                            </div>
+
+                        </div> <!-- End row -->
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
 </div>
 </div>

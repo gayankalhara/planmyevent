@@ -148,7 +148,10 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+<<<<<<< HEAD
         Cmgmyr\Messenger\MessengerServiceProvider::class,
+=======
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
         /*
          * Application Service Providers...

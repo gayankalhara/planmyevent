@@ -8,8 +8,12 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "laravel/socialite": "~2.0",
+<<<<<<< HEAD
         "filp/whoops": "~1.0",
         "cmgmyr/messenger": "~2.0"
+=======
+        "filp/whoops": "~1.0"
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

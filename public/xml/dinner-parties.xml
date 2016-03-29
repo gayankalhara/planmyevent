@@ -1,5 +1,6 @@
 <form-template>
 	<fields>
+<<<<<<< HEAD
 		<field type="date" name="date-input-1457022638495" label="Date Field"/>
 		<field type="checkbox" name="checkbox-1457001012523" label="Checkbox"/>
 		<field type="select" name="select-1457022636076" label="Select">
@@ -7,5 +8,8 @@
 			<option value="option-2">Option 2</option>
 		</field>
 		<field type="checkbox" name="checkbox-1457022633790" label="Checkbox"/>
+=======
+		<field type="checkbox" name="checkbox-1457001012523" label="Checkbox"/>
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 	</fields>
 </form-template>

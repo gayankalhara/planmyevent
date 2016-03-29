@@ -20,6 +20,7 @@
 | it contains. The "web" middleware group is defined in your HTTP
 | kernel and includes session state, CSRF protection, and more.
 |
+<<<<<<< HEAD
 */  
 
 //Routes common to all users without any permission restriction
@@ -42,11 +43,20 @@ Route::group(['middleware' => ['web']], function () {
 
 //Routes that are available only for Admins
 Route::group(['middleware' => ['web', 'App\Http\Middleware\AdminMiddleware', 'App\Http\Middleware\SessionTimeout']], function () {
+=======
+*/
+
+Route::group(['middleware' => ['web']], function () {
+    Route::auth();
+
+    Route::any('/', 'PageController@index');
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
     Route::get('auth/{provider?}', 'Auth\AuthController@redirectToProvider');
 
     Route::get('auth/{provider?}/callback', 'Auth\AuthController@handleProviderCallback');
 
+<<<<<<< HEAD
     Route::post('password/email/resend', 'AccountController@resendEmail');
 
     Route::post('change-email', 'AdminPageController@changeEmail');
@@ -96,11 +106,58 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\AdminMiddleware', 'Ap
         Mail::send('emails.register-success', [], function($message) {
             $message->to('gayan.csnc@gmail.com')
                 ->subject('Welcome to PlanMyEvent.me');
+=======
+    Route::get('/developers', 'PageController@Developers');
+
+    Route::get('/profile', 'PageController@Profile');
+
+    Route::get('/settings', 'PageController@Settings');
+
+    Route::get('/events/view-all', 'PageController@ViewAllEvents');
+
+    Route::get('/messages/new', 'PageController@NewMessage');
+
+    Route::get('/messages/inbox', 'PageController@Inbox');
+
+    Route::get('/messages/sent', 'PageController@SentMessages');
+
+    Route::get('/calendar', 'PageController@Calendar');
+
+    Route::get('/customers', 'PageController@Customers');
+
+    Route::get('/team-members', 'PageController@TeamMembers');
+
+    Route::get('/team-members/add-new', 'PageController@AddNewTeamMember');
+
+    Route::get('/service-providers', 'PageController@ServiceProviders');
+
+    Route::get('/reviews', 'PageController@Reviews');
+
+    Route::get('/request-a-quote', 'PageController@RequestAQuote');
+
+    Route::get('/quote-requests', 'PageController@QuoteRequests');
+
+    Route::get('/invoices', 'PageController@Invoices');
+
+    Route::get('/payments', 'PageController@Payments');
+
+    Route::get('/statistics', 'PageController@Statistics');
+
+    Route::get('/about-us', 'PageController@AboutUs');
+
+    Route::get('/test', 'PageController@Test');
+
+    Route::get('sendmail', function () {
+        Mail::raw('Laravel with Mailgun is easy!', function($message)
+        {
+            $message->to('gayan.csnc@gmail.com')->subject('Learning Laravel test email');;
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
         });
 
         return "Your email has been sent successfully";
     });
 
+<<<<<<< HEAD
     Route::get('dashboard/deactivate', 'UserController@Deactivate');
 
     Route::get('dashboard/events/add', 'AdminPageController@EventAdd');
@@ -113,11 +170,26 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\AdminMiddleware', 'Ap
     Route::get('dashboard/question-builder','AdminPageController@Questionnaire');   
 
     Route::post('dashboard/question-builder/xml-post','AdminPageController@XmlPost');   
+=======
+    Route::get('/deactivate', 'UserController@Deactivate');
+
+    Route::get('/events/add', 'PageController@EventAdd');
+
+    Route::get( '/users/role/switch/{role}', 'PageController@SwitchUser' );
+    Route::get( '/users/role/switch/reset', 'PageController@SwitchUserReset' );
+        
+    Route::get('dbmigrate', 'DbmigrateController@index');
+
+    Route::get('/question-builder','PageController@Questionnaire');   
+
+    Route::post('/question-builder/xml-post','PageController@XmlPost');   
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
     /**
      * Udesh Routes
      */
     
+<<<<<<< HEAD
 
     Route::get('dashboard/events/categories/add','ControllerU@AddEventCategoriesLoad');   
 
@@ -179,12 +251,42 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\AdminMiddleware', 'Ap
     Route::get('dashboard/events/categories/tasks', 'ControllerU@TaskTemplateLoad');
 
     Route::post('dashboard/events/categories/tasks/check', 'ControllerU@GetTaskDetails');
+=======
+    Route::get('/events/categories', 'ControllerU@EventCategoriesLoad');
+
+    Route::get('/events/categories/add','ControllerU@AddEventCategoriesLoad');   
+
+    Route::post('/events/categories/add','ControllerU@AddEventCategoriesPost');   
+
+    Route::get('/events/categories/edit','ControllerU@EditEventCategoriesLoad');
+
+    Route::post('/events/categories/edit', 'ControllerU@EditEventCategoriesPost');
+
+    Route::get('/events/categories/success', function(){    return  view('event_types.success');     });
+
+    Route::post('/events/categories/edit{id}', 'ControllerU@EditEventCategoriesPost');
+
+    Route::post('/events/categories/check_catname', 'ControllerU@CheckEventCatName');
+
+    Route::get('/service-providers', 'ControllerU@ServiceProviders');
+
+    Route::get('/service-providers/add','ControllerU@AddServiceProviderLoad');
+
+    Route::post('/service-providers/add','ControllerU@AddServiceProviderSubmit');
+
+    Route::get('/service-providers/edit','ControllerU@EditServiceProviderLoad');
+
+    Route::post('/service-providers/edit','ControllerU@EditServiceProviderSubmit');
+    
+    Route::post('/service-providers/check_service', 'ControllerU@CheckService');
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
     
     /**
      * END Udesh Routes
      */
 
 
+<<<<<<< HEAD
     /**
      * Hasitha Routes
      */
@@ -210,10 +312,29 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\AdminMiddleware', 'Ap
     Route::post('dashboard/quote-requests/send-reject-quote', 'hjController@SendRejectQuoteAdmin');
 
     Route::get('dashboard/events/view-all', 'hjController@ViewAllEventsAdmin');
+=======
+        /**
+     * Hasitha Routes
+     */
+    Route::get('/request-a-quote', 'hjController@RequestAQuoteLoad');
+
+    Route::post('/request-a-quote/task', 'hjController@RequestAQuoteGetTask');
+
+    Route::post('/request-a-quote/addquote', 'hjController@RequestAQuoteAddQuote');
+
+    Route::get('/view-quote-requests', 'hjController@ViewQuoteRequests');
+
+    Route::get('/quote-requests', 'hjController@QuoteRequestsAdmin');
+
+    Route::get('/quote-requests/view-pending', 'hjController@ViewPendingQuoteRequests');
+
+    Route::post('/quote-requests/approve-quote', 'hjController@ApproveQuote');
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 
     /**
      * END Hasitha Routes
      */
+<<<<<<< HEAD
 });
 
 //Routes that are only accessible by Customers (Admin also can access by changing the user role)
@@ -271,3 +392,7 @@ Route::group(['prefix' => 'messages'], function () {
     Route::get('{id}', ['as' => 'messages.show', 'uses' => 'MessagesController@show']);
     Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
 });
+=======
+
+});
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512

@@ -19,11 +19,21 @@
             <div class="col-sm-12">
                 <h4 class="pull-left page-title">Service Providers</h4>
                 
+<<<<<<< HEAD
                 
                 
                 <ol class="breadcrumb pull-right">
             <a href="{{ url('dashboard/service-providers/add') }}"> <button class="btn btn-success waves-effect waves-light" id="btnsub" >Add New</button></a>
         </ol>
+=======
+                <ol class="breadcrumb pull-right">
+                       <a href="{{ url('/service-providers/add') }}"> <button class="btn btn-success waves-effect waves-light" id="btnsub" type="submit">Add New</button></a>
+                </ol>
+                
+                <ol hidden>
+                    <li><a href="javascript:;" class="md-trigger2" style="font-family: 'Nunito', sans-serif;" data-modal="data-modal-add"><i class="md md-loop"></i> Click Here</a></li>
+                </ol>
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
             </div>
         </div>
 
@@ -33,8 +43,12 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
+<<<<<<< HEAD
                             <div class="sticky-table-header fixed-solution table-responsive">
                                 <table id="datatable" class="table table-striped table-bordered ">
+=======
+                                <table id="datatable" class="table table-striped table-bordered">
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                                     <thead>
                                         <tr>
                                             <th>Company Name</th>
@@ -47,8 +61,13 @@
                                     </thead>
 
                                     <tbody>
+<<<<<<< HEAD
                                         <?php 
                                         //GET data passed from controller and display information
+=======
+                                        <?php $result = DB::select('SELECT * FROM services') ;
+
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                                         foreach($result as $sevice)
                                         {
                                             echo '<tr>';
@@ -67,7 +86,11 @@
                                         ?>
                                     </tbody>
                                 </table>
+<<<<<<< HEAD
                                 </div>
+=======
+
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
                             </div>
                         </div>
                     </div>
@@ -78,9 +101,12 @@
 
     </div>
 </div>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> e29ccdd27609c0470752dbc32f2bca356375a512
 @endsection
      
 <!-- Footer JavaScript -->
