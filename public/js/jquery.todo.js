@@ -1,29 +1,39 @@
 var todoAjax = [];
 
+$.ajaxSetup(
+{
+    headers:
+    {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 (function($){
 "use strict";
- $.ajax({
 
+showPreloader()
+
+ $.ajax({
         url:"todoList",
         type:"get",
         data:{},
         success:function(data){
             todoAjax  = data;
 
+            hidePreloader();
+
             for(var i = 0; i < data.length; i++) {
                 var obj = data[i];
-
-                $.TodoApp.addTodo(obj.text, obj.id, obj.done);
-                //console.log(obj.name);
+                $.TodoApp.addTodo(obj.description, obj.todo_id, obj.status);
             }
+
+            //todoDelClick();
+
         },
         error: function(err){
 
         }
-
-
     });
-
 })(window.jQuery),
 
 function($) {
@@ -36,13 +46,12 @@ function($) {
         this.$todoRemaining = $("#todo-remaining"),
         this.$todoTotal = $("#todo-total"),
         this.$archiveBtn = $("#btn-archive"),
+        this.$todoDelAllBtn = $("#todo-delAll"),
         this.$todoList = $("#todo-list"),
         this.$todoDonechk = ".todo-done",
         this.$todoForm = $("#todo-form"),
         this.$todoInput = $("#todo-input-text"),
         this.$todoBtn = $("#todo-btn-submit"),
-
-        console.log(todoAjax);
 
         this.$todoData = todoAjax ;
 
@@ -54,15 +63,58 @@ function($) {
     TodoApp.prototype.markTodo = function(todoId, complete) {
        for(var count=0; count<this.$todoData.length;count++) {
             if(this.$todoData[count].id == todoId) {
-                //alert(this.$todoData[count].id);
-                //todoCompleteSuccess();
+                document.getElementById('preloader').style.visibility="visible";
+                var data = new FormData();
+
+                data.append('todoId', this.$todoData[count].id);
+                data.append('todoStatus', this.$todoData[count].done);
+
+                var url= "todoTickToggle";
+
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    data: data,
+                    dataType: "JSON",
+                    processData: false,
+                    contentType: false,
+
+                    success: function (data, status){
+                        document.getElementById('preloader').style.visibility="hidden";
+                    },
+
+                    error: function (data){
+                        document.getElementById('preloader').style.visibility="hidden";
+                        
+                        if (data.status === 422) {
+                            swal(
+                              'Something went wrong!',
+                              'Unexpected error occured. Please try again!',
+                              'error'
+                            )
+                        } else {
+                            todoDelClick();
+                        }
+                    }
+                });
+
                 this.$todoData[count].done = complete;
+
+
             }
        }
     },
     //adds new todo
-    TodoApp.prototype.addTodo = function(todoText) {
-        this.$todoData.push({'id': this.$todoData.length, 'text': todoText, 'done': false});
+    TodoApp.prototype.addTodo = function(todoText, todoId, todoDone) {
+        this.$todoData.push({'id': todoId, 'text': todoText, 'done': todoDone});
+
+        //regenerate list
+        this.generate();
+    },
+    //removes todo
+    TodoApp.prototype.removeTodo = function(todoId) {
+        this.$todoData.pop({'id': todoId});
+
         //regenerate list
         this.generate();
     },
@@ -113,11 +165,11 @@ function($) {
         for(var count=0; count<this.$todoData.length;count++) {
             //geretaing html
             var todoItem = this.$todoData[count];
-            if(todoItem.done == true)
-                this.$todoList.prepend('<li class="list-group-item"><div class="checkbox checkbox-success"><input class="todo-done" id="' + todoItem.id + '" type="checkbox" checked><label for="' + todoItem.id + '">' + todoItem.text + '</label></div></li>');
+            if(todoItem.done == "true")
+                this.$todoList.prepend('<li class="list-group-item"><div class="checkbox checkbox-success"><input class="todo-done" id="' + todoItem.id + '" type="checkbox" checked><label for="' + todoItem.id + '">' + todoItem.text + '</label><a data-id="' + todoItem.id + '" class="todo-del-btn btn btn-icon btn-custom btn-xs waves-effect waves-light btn-danger m-b-5"> <i class="fa fa-remove"></i></a><a class="todo-down btn btn-icon btn-custom btn-xs waves-effect waves-light btn-info m-b-5"><i class="fa fa-arrow-down"></i></a><a class="todo-up btn btn-icon btn-custom btn-xs waves-effect waves-light btn-info m-b-5"><i class="fa fa-arrow-up"></i></a></div></li>');
             else {
                 remaining = remaining + 1;
-                this.$todoList.prepend('<li class="list-group-item"><div class="checkbox checkbox-success"><input class="todo-done" id="' + todoItem.id + '" type="checkbox"><label for="' + todoItem.id + '">' + todoItem.text + '</label></div></li>');
+                this.$todoList.prepend('<li class="list-group-item"><div class="checkbox checkbox-success"><input class="todo-done" id="' + todoItem.id + '" type="checkbox"><label for="' + todoItem.id + '">' + todoItem.text + '</label><a data-id="' + todoItem.id + '" class="todo-del-btn btn btn-icon btn-custom btn-xs waves-effect waves-light btn-danger m-b-5"> <i class="fa fa-remove"></i></a><a class="todo-down btn btn-icon btn-custom btn-xs waves-effect waves-light btn-info m-b-5"><i class="fa fa-arrow-down"></i></a><a class="todo-up btn btn-icon btn-custom btn-xs waves-effect waves-light btn-info m-b-5"><i class="fa fa-arrow-up"></i></a></div></li>');
             }
         }
 
@@ -125,6 +177,8 @@ function($) {
         this.$todoTotal.text(this.$todoData.length);
         //set remaining
         this.$todoRemaining.text(remaining);
+
+        todoDelClick();
     },
     //init todo app
     TodoApp.prototype.init = function () {
@@ -142,11 +196,78 @@ function($) {
         //binding todo done chk
         $(document).on("change", this.$todoDonechk, function() {
             if(this.checked) 
-                $this.markTodo($(this).attr('id'), true);
+                $this.markTodo($(this).attr('id'), "true");
             else
-                $this.markTodo($(this).attr('id'), false);
+                $this.markTodo($(this).attr('id'), "false");
             //regenerate list
             $this.generate();
+        });
+
+        //binding todo Delete All
+        this.$todoDelAllBtn.on("click", function() {
+            if($.TodoApp.$todoData.length == 0){
+                sweetAlert("Oops...", "You don't have any todo items to delete.", "error");
+            } else {
+                var todoID = $(this).attr("data-id");
+
+              sweetAlert({
+                title: 'Are you sure?',
+                text: "All of your todo items will be permenently deleted.",
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#2379CE',
+                confirmButtonColor: '#E02222',
+                confirmButtonText: 'Yes, delete all!',
+                closeOnConfirm: true
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                    var url= "todoDeleteAll";
+                    var data = new FormData();
+
+                    document.getElementById('preloader').style.visibility="visible";
+
+                  $.ajax({
+                    url: url,
+                    type:"post",
+                    data: data,
+                    dataType:"JSON",
+                    processData: false,
+                    contentType: false,
+                      success: function (data, status) {
+                        $.TodoApp.$todoData = [];
+                        $.TodoApp.$todoList.html("");
+                      }, 
+                      error: function() {
+                        if (data.status === 422) {
+                          sweetAlert(
+                            'Error Occured!',
+                            'Something went wrong. Please try again!',
+                            'error'
+                          );
+                        } else {
+                            $.TodoApp.$todoData = [];
+                            $.TodoApp.$todoList.html("");
+                            //set total in ui
+                            $.TodoApp.$todoTotal.text(0);
+                            //set remaining
+                            $.TodoApp.$todoRemaining.text(0);
+
+                            document.getElementById('preloader').style.visibility="hidden";
+
+                            swal(
+                              'Successfully Deleted',
+                              'All of your todo items has been successfully deleted.',
+                              'success'
+                            )
+                        }
+                      }
+                  }); //AJAX End
+
+                }
+              })
+            }
+            
         });
 
         //binding the new todo button
@@ -156,8 +277,42 @@ function($) {
                 $this.$todoInput.focus();
             } else {
                 document.getElementById('preloader').style.visibility="visible";
-                $this.addTodo($this.$todoInput.val());
+                var data = new FormData();
+                data.append('todoText', document.getElementById("todo-input-text").value);
+
+                var url= "todoListAddNew";
+
+                $.ajax({
+                    url: url,
+                    type:"post",
+                    data: data,
+                    dataType:"JSON",
+                    processData: false,
+                    contentType: false,
+
+                    success: function (data, status){
+                        document.getElementById('preloader').style.visibility="hidden";
+                        $this.addTodo($this.$todoInput.val(), data, 'false');
+
+                        //Empty todo input box entered text
+                        document.getElementById("todo-input-text").value = "";
+                    },
+
+                    error: function (data){
+                        document.getElementById('preloader').style.visibility="hidden";
+                        
+                        if (data.status === 422) {
+                            swal(
+                              'Something went wrong!',
+                              'Unexpected error occured. Please try again!',
+                              'error'
+                            )
+                        }
+                    }
+                });
             }
+
+            
         });
     },
     //init TodoApp
@@ -171,10 +326,73 @@ function($) {
        $.TodoApp.init()
 }(window.jQuery);
 
-function todoCompleteSuccess(){
-    swal(
-      'Good job!',
-      'Your todo item has been marked as complete!',
-      'success'
-    )
+
+function todoDelClick(){
+    $(".todo-del-btn").click(function(){
+                    var todoID = $(this).attr("data-id");
+
+                      sweetAlert({
+                        title: 'Are you sure?',
+                        text: "Your todo item will be permenently deleted.",
+                        type: 'warning',
+                        showCancelButton: true,
+                        cancelButtonColor: '#2379CE',
+                        confirmButtonColor: '#E02222',
+                        confirmButtonText: 'Yes, delete it!',
+                        closeOnConfirm: true
+                      },
+                      function(isConfirm) {
+                        if (isConfirm) {
+                            document.getElementById('preloader').style.visibility="visible";
+
+                            var data = new FormData();
+                            data.append('todoId', todoID);
+
+                            var url= "todoDelete";
+
+                            $.ajaxSetup(
+                            {
+                                headers:
+                                {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+
+                          $.ajax({
+                              url: url,
+                                type:"post",
+                                data: data,
+                                dataType:"JSON",
+                                processData: false,
+                                contentType: false,
+                              success: function () {
+                                  
+                              }, 
+                              error: function() {
+                                  if (data.status === 422) {
+                                    swal(
+                                      'Something went wrong!',
+                                      'Unexpected error occured. Please try again!',
+                                      'error'
+                                    )
+                                  } else {
+                                    swal(
+                                      'Successfully Deleted',
+                                      'Your todo item has been successfully deleted.',
+                                      'success'
+                                    )
+
+                                    $.TodoApp.removeTodo(todoID);
+                                    //$.TodoApp.$todoData.pop(todoID);
+                                    //$.TodoApp.generate();
+                                    document.getElementById('preloader').style.visibility="hidden";
+
+                                  }
+                              }
+                          });
+
+                          
+                        }
+                      })
+            });
 }

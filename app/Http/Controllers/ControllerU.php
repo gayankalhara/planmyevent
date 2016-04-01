@@ -9,13 +9,18 @@ use Input;
 use Validator;
 use Redirect;
 use Session;
- 
+use Mail;
 //use models
 use App\Models\Event_Types;
 use App\Models\Event_Services;
 use App\Models\Services;
 use App\Models\Service_Providers;
 use App\Models\Task_Templates;
+use App\Models\Team_Members;
+use App\Models\Quote_Requests;
+use App\Models\Event_Tasks;
+use App\Models\Notifications;
+use Carbon\Carbon;
 class ControllerU extends Controller
 {
 
@@ -449,8 +454,7 @@ public function CheckEventCatName()
       {
 
           $input = Request::all();
-          $cname =$input['cname'];
-          $sname = $input['sname'];
+
           //create validation array
           $rules = array(
             'address' => 'regex:/[A-Za-z0-9 _.,!"]+$]*/',
@@ -460,9 +464,10 @@ public function CheckEventCatName()
 
           //use validation class
           $validation = Validator::make($input, $rules);
+
           //if validation fails, redirect.
           if($validation->fails()){
-            return redirect('dashboard/service-providers/edit?CompanyName='.$cname.'&Service='.$sname)->withErrors($validation)->withInput();
+            return redirect('dashboard/service-providers/edit')->withErrors($validation)->withInput();
           }
           
           // check if delete button is clicked
@@ -914,4 +919,136 @@ public function CheckEventCatName()
         }
       }
 
+
+      public function AssignTasks()
+      {
+        $team = Team_Members::distinct()->select('*')->get();
+        $quote = Quote_Requests::select('*')->get();
+        return view('assign_task.assign-tasks')->with(array('team' => $team, 'quote' => $quote));
+      }
+
+
+      public function Assign()
+      {
+        
+
+
+
+
+          $input = Request::all();
+
+          //if no inputs, redirect to Task Templates page
+          if ($input == null)
+          {
+            return redirect('dashboard/events/assign-tasks');
+          }
+          
+          //check with db if EventName is valid
+          $evid = $_GET['EventID'];
+          $quote = Quote_Requests::select('*')->where('id', $evid)->get();
+          
+          //if not valid,  redirect to Task Templates page
+          if($quote=='[]')
+            return redirect('dashboard/events/assign-tasks');
+
+          foreach($quote as $quote1)
+              $evetype=$quote1->EventType;
+
+          $tasks = Task_Templates::select('*')->where('EventName',$evetype)->get();
+          $team = Team_Members::distinct()->select('*')->get();
+          
+          return view('assign_task.assign')->with(array('team' => $team, 'quote' => $quote, 'tasks' => $tasks));
+      }
+
+
+      public function AssignPOST()
+      {
+        $input = Request::all();
+         
+         //create arrays to store post data
+         $iTaskdesc = array();
+         $iTeamMem = array();
+         $dbData= array();
+         //take inputs to variables
+         $iName = $input['EventID'];
+
+        
+                
+        //store input data in corresponding arrays  
+        foreach( $input['desc']  as $x) 
+        {
+            $iTaskdesc[] = $x;
+        }     
+
+        foreach( $input['teammember']  as $y) 
+        {
+            $iTeamMem[] = $y;
+        }  
+
+
+        foreach($input['desc']  as $z=>$value) 
+            {
+                  Event_Tasks::insert([['EventID' => $iName, 'MemberID' => $iTeamMem[$z] , 'Description' => $iTaskdesc[$z]]]);
+
+            }
+       
+          $mem = Event_Tasks::distinct()->select('MemberID')->where('EventID',$iName)->get();
+
+            //return dd($mem);
+
+                foreach($mem as $memb)
+                {
+
+                  $time = Carbon::now();
+                  
+                  Notifications::insert([['user_ID' => $memb->MemberID, 'Icon' => 'NULL'  , 'Status' => 'Unread', 'Notification' => 'New Event Tasks Assigned for event ID '.$iName, 'Time' => $time, 'Type'=>'Specific', 'Link'=>'dashboard/events/progress?EventName='.$iName ]]);
+                  $em = Team_Members::select('*')->where('id',$memb->MemberID)->first();
+                  //foreach($em as $email)
+                  //{
+                  //return dd($em->Email);
+                  //  $mememail = $email->Email;
+                  //}
+                  Mail::send('emails.member-tasks', [], function($message) use ($em)
+                  {
+                        $message->to($em->Email, 'Test')
+                                ->subject('Tasks Assgined for Event');
+                  });
+                }
+         /* 
+           */  
+            $team = Team_Members::distinct()->select('*')->get();
+        $quote = Quote_Requests::select('*')->get();
+        return view('assign_task.assign-tasks')->with(array('team' => $team, 'quote' => $quote));   
+        
+             
+      }
+
+      public function Progress()
+      {
+          $input = Request::all();
+          $iName = $input['EventID'];
+
+
+          return view('event_progress.progress')->with('EventID', $iName);;
+
+      }
+
+      public function Notifications()
+      {
+        $input = Request::all();
+        $uID = $input['userid'];
+        Notifications::where('user_ID', $uID)->update(['Status' => 'Read']);
+        $notificount = Notifications::select('*')->where('user_id',$uID)->where('Status','Unread')->count();
+        return $notificount;
+      }
+
+
+    public function CheckNotifications()
+      {
+        $input = Request::all();
+        $uID = $input['userid'];
+        $iTime = $input['time'];
+        $notif = Notifications::select('*')->where('user_id',$uID)->where('status','Unread')->where('Time','<' ,$iTime)->get();
+        echo $notif;
+      }
 }

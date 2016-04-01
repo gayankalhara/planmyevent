@@ -2,6 +2,10 @@
 
 @extends('master')
 
+@section('meta')
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+@endsection
+
 @section('content')
 <div class="content">
     <div class="container">
@@ -72,14 +76,7 @@
                                     <p class="inbox-item-date">12:20 PM</p>
                                 </div>
                             </a>
-                            <a href="#">
-                                <div class="inbox-item">
-                                    <div class="inbox-item-img"><img src="images/users/avatar-5.jpg" class="img-circle" alt=""></div>
-                                    <p class="inbox-item-author">Lasanthi Kalpani</p>
-                                    <p class="inbox-item-text">Suggest me some good photographers for my wedding.</p>
-                                    <p class="inbox-item-date">10:15 AM</p>
-                                </div>
-                            </a>
+                            
                             <a href="#">
                                 <div class="inbox-item">
                                     <div class="inbox-item-img"><img src="images/users/avatar-6.jpg" class="img-circle" alt=""></div>
@@ -104,6 +101,24 @@
                                     <p class="inbox-item-date">9:56 PM</p>
                                 </div>
                             </a>
+
+                            <a href="#">
+                                <div class="inbox-item">
+                                    <div class="inbox-item-img"><img src="images/users/avatar-10.jpg" class="img-circle" alt=""></div>
+                                    <p class="inbox-item-author">Ishani Hansika</p>
+                                    <p class="inbox-item-text">What happened with my event?</p>
+                                    <p class="inbox-item-date">10:15 AM</p>
+                                </div>
+                            </a>
+
+                            <a href="#">
+                                <div class="inbox-item">
+                                    <div class="inbox-item-img"><img src="images/users/avatar-5.jpg" class="img-circle" alt=""></div>
+                                    <p class="inbox-item-author">Lasanthi Kalpani</p>
+                                    <p class="inbox-item-text">Suggest me some good photographers for my wedding.</p>
+                                    <p class="inbox-item-date">10:15 AM</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -117,11 +132,19 @@
                     </div>
                     <div class="panel-body todoapp">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 <h4 id="todo-message"><span id="todo-remaining"></span> of <span id="todo-total"></span> remaining</h4>
                             </div>
-                            <div class="col-sm-6">
-                                <a href="" class="pull-right btn btn-success btn-sm waves-effect waves-light" id="btn-archive">Archive</a>
+                            <div class="col-sm-7">
+                                <a href="{{ url('dashboard/todo') }}" class="pull-right btn-sm btn btn-icon waves-effect waves-light btn-purple m-b-5"> <i class="fa fa-table"></i> </a>
+
+                                <a href="{{ url('dashboard/todo') }}" class="pull-right btn-sm btn btn-icon waves-effect waves-light btn-primary m-b-5" id="btn-todo-mail"> <i class="fa fa-envelope"></i> </a>
+
+                                <button type="button" class="pull-right btn-sm btn btn-success waves-effect waves-light m-b-5" id="btn-archive"> <i class="fa fa-save"></i> <span>Archive</span> </button>
+
+                                <button type="button" class="pull-right btn-sm btn btn-warning waves-effect waves-light m-b-5" id="todo-delAll"> <i class="fa fa-trash"></i> <span>Delete All</span> </button>
+
+
                             </div>
                         </div>
 
@@ -133,7 +156,7 @@
                                     <input type="text" id="todo-input-text" name="todo-input-text" class="form-control" placeholder="Add new todo">
                                 </div>
                                 <div class="col-sm-3 todo-send">
-                                    <button class="btn-success btn-block btn waves-effect waves-light" type="button" id="todo-btn-submit">Add</button>
+                                    <button type="button" class="btn btn-info waves-effect waves-light m-b-5" id="todo-btn-submit"> <i class="fa fa-check"></i> <span>Add to List</span> </button>                                   
                                 </div>
                             </div>
                         </form>
@@ -161,17 +184,17 @@
 
 @endsection
 
-
 @section('jquery')
-    $('.counter').counterUp({
-            delay: 100,
-            time: 1200
-        });
+    
 
-        $('#calendar').fullCalendar( 'changeView', 'agendaWeek');
+    $('.counter').counterUp({
+        delay: 100,
+        time: 1200
+    });
+
+    //$('#calendar').fullCalendar( 'changeView', 'agendaWeek');  
 @endsection
 
 @section('footer-js')
-<!-- Todo -->
 <script src="{{asset('js/jquery.todo.js')}}"></script>
 @endsection

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Session\DatabaseSessionHandler;
-use Illuminate\Support\Facades\Request;
+//use Illuminate\Support\Facades\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Input;
 use Validator;
 use Redirect;
@@ -14,6 +15,8 @@ use App\Models\Event_Types;
 use File;
 use App\Models\users;
 use DB;
+use App\Models\Todo;
+use Carbon\Carbon;
 
 use Auth;
 
@@ -388,12 +391,59 @@ class AdminPageController extends Controller
 
 
     public  function todoList(){
-         
-       $todolist = DB::select(DB::raw("select id,email as text,'false' as done from users"));
- 
-        
-      return $todolist;
-        //return response()->toJson(['data' => $todolist ]);
+       //$todolist = DB::select(DB::raw("select todo_id as id, description as text, status as done from todo order by date_added asc"));
 
+       $todolist = Todo::where('user_id', Auth::User()->id)
+                        ->orderBy('date_added', 'asc')
+                        ->get();
+
+       return $todolist;
+    }
+
+    public function todoListAddNew(Request $request){
+       $addedItem = Todo::create([
+            'user_id' => Auth::user()->id,
+            'date_added' => Carbon::now(),
+            'description' => $request->input('todoText'),
+            'date_completed' => '0000-00-00 00:00:00',
+            'date_deleted' => '0000-00-00 00:00:00',
+            'date_archieved' => '0000-00-00 00:00:00',
+            'status' => "false"
+        ])->todo_id;
+
+       return $addedItem;
+    }
+
+    public function todoTickToggle(Request $request){
+        $todoItem = Todo::find($request->input('todoId'));
+        
+        $status = "false";
+
+        if($request->input('todoStatus') == "true"){
+            $status = "false";
+        } else {
+            $status = "true";
+        }
+
+        $todoItem->status = $status;
+        $todoItem->save();
+
+       // return "Success";
+       return dd($request->input());
+    }
+
+    public function todoDelete(Request $request){
+        Todo::where('todo_id',$request->input('todoId'))->delete();
+
+        return dd($request->input());
+    }
+
+    public function todoDeleteAll(){
+        Todo::truncate();
+        return "Success";
+    }
+
+    public function ToDo(){
+        return view('todo');
     }
 }

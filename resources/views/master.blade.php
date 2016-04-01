@@ -17,7 +17,26 @@
                                 break;
 
                             default:
-                                $userRole = "Unknown User";
+                                switch (Auth::User()->role){
+                                case "customer":
+                                    $userRole = "Customer";
+                                    break;
+
+                                case "admin":
+                                    $userRole = "Administrator";
+                                    break;
+
+                                case "event-planner":
+                                    $userRole = "Event Planner";
+                                    break;
+
+                                case "team-member":
+                                    $userRole = "Team Member";
+                                    break;
+
+                                default:
+                                    $userRole = "Unknown User";
+                                }
                         }
                     ?>
 
@@ -27,7 +46,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="SLIIT">
+    <meta name="author" content="SLIIT {{ Auth::User()->id }}">
 
     @yield('meta')
 
@@ -72,6 +91,16 @@
     </style>
         
     @yield('header-js')
+
+    <script>
+    function showPreloader(){
+        document.getElementById('preloader').style.visibility="visible";
+    }
+
+    function hidePreloader(){
+        document.getElementById('preloader').style.visibility="hidden";
+    }
+    </script>
 
     @yield('header-css')
 
@@ -141,7 +170,13 @@
                     <div class="navbar-form pull-left" style="font-family: 'Nunito', sans-serif; color: #FFF; line-height: 54px; margin-left: 10px; font-size: 16px;">
                         We Make YOUR Event Creative, Exciting and Unique.
                     </div>
-
+<?php
+                            
+                            $user_id = Auth::user()->id;
+                            use App\Models\Notifications;
+                            $notifi = Notifications::select('*')->where('user_id',$user_id)->get();
+                            $notificount = Notifications::select('*')->where('user_id',$user_id)->where('Status','Unread')->count();    
+                            ?>
                     <ul class="nav navbar-nav navbar-right pull-right">
                         <li class="hidden-xs">
                             <a href="{{ url('/') }}" class="waves-effect waves-light"><i class="md md-home"></i></a>
@@ -149,25 +184,34 @@
                         <li class="dropdown hidden-xs">
                             <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
                                 <i class="md md-notifications"></i>
+                                <span id="notificount" class="badge badge-xs badge-danger"> {{$notificount}} </span>
                             </a>
-
-                            <ul class="dropdown-menu dropdown-menu-lg">
+							
+                            <ul id="notification"  class="dropdown-menu dropdown-menu-lg">
                                 <li class="text-center notifi-title">Notification</li>
                                 <li class="list-group">
                                     <!-- list item-->
-                                    <a href="javascript:void(0);" class="list-group-item">
+                                    <!-- list item-->
+                                    <div id="notifill">
+                                      @foreach($notifi as $not)
+                                    <a href="/<?php echo $not->Link;?>" class="list-group-item">
                                         <div class="media">
                                             <div class="pull-left">
                                                 <em class="fa fa-user-plus fa-2x text-info"></em>
                                             </div>
+
+
                                             <div class="media-body clearfix">
-                                                <div class="media-heading">New user registered</div>
+                                        
+                                                <div class="media-heading"></div>
                                                 <p class="m-0">
-                                                    <small>gayan.csnc@gmail.com</small>
+                                                    <small>{{$not->Notification}}</small>
                                                 </p>
                                             </div>
                                         </div>
                                     </a>
+                                        @endforeach
+                                    </div>
                                     <!-- list item-->
 
                                     <a href="{{ url('/dashboard/all-notifications') }}" class="list-group-item">
@@ -299,9 +343,16 @@
                         </li>
                     <?php }; ?>
 
+
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a href="{{ url('dashboard/events/categories/tasks') }}" class="waves-effect {{ Request::is('dashboard/events/categories/tasks*') ? 'active' : null }}"><i class="md md-check-box"></i><span> Event Tasks </span></a>
+                            <a class="waves-effect {{ Request::is('dashboard/events/categories/tasks*') ? 'active' : null }}"><i class="md md-check-box"></i><span> Event Tasks </span></a>
+
+                            <ul class="list-unstyled">
+                                <li class="{{ Request::is('dashboard/events/categories') ? 'active' : null }}"><a href="{{ url('/dashboard/events/categories') }}">View All</a></li>
+                                <li class="{{ Request::is('dashboard/events/categories/add') ? 'active' : null }}"><a href="{{ url('/dashboard/events/categories/add') }}">Add New</a></li>
+                                <li class="{{ Request::is('dashboard/events/categories/add') ? 'active' : null }}"><a href="{{ url('/dashboard/events/assign-tasks') }}">Assign Tasks</a></li>
+                            </ul>
                         </li>
                     <?php }; ?>
 
@@ -413,7 +464,7 @@
 <script src="{{asset('js/jquery.scrollTo.min.js')}}"></script>
 <script src="{{asset('assets/jquery-sparkline/jquery.sparkline.min.js')}}"></script>
 <script src="{{asset('assets/jquery-detectmobile/detect.js')}}"></script>
-<script src="{{asset('assets/fastclick/fastclick.js')}}"></script>
+<script src="{{asset('assets/click/click.js')}}"></script>
 <script src="{{asset('assets/jquery-slimscroll/jquery.slimscroll.js')}}"></script>
 <script src="{{asset('assets/jquery-blockui/jquery.blockUI.js')}}"></script>
 
@@ -439,16 +490,69 @@
 @yield('footer-js')
 
 <script type="text/javascript">
-    /* ==============================================
-     Counter Up
-     =============================================== */
     jQuery(document).ready(function($) {
         @yield('jquery')
     });
 
 
+        $('#notification').click(function() {
 
+    var userid = $('#userid').val();
+ 
+
+    $.ajax({
+      type: "POST",
+      url: "{{ url('dashboard/notifications') }}",
+      data: {userid: userid, '_token': '{!! csrf_token() !!}'},
+      cache: false,
+      success: function(data)
+      {
+              //userid = $('#userid').val();
+              $('#notificount').text(data);
+      } 
+    });
+
+
+    });
+ 
+
+    function get_fb(){
+        var userid = $('#userid').val();
+        var time = moment().format('YYYY-MM-DD h:mm:ss'); 
+        var feedback = $.ajax({
+            type: "POST",
+            url: "{{ url('dashboard/checknotifications') }}",
+            data: {userid: userid,time:time, '_token': '{!! csrf_token() !!}'},
+            cache: false,
+        }).success(function(data){
+                var arr = JSON.parse(data);
+                var i;
+                var out = "";
+
+                for(i = 0; i < arr.length; i++) {
+                out += "<a href=\"" + 
+                arr[i].Link +
+                "\" class='list-group-item'><div class='media'><div class='pull-left'><em class='fa fa-user-plus fa-2x text-info'></em></div><div class='media-body clearfix'><div class='media-heading'>" +
+                arr[i].Notification +
+                "</div><p class='m-0'><small>" +
+                arr[i].Notification +
+                "</small></p></div></div></a>";
+                }
+               
+              
+                var newElement = document.createElement('div');
+                newElement.innerHTML = out;
+                //document.getElementById("notifill").appendChild(newElement);
+                //document.getElementById("notifill").innerHTML = out;
+                //document.getElementById("notificount").innerHTML = arr.length;
+                setTimeout(function(){get_fb();}, 1000);
+            }).responseText;
+
+    $('div.feedback-box').html(feedback);
+}
 </script>
+
+
 
 <!-- Modal-Effect -->
         <script src="{{asset('assets/modal-effect/js/classie.js')}}"></script>
