@@ -1,10 +1,3 @@
- <?php
-                        
-
-
-                    ?>
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -373,7 +366,7 @@
     <div class="content-page">
     
     <div class="md-modal md-effect-11" id="modal-11">
-        <div class="md-content" style="background-color: #2379CE;">
+        <div class="md-content" style="background-color: #003B5D;">
             
             <div style="color: #fff;">
             <h2 style="color: #fff; text-align: center;">Change User Role</h2>
@@ -401,7 +394,7 @@
                     </div></a>
                 </div>
 
-                <div class="row" style="text-align: center;"><button class="md-close btn-sm btn-success waves-effect waves-light">Close</button></div>
+                <div class="row" style="text-align: center;"><button class="md-close btn-lg btn-success waves-effect waves-light">Close</button></div>
             </div>
         </div>
     </div>

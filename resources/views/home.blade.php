@@ -10,6 +10,82 @@
 <div class="content">
     <div class="container">
 
+        <!-- WEATHER -->
+        <div class="row">
+                    
+            <div class="col-lg-6">
+                
+                <!-- BEGIN WEATHER WIDGET 1 -->
+                <div class="panel bg-info" style="height: 161px;">
+                    <div class="panel-body">
+                    
+                        <div class="row">
+                            <div class="col-sm-3" style="margin-left: 18px;">
+                                <div class="row">
+                                    <img src="{{ asset('images/male.png') }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-7" style="margin-left: 10px;">
+                                <div class="row">
+                                    <h2 style="margin-top: 20px;" class="m-t-0 text-white">Welcome</h2>
+                                    <h1 class="m-t-0 text-white">{{ Auth::User()->name }}</h1>
+                                </div>
+                            </div>
+                        </div><!-- end row -->
+                    </div><!-- panel-body -->
+                </div><!-- panel-->
+                <!-- END Weather WIDGET 1 -->
+                
+            </div><!-- End col-md-6 -->
+
+            <div class="col-lg-6">
+                
+                <!-- WEATHER WIDGET 2 -->
+                <div class="panel bg-success">
+                    <div class="panel-body">
+                    
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col-xs-6 text-center">
+                                            <canvas id="snow" width="115" height="115"></canvas>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <h2 class="m-t-0 text-white"><b> 23°</b></h2>
+                                            <p class="text-white">Partly cloudy</p>
+                                            <p class="text-white">15km/h - 37%</p>
+                                        </div>
+                                    </div><!-- end row -->
+                                </div><!-- weather-widget -->
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center">
+                                        <h4 class="text-white m-t-0">SAT</h4>
+                                        <canvas id="sleet" width="35" height="35"></canvas>
+                                        <h4 class="text-white">30<i class="wi-degrees"></i></h4>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <h4 class="text-white m-t-0">SUN</h4>
+                                        <canvas id="fog" width="35" height="35"></canvas>
+                                        <h4 class="text-white">28<i class="wi-degrees"></i></h4>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <h4 class="text-white m-t-0">MON</h4>
+                                        <canvas id="partly-cloudy-night" width="35" height="35"></canvas>
+                                        <h4 class="text-white">33<i class="wi-degrees"></i></h4>
+                                    </div>
+                                </div><!-- End row -->
+                            </div> <!-- col-->
+                        </div><!-- End row -->
+                    </div><!-- panel-body -->
+                </div><!-- panel -->
+                <!-- END WEATHER WIDGET 2 -->
+                    
+            </div><!-- /.col-md-6 -->
+        </div> <!-- End row -->   
+
         @if($userRole == "Administrator")
         <div class="row">
             <div class="col-md-6 col-sm-6 col-lg-3">
@@ -45,7 +121,7 @@
                 <div class="mini-stat clearfix bx-shadow">
                     <span class="mini-stat-icon bg-pink"><i class="ion-navicon-round"></i></span>
                     <div class="mini-stat-info text-right text-muted">
-                        <span class="counter">10</span>
+                        <span class="counter">{{ $todoCount }}</span>
                         Tasks to Do
                     </div>
                 </div>
@@ -190,5 +266,26 @@
 @endsection
 
 @section('footer-js')
+ <!-- skycons -->
+<script src="{{asset('js/skycons.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/jquery.todo.js')}}"></script>
+<script>
+/* BEGIN SVG WEATHER ICON */
+if (typeof Skycons !== 'undefined'){
+var icons = new Skycons(
+    {"color": "#fff"},
+    {"resizeClear": true}
+    ),
+        list  = [
+            "clear-day", "clear-night", "partly-cloudy-day",
+            "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+            "fog"
+        ],
+        i;
+
+    for(i = list.length; i--; )
+    icons.set(list[i], list[i]);
+    icons.play();
+};
+</script>
 @endsection

@@ -66,7 +66,7 @@ class AdminPageController extends Controller
      */
     public function dashboard()
     {
-        return view('home');
+        return view('home')->with('todoCount', Todo::where('user_id', Auth::User()->id)->get()->count());
     }
 
     /**
