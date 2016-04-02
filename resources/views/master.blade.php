@@ -1,43 +1,7 @@
  <?php
-                        switch (session()->get('user_role')){
-                            case "customer":
-                                $userRole = "Customer";
-                                break;
+                        
 
-                            case "admin":
-                                $userRole = "Administrator";
-                                break;
 
-                            case "event-planner":
-                                $userRole = "Event Planner";
-                                break;
-
-                            case "team-member":
-                                $userRole = "Team Member";
-                                break;
-
-                            default:
-                                switch (Auth::User()->role){
-                                case "customer":
-                                    $userRole = "Customer";
-                                    break;
-
-                                case "admin":
-                                    $userRole = "Administrator";
-                                    break;
-
-                                case "event-planner":
-                                    $userRole = "Event Planner";
-                                    break;
-
-                                case "team-member":
-                                    $userRole = "Team Member";
-                                    break;
-
-                                default:
-                                    $userRole = "Unknown User";
-                                }
-                        }
                     ?>
 
 

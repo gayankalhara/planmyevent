@@ -9,6 +9,8 @@
 @section('content')
 <div class="content">
     <div class="container">
+
+        @if($userRole == "Administrator")
         <div class="row">
             <div class="col-md-6 col-sm-6 col-lg-3">
                 <div class="mini-stat clearfix bx-shadow">
@@ -50,6 +52,7 @@
             </div>
         </div>
         <!-- End row-->
+        @endif
 
         <div class="row">
             <!-- INBOX -->
@@ -155,7 +158,8 @@
                 </div>
             </div> <!-- end col -->   
         </div> <!-- end row -->
-
+        
+        @if($userRole == "Administrator")
         <div class="row">
             <!-- Calendar -->
             <div class="col-md-12">
@@ -170,14 +174,13 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 </div> <!-- content -->
 
 @endsection
 
 @section('jquery')
-    
-
     $('.counter').counterUp({
         delay: 100,
         time: 1200

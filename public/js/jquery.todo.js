@@ -131,42 +131,23 @@ function($) {
     },
     //Archives the completed todos
     TodoApp.prototype.archives = function() {
-        swal({
-          title: 'Are you sure?',
-          text: "All your todo items that are marked as complete will be archieved. You can goto todo history page to see the deleted items.",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Archieve Now',
-          closeOnConfirm: false
-        },
-        function(isConfirm) {
-          if (isConfirm) {
-            $.TodoApp.$todoUnCompletedData = [];
-            for(var count=0; count<$.TodoApp.$todoData.length;count++) {
-                //geretaing html
-                var todoItem = $.TodoApp.$todoData[count];
-                if(todoItem.done == true) {
-                    $.TodoApp.$todoCompletedData.push(todoItem);
-                } else {
-                    $.TodoApp.$todoUnCompletedData.push(todoItem);
-                }
+        this.$todoList.html("");
+        var remaining = 0;
+        for(var count=0; count<this.$todoData.length;count++) {
+            //geretaing html
+            var todoItem = this.$todoData[count];
+            if(todoItem.done == true)
+                this.$todoList.prepend('<li class="list-group-item"><div class="checkbox checkbox-success"><input class="todo-done" id="' + todoItem.id + '" type="checkbox" checked><label for="' + todoItem.id + '">' + todoItem.text + '</label></div></li>');
+            else {
+                remaining = remaining + 1;
+                this.$todoList.prepend('<li class="list-group-item"><div class="checkbox checkbox-success"><input class="todo-done" id="' + todoItem.id + '" type="checkbox"><label for="' + todoItem.id + '">' + todoItem.text + '</label></div></li>');
             }
-            
-            $.TodoApp.$todoData = [];
-            $.TodoApp.$todoData = [].concat($.TodoApp.$todoUnCompletedData);
-            //regenerate todo list
-            $.TodoApp.generate();
+        }
 
-            swal(
-              'Archieved!',
-              'All your todo items that are marked as complete has been archieved.',
-              'success'
-            );
-          }
-        })
-        
+        //set total in ui
+        this.$todoTotal.text(this.$todoData.length);
+        //set remaining
+        this.$todoRemaining.text(remaining);
         
     },
     //Generates todos
