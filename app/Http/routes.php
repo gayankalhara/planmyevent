@@ -34,8 +34,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('todoTickToggle','AdminPageController@todoTickToggle');
     Route::post('todoDelete','AdminPageController@todoDelete');
     Route::post('todoDeleteAll','AdminPageController@todoDeleteAll');
+    Route::post('todoMoveUp','AdminPageController@todoMoveUp');
+    Route::post('todoMoveDown','AdminPageController@todoMoveDown');
     Route::get('dashboard/events/categories', 'ControllerU@EventCategoriesLoad');
     Route::get('dashboard/todo', 'AdminPageController@ToDo');
+    Route::get('dashboard/profile', 'AdminPageController@Profile');
+    Route::get('dashboard/settings', 'AdminPageController@Settings');
+    Route::post('dashboard/settings', 'AdminPageController@SettingsSubmit');
 });
 
 //Routes that are available only for Admins
@@ -46,9 +51,7 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\AdminMiddleware']], f
     Route::post('password/email/resend', 'AccountController@resendEmail');
     Route::post('change-email', 'AdminPageController@changeEmail');
     Route::get('dashboard/developers', 'AdminPageController@Developers');
-    Route::get('dashboard/profile', 'AdminPageController@Profile');
-    Route::get('dashboard/settings', 'AdminPageController@Settings');
-    Route::post('dashboard/settings', 'AdminPageController@SettingsSubmit');
+    
     Route::get('dashboard/events/view-all', 'AdminPageController@ViewAllEvents');
     Route::get('dashboard/messages/new', 'AdminPageController@NewMessage');
     Route::get('dashboard/messages/inbox', 'AdminPageController@Inbox');

@@ -104,15 +104,6 @@
 
                             <a href="#">
                                 <div class="inbox-item">
-                                    <div class="inbox-item-img"><img src="images/users/avatar-10.jpg" class="img-circle" alt=""></div>
-                                    <p class="inbox-item-author">Ishani Hansika</p>
-                                    <p class="inbox-item-text">What happened with my event?</p>
-                                    <p class="inbox-item-date">10:15 AM</p>
-                                </div>
-                            </a>
-
-                            <a href="#">
-                                <div class="inbox-item">
                                     <div class="inbox-item-img"><img src="images/users/avatar-5.jpg" class="img-circle" alt=""></div>
                                     <p class="inbox-item-author">Lasanthi Kalpani</p>
                                     <p class="inbox-item-text">Suggest me some good photographers for my wedding.</p>

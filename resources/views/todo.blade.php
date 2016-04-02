@@ -57,12 +57,18 @@
 </div>
 @endsection
 
+@section('header-css')
+    <link rel="stylesheet" href="{{asset('assets/jquery-datatables-editable/datatables.css')}}" />
+@endsection
+
 @section('footer-js')
 	<script>
         var resizefunc = [];
     </script>
 
 	<script src="{{asset('assets/responsive-table/rwd-table.min.js')}}" type="text/javascript"></script>
-
+    <script src="{{asset('assets/jquery-datatables-editable/jquery.dataTables.js')}}"></script> 
+    <script src="{{asset('assets/datatables/dataTables.bootstrap.js')}}"></script>
+    <script src="{{asset('assets/jquery-datatables-editable/datatables.editable.init.js')}}"></script>
 
 @endsection

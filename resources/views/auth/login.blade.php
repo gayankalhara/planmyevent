@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+    <meta name="description" content="SLIIT Project">
     <meta name="author" content="Coderthemes">
 
     <link rel="shortcut icon" href="images/favicon_1.ico">
@@ -44,7 +44,7 @@
 <div class="wrapper-page">
     <div class="panel panel-color panel-primary panel-pages">
         <div class="panel-heading">
-            <div class="bg-overlay"></div>
+            <div class="bg-overlay" style="background-color: #2E4D5F !important;"></div>
             <h3 class="text-center m-t-10 text-white"> Sign In to <strong>Plan My Event</strong> </h3>
         </div>
 
@@ -134,7 +134,7 @@
 <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
 <script src="js/jquery.scrollTo.min.js"></script>
 <script src="assets/jquery-detectmobile/detect.js"></script>
-<script src="assets/fastclick/fastclick.js"></script>
+<script src="assets/click/click.js"></script>
 <script src="assets/jquery-slimscroll/jquery.slimscroll.js"></script>
 <script src="assets/jquery-blockui/jquery.blockUI.js"></script>
 

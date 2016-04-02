@@ -391,10 +391,10 @@ class AdminPageController extends Controller
 
 
     public  function todoList(){
-       //$todolist = DB::select(DB::raw("select todo_id as id, description as text, status as done from todo order by date_added asc"));
+       //$todolist = DB::select(DB::raw("SELECT * FROM sep.todo order by priority=0, priority asc, date_added asc"));
 
        $todolist = Todo::where('user_id', Auth::User()->id)
-                        ->orderBy('date_added', 'asc')
+                        ->orderBy('priority', 'asc')
                         ->get();
 
        return $todolist;
@@ -441,6 +441,28 @@ class AdminPageController extends Controller
     public function todoDeleteAll(){
         Todo::truncate();
         return "Success";
+    }
+
+    public function todoMoveUp(Request $request){
+        $todoItem = Todo::find($request->input('todoId'));
+
+        $priority = intval($todoItem->priority) + 1;
+
+        $todoItem->priority = $priority;
+        $todoItem->save();
+
+       return dd($request->input());
+    }
+
+    public function todoMoveDown(Request $request){
+        $todoItem = Todo::find($request->input('todoId'));
+
+        $priority = intval($todoItem->priority) - 1;
+
+        $todoItem->priority = $priority;
+        $todoItem->save();
+
+       return dd($request->input());
     }
 
     public function ToDo(){

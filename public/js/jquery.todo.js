@@ -27,7 +27,7 @@ showPreloader()
                 $.TodoApp.addTodo(obj.description, obj.todo_id, obj.status);
             }
 
-            //todoDelClick();
+            //reinitButtons();
 
         },
         error: function(err){
@@ -93,7 +93,7 @@ function($) {
                               'error'
                             )
                         } else {
-                            todoDelClick();
+                            reinitButtons();
                         }
                     }
                 });
@@ -103,6 +103,17 @@ function($) {
 
             }
        }
+    },
+    //move todo items
+    TodoApp.prototype.move = function (old_index, new_index) {
+        if (new_index >= this.length) {
+            var k = new_index - this.length;
+            while ((k--) + 1) {
+                $.TodoApp.$todoData.push(undefined);
+            }
+        }
+        $.TodoApp.$todoData.splice(new_index, 0, $.TodoApp.$todoData.splice(old_index, 1)[0]);
+            return this; // for testing purposes
     },
     //adds new todo
     TodoApp.prototype.addTodo = function(todoText, todoId, todoDone) {
@@ -132,12 +143,6 @@ function($) {
         },
         function(isConfirm) {
           if (isConfirm) {
-            swal(
-              'Archieved!',
-              'All your todo items that are marked as complete has been archieved.',
-              'success'
-            );
-
             $.TodoApp.$todoUnCompletedData = [];
             for(var count=0; count<$.TodoApp.$todoData.length;count++) {
                 //geretaing html
@@ -148,10 +153,17 @@ function($) {
                     $.TodoApp.$todoUnCompletedData.push(todoItem);
                 }
             }
+            
             $.TodoApp.$todoData = [];
             $.TodoApp.$todoData = [].concat($.TodoApp.$todoUnCompletedData);
             //regenerate todo list
             $.TodoApp.generate();
+
+            swal(
+              'Archieved!',
+              'All your todo items that are marked as complete has been archieved.',
+              'success'
+            );
           }
         })
         
@@ -166,10 +178,10 @@ function($) {
             //geretaing html
             var todoItem = this.$todoData[count];
             if(todoItem.done == "true")
-                this.$todoList.prepend('<li class="list-group-item"><div class="checkbox checkbox-success"><input class="todo-done" id="' + todoItem.id + '" type="checkbox" checked><label for="' + todoItem.id + '">' + todoItem.text + '</label><a data-id="' + todoItem.id + '" class="todo-del-btn btn btn-icon btn-custom btn-xs waves-effect waves-light btn-danger m-b-5"> <i class="fa fa-remove"></i></a><a class="todo-down btn btn-icon btn-custom btn-xs waves-effect waves-light btn-info m-b-5"><i class="fa fa-arrow-down"></i></a><a class="todo-up btn btn-icon btn-custom btn-xs waves-effect waves-light btn-info m-b-5"><i class="fa fa-arrow-up"></i></a></div></li>');
+                this.$todoList.prepend('<li class="list-group-item"><div class="checkbox checkbox-success"><input class="todo-done" id="' + todoItem.id + '" type="checkbox" checked><label for="' + todoItem.id + '">' + todoItem.text + '</label><a data-id="' + todoItem.id + '" class="todo-del-btn btn btn-icon btn-custom btn-xs waves-effect waves-light btn-danger m-b-5"> <i class="fa fa-remove"></i></a><a data-id="' + count + '" data-todo-id="' + todoItem.id + '" class="todo-down btn btn-icon btn-custom btn-xs waves-effect waves-light btn-info m-b-5"><i class="fa fa-arrow-down"></i></a><a data-id="' + count + '" data-todo-id="' + todoItem.id + '" class="todo-up btn btn-icon btn-custom btn-xs waves-effect waves-light btn-info m-b-5"><i class="fa fa-arrow-up"></i></a></div></li>');
             else {
                 remaining = remaining + 1;
-                this.$todoList.prepend('<li class="list-group-item"><div class="checkbox checkbox-success"><input class="todo-done" id="' + todoItem.id + '" type="checkbox"><label for="' + todoItem.id + '">' + todoItem.text + '</label><a data-id="' + todoItem.id + '" class="todo-del-btn btn btn-icon btn-custom btn-xs waves-effect waves-light btn-danger m-b-5"> <i class="fa fa-remove"></i></a><a class="todo-down btn btn-icon btn-custom btn-xs waves-effect waves-light btn-info m-b-5"><i class="fa fa-arrow-down"></i></a><a class="todo-up btn btn-icon btn-custom btn-xs waves-effect waves-light btn-info m-b-5"><i class="fa fa-arrow-up"></i></a></div></li>');
+                this.$todoList.prepend('<li class="list-group-item"><div class="checkbox checkbox-success"><input class="todo-done" id="' + todoItem.id + '" type="checkbox"><label for="' + todoItem.id + '">' + todoItem.text + '</label><a data-id="' + todoItem.id + '" class="todo-del-btn btn btn-icon btn-custom btn-xs waves-effect waves-light btn-danger m-b-5"> <i class="fa fa-remove"></i></a><a data-id="' + count + '" data-todo-id="' + todoItem.id + '" class="todo-down btn btn-icon btn-custom btn-xs waves-effect waves-light btn-info m-b-5"><i class="fa fa-arrow-down"></i></a><a data-id="' + count + '" data-todo-id="' + todoItem.id + '" class="todo-up btn btn-icon btn-custom btn-xs waves-effect waves-light btn-info m-b-5"><i class="fa fa-arrow-up"></i></a></div></li>');
             }
         }
 
@@ -178,7 +190,7 @@ function($) {
         //set remaining
         this.$todoRemaining.text(remaining);
 
-        todoDelClick();
+        reinitButtons();
     },
     //init todo app
     TodoApp.prototype.init = function () {
@@ -327,6 +339,12 @@ function($) {
 }(window.jQuery);
 
 
+function reinitButtons(){
+    todoDelClick();
+    todoDownClick();
+    todoUpClick();
+}
+
 function todoDelClick(){
     $(".todo-del-btn").click(function(){
                     var todoID = $(this).attr("data-id");
@@ -395,4 +413,84 @@ function todoDelClick(){
                         }
                       })
             });
-}
+};
+
+
+function todoDownClick(){
+    $(".todo-down").click(function(){
+        var downNo = parseInt($(this).attr("data-id"));
+        var id = parseInt($(this).attr("data-todo-id"));
+
+        $.TodoApp.move(downNo, ((parseInt(downNo-1)) < 0) ? 0 : (parseInt(downNo-1)));
+        $.TodoApp.generate();
+
+        //$(this).attr("data-id") = parseInt(downNo-1);
+
+        var data = new FormData();
+        data.append('todoId', id);
+
+        var url= "todoMoveDown";
+
+        $.ajax({
+            url: url,
+            type:"post",
+            data: data,
+            dataType:"JSON",
+            processData: false,
+            contentType: false,
+          success: function () {
+              
+          }, 
+          error: function() {
+              if (data.status === 422) {
+                swal(
+                  'Something went wrong!',
+                  'Unexpected error occured. Please try again!',
+                  'error'
+                )
+              } else {
+                //document.getElementById('preloader').style.visibility="hidden";
+              }
+          }
+      }); //AJAX End
+
+    });
+};
+
+function todoUpClick(){
+    $(".todo-up").click(function(){
+        var upNo = parseInt($(this).attr("data-id"));
+        var id = parseInt($(this).attr("data-todo-id"));
+
+        $.TodoApp.move(upNo, ((parseInt(upNo-1)) < 0) ? 0 : (parseInt(upNo+1)));
+        $.TodoApp.generate();
+
+        var data = new FormData();
+        data.append('todoId', id);
+
+        var url= "todoMoveUp";
+
+        $.ajax({
+            url: url,
+            type:"post",
+            data: data,
+            dataType:"JSON",
+            processData: false,
+            contentType: false,
+          success: function () {
+              
+          }, 
+          error: function() {
+              if (data.status === 422) {
+                swal(
+                  'Something went wrong!',
+                  'Unexpected error occured. Please try again!',
+                  'error'
+                )
+              } else {
+                //document.getElementById('preloader').style.visibility="hidden";
+              }
+          }
+      }); //AJAX End
+    });
+};
