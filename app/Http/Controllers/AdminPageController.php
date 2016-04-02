@@ -394,6 +394,8 @@ class AdminPageController extends Controller
        //$todolist = DB::select(DB::raw("SELECT * FROM sep.todo order by priority=0, priority asc, date_added asc"));
 
        $todolist = Todo::where('user_id', Auth::User()->id)
+                        ->where('date_archieved', "0000-00-00 00:00:00")
+                        ->where('date_deleted', "0000-00-00 00:00:00")
                         ->orderBy('priority', 'asc')
                         ->get();
 
@@ -425,6 +427,7 @@ class AdminPageController extends Controller
             $status = "true";
         }
 
+        $todoItem->date_completed = Carbon::now();
         $todoItem->status = $status;
         $todoItem->save();
 
@@ -466,6 +469,11 @@ class AdminPageController extends Controller
     }
 
     public function ToDo(){
-        return view('todo');
+        $todoListActive = Todo::where('user_id', Auth::User()->id)
+                            ->where('date_deleted', "0000-00-00 00:00:00")
+                            ->where('date_archieved', "0000-00-00 00:00:00")
+                            ->get();
+
+        return view('todo')->with('todoListActive', $todoListActive);
     }
 }

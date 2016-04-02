@@ -143,23 +143,20 @@ function($) {
         },
         function(isConfirm) {
           if (isConfirm) {
-            $.TodoApp.$todoList.html("");
-            var remaining = 0;
-            for(var count=0; count<this.$todoData.length;count++) {
-                //geretaing html
-                var todoItem = this.$todoData[count];
-                if(todoItem.done == true)
-                    this.$todoList.prepend('<li class="list-group-item"><div class="checkbox checkbox-success"><input class="todo-done" id="' + todoItem.id + '" type="checkbox" checked><label for="' + todoItem.id + '">' + todoItem.text + '</label></div></li>');
-                else {
-                    remaining = remaining + 1;
-                    this.$todoList.prepend('<li class="list-group-item"><div class="checkbox checkbox-success"><input class="todo-done" id="' + todoItem.id + '" type="checkbox"><label for="' + todoItem.id + '">' + todoItem.text + '</label></div></li>');
+               $.TodoApp.$todoUnCompletedData = [];
+                for(var count=0; count<$.TodoApp.$todoData.length;count++) {
+                    //geretaing html
+                    var todoItem = $.TodoApp.$todoData[count];
+                    if(todoItem.done == "true") {
+                        $.TodoApp.$todoCompletedData.push(todoItem);
+                    } else {
+                        $.TodoApp.$todoUnCompletedData.push(todoItem);
+                    }
                 }
-            }
-
-            //set total in ui
-            this.$todoTotal.text(this.$todoData.length);
-            //set remaining
-            this.$todoRemaining.text(remaining);
+                $.TodoApp.$todoData = [];
+                $.TodoApp.$todoData = [].concat($.TodoApp.$todoUnCompletedData);
+                //regenerate todo list
+                $.TodoApp.generate();
 
             swal(
               'Archieved!',

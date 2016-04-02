@@ -3,6 +3,7 @@
 namespace App;
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Todo extends Model
 {
@@ -37,4 +38,15 @@ class Todo extends Model
     protected $fillable = [
         'user_id', 'date_added', 'description', 'date_completed', 'date_deleted', 'date_archieved', 'status'
     ];
+
+    /**
+     * Set todo Date Added
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getDateAdded($value)
+    {
+        return Carbon::parse(attributes['date_added'])->format('l jS \\of F Y h:i:s A');
+    }
 }

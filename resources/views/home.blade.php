@@ -49,12 +49,12 @@
                                 <div class="">
                                     <div class="row">
                                         <div class="col-xs-6 text-center">
-                                            <canvas id="snow" width="115" height="115"></canvas>
+                                            <canvas id="clear-day" width="115" height="115"></canvas>
                                         </div>
                                         <div class="col-xs-6">
-                                            <h2 class="m-t-0 text-white"><b> 23°</b></h2>
-                                            <p class="text-white">Partly cloudy</p>
-                                            <p class="text-white">15km/h - 37%</p>
+                                            <h2 class="m-t-0 text-white"><b> 27°</b></h2>
+                                            <p class="text-white">Clear Day</p>
+                                            <p class="text-white">W: 2km/h, H: 84%</p>
                                         </div>
                                     </div><!-- end row -->
                                 </div><!-- weather-widget -->
@@ -62,17 +62,17 @@
                             <div class="col-sm-5">
                                 <div class="row">
                                     <div class="col-xs-4 text-center">
-                                        <h4 class="text-white m-t-0">SAT</h4>
+                                        <h4 class="text-white m-t-0">MON</h4>
                                         <canvas id="sleet" width="35" height="35"></canvas>
                                         <h4 class="text-white">30<i class="wi-degrees"></i></h4>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <h4 class="text-white m-t-0">SUN</h4>
+                                        <h4 class="text-white m-t-0">TUE</h4>
                                         <canvas id="fog" width="35" height="35"></canvas>
                                         <h4 class="text-white">28<i class="wi-degrees"></i></h4>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <h4 class="text-white m-t-0">MON</h4>
+                                        <h4 class="text-white m-t-0">WED</h4>
                                         <canvas id="partly-cloudy-night" width="35" height="35"></canvas>
                                         <h4 class="text-white">33<i class="wi-degrees"></i></h4>
                                     </div>
