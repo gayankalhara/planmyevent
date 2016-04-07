@@ -17,6 +17,7 @@ use App\Models\users;
 use DB;
 use App\Models\Todo;
 use Carbon\Carbon;
+use Mail;
 
 use Auth;
 
@@ -157,7 +158,10 @@ class AdminPageController extends Controller
      */
     public function Profile()
     {
-        return view('profile');
+        $userDetails = users::select('*')->where('id', Auth::user()->id)
+                                        ->get();
+
+        return view('profile')->with('userDetails',$userDetails);
     }
 
     /**
@@ -468,12 +472,61 @@ class AdminPageController extends Controller
        return dd($request->input());
     }
 
+
+    public function todoArchieve(Request $request){
+
+       foreach (json_decode($request->input('todo')) as $todo_item)
+        {
+         return $todo_item['id'];
+        }
+    }
+
+
     public function ToDo(){
-        $todoListActive = Todo::where('user_id', Auth::User()->id)
+        $todoListActive = Todo::select(DB::raw("todo.*, DATE_FORMAT(todo.date_added,'%d-%m-%Y') as date1"))
+                            ->where('date_deleted', '0000-00-00 00:00:00')
+                            ->where('date_archieved', '0000-00-00 00:00:00')
+                            ->get();
+
+                            return $todoListActive;
+
+        $todoListArchieved = Todo::where('user_id', Auth::User()->id)
+                            ->where('date_deleted', "!=", "0000-00-00 00:00:00")
+                            ->get();
+
+        $todoListDeleted= Todo::where('user_id', Auth::User()->id)
+                            ->where('date_archieved', "!=", "0000-00-00 00:00:00")
+                            ->get();
+
+        return view('todo')->with('todoListActive', $todoListActive)
+                            ->with('todoListArchieved', $todoListArchieved)
+                            ->with('todoListDeleted', $todoListDeleted);
+    }
+
+    public function todoEmail(Request $request){
+
+        if($request->input('emailMe') == "on"){
+
+            $todoList1 = Todo::where('user_id', Auth::User()->id)
                             ->where('date_deleted', "0000-00-00 00:00:00")
                             ->where('date_archieved', "0000-00-00 00:00:00")
                             ->get();
 
-        return view('todo')->with('todoListActive', $todoListActive);
+            $mailData = [
+               'todoList' => $todoList1
+            ];
+
+
+
+            $userEmail = Auth::User()->email;
+
+            Mail::send('emails.todolist', $mailData, function($message) use ($userEmail) {
+                $message->to($userEmail)
+                    ->subject('Your Todo List Digest');
+            });
+        }
+        
+
+       return dd($request->input());
     }
 }

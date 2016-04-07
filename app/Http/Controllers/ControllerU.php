@@ -21,6 +21,8 @@ use App\Models\Quote_Requests;
 use App\Models\Event_Tasks;
 use App\Models\Notifications;
 use Carbon\Carbon;
+use App\Models\Users;
+
 class ControllerU extends Controller
 {
 
@@ -922,7 +924,7 @@ public function CheckEventCatName()
 
       public function AssignTasks()
       {
-        $team = Team_Members::distinct()->select('*')->get();
+        $team = Users::distinct()->select('*')->where('role', 'team-member')->get();
         $quote = Quote_Requests::select('*')->get();
         return view('assign_task.assign-tasks')->with(array('team' => $team, 'quote' => $quote));
       }
@@ -955,7 +957,7 @@ public function CheckEventCatName()
               $evetype=$quote1->EventType;
 
           $tasks = Task_Templates::select('*')->where('EventName',$evetype)->get();
-          $team = Team_Members::distinct()->select('*')->get();
+          $team = Users::distinct()->select('*')->where('role', 'team-member')->get();
           
           return view('assign_task.assign')->with(array('team' => $team, 'quote' => $quote, 'tasks' => $tasks));
       }
@@ -989,11 +991,10 @@ public function CheckEventCatName()
         foreach($input['desc']  as $z=>$value) 
             {
                   Event_Tasks::insert([['EventID' => $iName, 'MemberID' => $iTeamMem[$z] , 'Description' => $iTaskdesc[$z]]]);
-
             }
        
           $mem = Event_Tasks::distinct()->select('MemberID')->where('EventID',$iName)->get();
-
+          $evedata = Quote_Requests::select('*')->where('id',$iName)->first();
             //return dd($mem);
 
                 foreach($mem as $memb)
@@ -1001,24 +1002,29 @@ public function CheckEventCatName()
 
                   $time = Carbon::now();
                   
-                  Notifications::insert([['user_ID' => $memb->MemberID, 'Icon' => 'NULL'  , 'Status' => 'Unread', 'Notification' => 'New Event Tasks Assigned for event ID '.$iName, 'Time' => $time, 'Type'=>'Specific', 'Link'=>'dashboard/events/progress?EventName='.$iName ]]);
-                  $em = Team_Members::select('*')->where('id',$memb->MemberID)->first();
-                  //foreach($em as $email)
-                  //{
-                  //return dd($em->Email);
-                  //  $mememail = $email->Email;
-                  //}
-                  Mail::send('emails.member-tasks', [], function($message) use ($em)
+                  Notifications::insert([['user_ID' => $memb->MemberID, 'Icon' => 'NULL'  , 'Status' => 'Unread', 'Notification' => 'New Event Tasks Assigned for event ID '.$iName, 'Time' => $time, 'Type'=>'Specific', 'Link'=>'dashboard/events/progress?EventID='.$iName ]]);
+                  $em = Users::select('*')->where('id',$memb->MemberID)->first();
+                  
+
+                  $mailData = [
+                  'EventID' => $iName,
+                  'MemName' => $em->Name,
+                  'DueDate' => $evedata->EventDate,
+                  'FirstName'=>$evedata->FirstName,
+                  'LastName'=> $evedata->LastName,    
+                  ];
+
+                  Mail::send('emails.member-tasks', $mailData, function($message) use ($em)
                   {
-                        $message->to($em->Email, 'Test')
+                        $message->to($em->email, 'Test')
                                 ->subject('Tasks Assgined for Event');
                   });
                 }
          /* 
            */  
-            $team = Team_Members::distinct()->select('*')->get();
+            $team = Users::distinct()->select('*')->where('role', 'team-member')->get();
         $quote = Quote_Requests::select('*')->get();
-        return view('assign_task.assign-tasks')->with(array('team' => $team, 'quote' => $quote));   
+        return view('assign_task.assign-tasks')->with(array('team' => $team, 'quote' => $quote, 'message'=>'yes'));   
         
              
       }
@@ -1028,8 +1034,9 @@ public function CheckEventCatName()
           $input = Request::all();
           $iName = $input['EventID'];
 
-
-          return view('event_progress.progress')->with('EventID', $iName);;
+          $user_id = \Auth::user()->id;
+          $memtasks= Event_Tasks::select('*')->where('MemberID',$user_id)->where('EventID',$iName)->get();
+          return view('event_progress.progress')->with('memtasks', $memtasks);;
 
       }
 

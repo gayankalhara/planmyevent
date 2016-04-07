@@ -182,7 +182,7 @@
                             <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="md md-crop-free"></i></a>
                         </li>
                         <li class="dropdown">
-                            <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="{{ (empty(Auth::user()->avatar)) ? URL::to('/images/users/avatar.png') : Auth::user()->avatar }}" alt="user-img" class="img-circle"> </a>
+                            <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img onError="this.onerror=null;this.src='{{asset('/images/users/avatar.png')}}';" src="{{ (empty(Auth::user()->avatar)) ? URL::to('/images/users/avatar.png') : Auth::user()->avatar }}" alt="user-img" class="img-circle"> </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url('/dashboard/profile') }}"><i class="md md-face-unlock"></i> Profile</a></li>
                                 <li><a href="{{ url('/dashboard/settings') }}"><i class="md md-settings"></i> Settings</a></li>
@@ -208,7 +208,7 @@
         <div class="sidebar-inner slimscrollleft">
             <div class="user-details">
                 <div class="pull-left">
-                    <img src="{{ (empty(Auth::user()->avatar)) ? URL::to('/images/users/avatar.png') : Auth::user()->avatar }}" alt="" class="thumb-md img-circle">
+                    <img onError="this.onerror=null;this.src='{{asset('/images/users/avatar.png')}}';" src="{{ (empty(Auth::user()->avatar)) ? URL::to('/images/users/avatar.png') : Auth::user()->avatar }}" alt="" class="thumb-md img-circle">
                 </div>
                 <div class="user-info">
                     <div class="dropdown">
@@ -300,14 +300,12 @@
                         </li>
                     <?php }; ?>
 
-
                     <?php if($userRole == "Administrator"){?>
                         <li>
                             <a class="waves-effect {{ Request::is('dashboard/events/categories/tasks*') ? 'active' : null }}"><i class="md md-check-box"></i><span> Event Tasks </span></a>
 
                             <ul class="list-unstyled">
-                                <li class="{{ Request::is('dashboard/events/categories') ? 'active' : null }}"><a href="{{ url('/dashboard/events/categories') }}">View All</a></li>
-                                <li class="{{ Request::is('dashboard/events/categories/add') ? 'active' : null }}"><a href="{{ url('/dashboard/events/categories/add') }}">Add New</a></li>
+                                <li class="{{ Request::is('dashboard/events/categories/tasks') ? 'active' : null }}"><a href="{{ url('/dashboard/events/categories/tasks') }}">View All</a></li>
                                 <li class="{{ Request::is('dashboard/events/categories/add') ? 'active' : null }}"><a href="{{ url('/dashboard/events/assign-tasks') }}">Assign Tasks</a></li>
                             </ul>
                         </li>
@@ -506,6 +504,10 @@
             }).responseText;
 
     $('div.feedback-box').html(feedback);
+
+    $("img").error(function () { 
+        $(this).hide();
+    });
 }
 </script>
 
@@ -513,8 +515,7 @@
 
 <!-- Modal-Effect -->
         <script src="{{asset('assets/modal-effect/js/classie.js')}}"></script>
-        <script src="{{asset('assets/modal-effect/js/modalEffects.js')}}"></script>
-
+        
 
 </body>
 </html>

@@ -8,11 +8,11 @@
 	<div class="wraper container-fluid">
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="bg-picture text-center" style="background-image:url('images/big/bg.jpg')">
+                            <div class="bg-picture text-center">
                                 <div class="bg-picture-overlay"></div>
                                 <div class="profile-info-name">
-                                    <img src="images/avatar-1.jpg" class="thumb-lg img-circle img-thumbnail" alt="profile-image">
-                                    <h3 class="text-white">John Deon</h3>
+                                    <img src="{{ $userDetails[0]->avatar }}" class="thumb-lg img-circle img-thumbnail" alt="profile-image">
+                                    <h3 class="text-white">{{ $userDetails[0]->name }}</h3>
                                 </div>
                             </div>
                             <!--/ meta -->

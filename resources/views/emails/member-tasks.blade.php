@@ -209,7 +209,7 @@
                                                                                         <tr>
                                                                                             <td align="left" class="textContent">
                                                                                                 <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
-                                                                                                    You have been assigned Tasks for an event. Please follow the link to view them.
+                                                                                                    Tasks Assigned For event of {{$FirstName}} {{$LastName}}}
                                                                                                 </div>
                                                                                             </td>
                                                                                         </tr>
@@ -305,8 +305,9 @@
                                                                                                                 <div style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#cccccc;line-height:150%;">
                                                                                                                     <img src="http://www.planmyevent.me/assets/website/logo.png" alt="Plan My Event"/>
 
-                                                                                                                    <h1 style="color: #6B6B6B; text-align: center;">Tasks Assigned From PlanMyEvent.me</h1>
-                                                                                                                                <table id="datatable" class="table table-striped table-bordered">
+                                                                                                                    <h1 style="color: #6B6B6B; text-align: center;">Tasks Assigned For {{$FirstName}} {{$LastName}} 's Event</h1>
+                                                                                                                               <h5>Event Date is {{$DueDate}} </h5>
+                                                                                                                               <h6> follow link to update status : http://www.planmyevent.me/dashboard/events/progress?EventID={{$EventID}} </h6>
 
 
 

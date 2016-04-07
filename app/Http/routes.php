@@ -29,6 +29,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('dashboard/permission-denied', 'PageController@PermissionDenied');
     Route::auth();
     Route::any('dashboard', 'AdminPageController@Dashboard');
+    Route::get('dashboard/ToDo', 'AdminPageController@ToDo'); 
     Route::get('todoList','AdminPageController@todoList');
     Route::post('todoListAddNew','AdminPageController@todoListAddNew');
     Route::post('todoTickToggle','AdminPageController@todoTickToggle');
@@ -36,11 +37,15 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('todoDeleteAll','AdminPageController@todoDeleteAll');
     Route::post('todoMoveUp','AdminPageController@todoMoveUp');
     Route::post('todoMoveDown','AdminPageController@todoMoveDown');
+    Route::get('todoEmail','AdminPageController@todoEmail');
+    Route::post('todoArchieve','AdminPageController@todoArchieve');
     Route::get('dashboard/events/categories', 'ControllerU@EventCategoriesLoad');
     Route::get('dashboard/todo', 'AdminPageController@ToDo');
     Route::get('dashboard/profile', 'AdminPageController@Profile');
     Route::get('dashboard/settings', 'AdminPageController@Settings');
     Route::post('dashboard/settings', 'AdminPageController@SettingsSubmit');
+
+    
 });
 
 //Routes that are available only for Admins
@@ -130,7 +135,7 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\AdminMiddleware']], f
     Route::post('dashboard/events/assign', 'ControllerU@AssignPOST');
     Route::get('dashboard/test', function(){ return view('emails.register-success') ;    });
 
-    Route::get('dashboard/events/progress', 'ControllerU@Progress');
+   
 
     Route::post('dashboard/notifications', 'ControllerU@Notifications');
 
@@ -193,7 +198,7 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\EventPlannerMiddlewar
 
 //Routes that are only accessible by Team Members (Admins also can access by changing the user role)
 Route::group(['middleware' => ['web', 'App\Http\Middleware\TeamMemberMiddleware']], function () {
-    
+    Route::get('dashboard/events/progress', 'ControllerU@Progress'); 
 });
 
 Route::group(['prefix' => 'messages'], function () {

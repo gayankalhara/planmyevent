@@ -4,7 +4,7 @@ namespace App;
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-
+use DB;
 class Todo extends Model
 {
 
@@ -49,4 +49,8 @@ class Todo extends Model
     {
         return Carbon::parse(attributes['date_added'])->format('l jS \\of F Y h:i:s A');
     }
+
+
+
+     
 }

@@ -143,26 +143,70 @@ function($) {
         },
         function(isConfirm) {
           if (isConfirm) {
-               $.TodoApp.$todoUnCompletedData = [];
-                for(var count=0; count<$.TodoApp.$todoData.length;count++) {
-                    //geretaing html
-                    var todoItem = $.TodoApp.$todoData[count];
-                    if(todoItem.done == "true") {
-                        $.TodoApp.$todoCompletedData.push(todoItem);
-                    } else {
-                        $.TodoApp.$todoUnCompletedData.push(todoItem);
-                    }
-                }
-                $.TodoApp.$todoData = [];
-                $.TodoApp.$todoData = [].concat($.TodoApp.$todoUnCompletedData);
-                //regenerate todo list
-                $.TodoApp.generate();
+                    var url= "todoArchieve";
+                    var data = new FormData();
+                    
 
-            swal(
-              'Archieved!',
-              'All your todo items that are marked as complete has been archieved.',
-              'success'
-            );
+                    document.getElementById('preloader').style.visibility="visible";
+
+
+                    $.TodoApp.$todoUnCompletedData = [];
+                    for(var count=0; count<$.TodoApp.$todoData.length;count++) {
+                        //geretaing html
+                        var todoItem = $.TodoApp.$todoData[count];
+                        if(todoItem.done == "true") {
+                            $.TodoApp.$todoCompletedData.push(todoItem);
+                        } else {
+                            $.TodoApp.$todoUnCompletedData.push(todoItem);
+                        }
+                    }
+                    $.TodoApp.$todoData = [];
+                    $.TodoApp.$todoData = [].concat($.TodoApp.$todoUnCompletedData);
+
+
+                    data.append('todo', JSON.stringify($.TodoApp.$todoUnCompletedData));
+
+                  $.ajax({
+                    url: url,
+                    type:"post",
+                    data: data,
+                    dataType:"JSON",
+                    processData: false,
+                    contentType: false,
+                      success: function (data, status) {
+                        $.TodoApp.$todoData = [];
+                        $.TodoApp.$todoList.html("");
+
+                      }, 
+                      error: function() {
+                        if (data.status === 422) {
+                          sweetAlert(
+                            'Error Occured!',
+                            'Something went wrong. Please try again!',
+                            'error'
+                          );
+                        } else {
+                            
+                            
+                            //regenerate todo list
+                            $.TodoApp.generate();
+
+                            document.getElementById('preloader').style.visibility="hidden";
+
+                            swal(
+                              'Archieved!',
+                              'All your todo items that are marked as complete has been archieved.',
+                              'success'
+                            );
+                        }
+                      }
+                  }); //AJAX End
+
+
+
+               
+
+            
           }
         })
         

@@ -233,6 +233,15 @@
 
 
   <script>
+    $.ajaxSetup(
+    {
+        headers:
+        {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+  
   jQuery(document).ready(function($) {
     'use strict';
     var template = document.getElementById('form-builder-template'),

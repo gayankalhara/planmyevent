@@ -16,11 +16,28 @@
 @endsection
 
 @section('header-js')
+<script  type="text/javascript" >
+ 
 
+ function init2() 
+    {
+        <?php echo 'sweetAlert("Success!", "You have successfully assigned Tasks.", "success")'; ?>; 
+    }
+   @if(Session::has('message')) 
+window.onload  = function() {
+        init2(); };
+@endif
+        
+
+
+</script>
 @endsection
 
 @section('content')
 <div class="content">
+
+
+
     <div class="wraper container-fluid">
         <div class="row">
             <div class="col-md-12">

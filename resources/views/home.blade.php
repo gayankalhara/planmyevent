@@ -10,6 +10,54 @@
 <div class="content">
     <div class="container">
 
+        <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog"> 
+                <div class="modal-content"> 
+                    <div class="modal-header"> 
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                        <h4 class="modal-title">Email my Todo List</h4> 
+                    </div> 
+
+                    <form id="emailForm" onsubmit="return sendTodoEmail()">
+                        <div class="modal-body"> 
+                            <div class="row"> 
+                                <div class="col-md-6"> 
+
+                                    <div class="form-group"> 
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="checkbox8" type="checkbox" checked="" name="emailMe">
+                                            <label for="checkbox8">
+                                                Email to Me
+                                            </label>
+                                        </div>
+
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="checkbox2" type="checkbox" name="emailFriend">
+                                            <label for="checkbox2">
+                                                Email to a Friend
+                                            </label>
+                                        </div>
+                                    </div> 
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <div class="form-group"> 
+                                        <label for="field-2" class="control-label">Email Address</label> 
+                                        <input type="email" id="todoEmail" name="todoEmail" class="form-control" placeholder="Email">
+                                    </div> 
+                                </div> 
+                            </div> 
+                        </div> 
+                    
+
+                        <div class="modal-footer"> 
+                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> 
+                            <button type="submit" class="btn btn-info waves-effect waves-light">Send the Email(s)</button> 
+                        </div> 
+                        </form>
+                </div> 
+            </div>
+        </div><!-- /.modal -->
+
         <!-- WEATHER -->
         <div class="row">
                     
@@ -208,7 +256,7 @@
                             <div class="col-sm-7">
                                 <a href="{{ url('dashboard/todo') }}" class="pull-right btn-sm btn btn-icon waves-effect waves-light btn-purple m-b-5"> <i class="fa fa-table"></i> </a>
 
-                                <a href="{{ url('dashboard/todo') }}" class="pull-right btn-sm btn btn-icon waves-effect waves-light btn-primary m-b-5" id="btn-todo-mail"> <i class="fa fa-envelope"></i> </a>
+                                <a  data-toggle="modal" data-target="#con-close-modal" class="pull-right btn-sm btn btn-icon waves-effect waves-light btn-primary m-b-5" id="btn-todo-mail"> <i class="fa fa-envelope"></i> </a>
 
                                 <button type="button" class="pull-right btn-sm btn btn-success waves-effect waves-light m-b-5" id="btn-archive"> <i class="fa fa-save"></i> <span>Archive</span> </button>
 
@@ -263,12 +311,33 @@
     });
 
     //$('#calendar').fullCalendar( 'changeView', 'agendaWeek');  
+
+    $.simpleWeather({
+        location: 'Austin, TX',
+        woeid: '',
+        unit: 'f',
+        success: function(weather) {
+            console.log(weather.code);
+            console.log(weather.temp);
+            console.log(weather.city);
+            console.log(weather.region);
+            console.log(weather.currently);
+            console.log(weather.wind.direction);
+            console.log(weather.wind.speed);
+            console.log(weather.units.speed);
+        },
+        error: function(error) {
+          console.log(error);
+        }
+      });
 @endsection
 
 @section('footer-js')
  <!-- skycons -->
 <script src="{{asset('js/skycons.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/jquery.todo.js')}}"></script>
+
+<script src="{{asset('js/jquery.simpleWeather.js')}}" type="text/javascript"></script>
 <script>
 /* BEGIN SVG WEATHER ICON */
 if (typeof Skycons !== 'undefined'){
@@ -287,5 +356,29 @@ var icons = new Skycons(
     icons.set(list[i], list[i]);
     icons.play();
 };
+</script>
+
+<script>
+function sendTodoEmail(){
+    $('#con-close-modal').modal('hide');
+
+    document.getElementById('preloader').style.visibility="visible";
+        $.ajax({
+            type: "get",
+            url: 'todoEmail',
+            data: $('#emailForm').serialize(),
+
+            success : function(data){
+                document.getElementById('preloader').style.visibility="hidden";
+                swal('Success','Mail sent successfully!', 'success');
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError);
+            }    
+        });
+
+        return false; 
+
+    }
 </script>
 @endsection

@@ -1,10 +1,3 @@
-/**
-* Theme: Montran Admin Template
-* Author: Coderthemes
-* Component: Editable
-* 
-*/
-
 (function( $ ) {
 
 	'use strict';

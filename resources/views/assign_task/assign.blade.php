@@ -109,7 +109,7 @@
                                                     <option value="">-- Select a Member --</option>
                                                         @foreach ($team as $teammem)
                                                             
-                                                            <option value="{{ $teammem -> id }}">{{$teammem->Name}}</option>
+                                                            <option value="{{ $teammem -> id }}">{{$teammem->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -126,7 +126,7 @@
                                 </table>
                                  <div class="form-group" style="margin-bottom:50px">
                                       <div class="col-lg-offset-2 col-lg-10">
-                                            <button id="btnsub"  class="btn btn-success waves-effect waves-light" type="submit">Save</button>
+                                            <button id="btnsub"  class="btn btn-success waves-effect waves-light" type="submit">Assign</button>
                                       </div>
                                  </div>
                                 </form>

@@ -6,6 +6,15 @@
 
 @section('header-css')
 
+<!-- ION Slider -->
+        <link href="{{asset('assets/ion-rangeslider/ion.rangeSlider.css')}}" rel="stylesheet" type="text/css"/>
+        <link href="{{asset('assets/ion-rangeslider/ion.rangeSlider.skinFlat.css')}}" rel="stylesheet" type="text/css"/> 
+
+<style>
+.progress-item{
+  font-family: 'Roboto', sans-serif;
+}
+</style>
 
 
   <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/loaders.min.css')}}">
@@ -15,9 +24,12 @@
 
 @section('header-js')
   <script type="text/javascript">
-    function updateTextInput(val) {
-      document.getElementById('textInput').value=val; 
+
+    function updateTextInput(val,val2) {
+      document.getElementsByClassName("displaytxt")[val2.id-1].value=val+"%"; 
     }
+
+
   </script>
 @endsection
 
@@ -36,16 +48,22 @@
                                         <h3 class="panel-title">Update Event Progress</h3>
                                     </div>
                                     <div class="panel-body">
+                                    
                                         <form class="form-horizontal">
-                                            <div class="form-group">
-                                                <label for="range_01" class="col-sm-2 control-label">Default<span class="text-muted clearfix">Start without params</span></label>
-                                                <div class="col-sm-10">
-                                                    <input type="range" name="rangeInput" min="0" max="100" onchange="updateTextInput(this.value);">
-                                                    <input type="text" id="textInput" value="">
+                                        @foreach($memtasks as $item)
+                                              <div class="form-group">
+                                                <label for="{{ $item->id }}" class="col-sm-3 control-label"><span class="progress-item clearfix">{{ $item->Description }}</span></label>
+                                                <div class="col-sm-6">
+                                                    <input value="{{ $item->progress }}" type="text" id="{{ $item->id }}" class="range">
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <textarea style="width: 100%;" name="status"></textarea>
                                                 </div>
                                             </div>
-                                            
+                                        @endforeach
                                         </form>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -73,12 +91,8 @@
 @endsection
 
 @section('footer-js')
-
-
-
-
-
-
+<script src="{{asset('assets/ion-rangeslider/ion.rangeSlider.min.js')}}"></script>
+<script src="{{asset('assets/ion-rangeslider/ui-sliders.js')}}"></script>
 @endsection
     
         
