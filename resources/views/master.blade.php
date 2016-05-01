@@ -392,7 +392,7 @@
                     </div></a>
                 </div>
 
-                <div class="row" style="text-align: center;"><button class="md-close btn-lg btn-success waves-effect waves-light">Close</button></div>
+                <div class="row" style="text-align: center;"><button class="md-close-popup btn-lg btn-success waves-effect waves-light">Close</button></div>
             </div>
         </div>
     </div>
@@ -497,9 +497,6 @@
               
                 var newElement = document.createElement('div');
                 newElement.innerHTML = out;
-                //document.getElementById("notifill").appendChild(newElement);
-                //document.getElementById("notifill").innerHTML = out;
-                //document.getElementById("notificount").innerHTML = arr.length;
                 setTimeout(function(){get_fb();}, 1000);
             }).responseText;
 
@@ -515,7 +512,7 @@
 
 <!-- Modal-Effect -->
         <script src="{{asset('assets/modal-effect/js/classie.js')}}"></script>
-        
+        <script src="{{asset('assets/modal-effect/js/modalEffects.js')}}"></script>
 
 </body>
 </html>

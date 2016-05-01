@@ -231,7 +231,6 @@
 
   <script src="{{asset('js/jquery.query-object.js')}}" type="text/javascript"></script>
 
-
   <script>
     $.ajaxSetup(
     {

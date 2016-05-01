@@ -24,7 +24,7 @@
     CodeEditor.prototype.init = function() {
         var $this = this;
         //init plugin
-        CodeMirror.fromTextArea(document.getElementById("code"), {
+        CodeMirror.fromTextArea(document.getElementById("form-builder-template"), {
             mode: {name: "xml", alignCDATA: true},
             lineNumbers: true
         });

@@ -311,25 +311,7 @@
     });
 
     //$('#calendar').fullCalendar( 'changeView', 'agendaWeek');  
-
-    $.simpleWeather({
-        location: 'Austin, TX',
-        woeid: '',
-        unit: 'f',
-        success: function(weather) {
-            console.log(weather.code);
-            console.log(weather.temp);
-            console.log(weather.city);
-            console.log(weather.region);
-            console.log(weather.currently);
-            console.log(weather.wind.direction);
-            console.log(weather.wind.speed);
-            console.log(weather.units.speed);
-        },
-        error: function(error) {
-          console.log(error);
-        }
-      });
+    
 @endsection
 
 @section('footer-js')
@@ -337,7 +319,7 @@
 <script src="{{asset('js/skycons.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/jquery.todo.js')}}"></script>
 
-<script src="{{asset('js/jquery.simpleWeather.js')}}" type="text/javascript"></script>
+
 <script>
 /* BEGIN SVG WEATHER ICON */
 if (typeof Skycons !== 'undefined'){

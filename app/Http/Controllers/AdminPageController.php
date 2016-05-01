@@ -414,8 +414,12 @@ class AdminPageController extends Controller
             'date_completed' => '0000-00-00 00:00:00',
             'date_deleted' => '0000-00-00 00:00:00',
             'date_archieved' => '0000-00-00 00:00:00',
-            'status' => "false"
+            'status' => "false",
+            'priority' => Todo::count() + 1
+
         ])->todo_id;
+
+       //
 
        return $addedItem;
     }
@@ -451,25 +455,47 @@ class AdminPageController extends Controller
     }
 
     public function todoMoveUp(Request $request){
+
         $todoItem = Todo::find($request->input('todoId'));
 
-        $priority = intval($todoItem->priority) + 1;
+        $currentPriority = intval($todoItem->priority); 
 
-        $todoItem->priority = $priority;
-        $todoItem->save();
+        if(Todo::count() == intval($currentPriority) + 1){
+            return "false";
+        } else {
+            $newPriority = intval($currentPriority) + 1;
 
-       return dd($request->input());
+            $todoItem2 = Todo::where('priority', $newPriority)->first();
+            $todoItem2->priority = $currentPriority;
+            $todoItem2->save();
+
+            $todoItem->priority = $newPriority;
+            $todoItem->save();
+
+           return "true";
+       }
     }
 
     public function todoMoveDown(Request $request){
-        $todoItem = Todo::find($request->input('todoId'));
+        
+            $todoItem = Todo::find($request->input('todoId'));
 
-        $priority = intval($todoItem->priority) - 1;
+            $currentPriority = intval($todoItem->priority); 
 
-        $todoItem->priority = $priority;
-        $todoItem->save();
+        if(1 == intval($currentPriority)){
+            return "false";
+        } else {
+            $newPriority = intval($currentPriority) - 1;
 
-       return dd($request->input());
+            $todoItem2 = Todo::where('priority', $newPriority)->first();
+            $todoItem2->priority = $currentPriority;
+            $todoItem2->save();
+
+            $todoItem->priority = $newPriority;
+            $todoItem->save();
+
+           return "true";
+        }
     }
 
 

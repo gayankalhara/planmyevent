@@ -1,5 +1,6 @@
 var todoAjax = [];
 
+//AJAX CSRF Setup
 $.ajaxSetup(
 {
     headers:
@@ -11,6 +12,7 @@ $.ajaxSetup(
 (function($){
 "use strict";
 
+//Show Preloader
 showPreloader()
 
  $.ajax({
