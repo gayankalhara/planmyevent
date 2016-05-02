@@ -58,6 +58,7 @@
 
                         @if ($errors->has('email'))
                                     <span class="help-block">
+                                        <script>console.log("<?php dd($errors); ?>")</script>
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                         @endif
