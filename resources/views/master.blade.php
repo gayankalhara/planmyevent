@@ -127,13 +127,6 @@
                     <div class="navbar-form pull-left" style="font-family: 'Nunito', sans-serif; color: #FFF; line-height: 54px; margin-left: 10px; font-size: 16px;">
                         We Make YOUR Event Creative, Exciting and Unique.
                     </div>
-<?php
-                            
-                            $user_id = Auth::user()->id;
-                            use App\Models\Notifications;
-                            $notifi = Notifications::select('*')->where('user_id',$user_id)->get();
-                            $notificount = Notifications::select('*')->where('user_id',$user_id)->where('Status','Unread')->count();    
-                            ?>
                     <ul class="nav navbar-nav navbar-right pull-right">
                         <li class="hidden-xs">
                             <a href="{{ url('/') }}" class="waves-effect waves-light"><i class="md md-home"></i></a>
@@ -141,7 +134,7 @@
                         <li class="dropdown hidden-xs">
                             <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
                                 <i class="md md-notifications"></i>
-                                <span id="notificount" class="badge badge-xs badge-danger"> {{$notificount}} </span>
+                                <span id="notificount" class="badge badge-xs badge-danger"> 2 </span>
                             </a>
 							
                             <ul id="notification"  class="dropdown-menu dropdown-menu-lg">
@@ -150,8 +143,7 @@
                                     <!-- list item-->
                                     <!-- list item-->
                                     <div id="notifill">
-                                      @foreach($notifi as $not)
-                                    <a href="/<?php echo $not->Link;?>" class="list-group-item">
+                                    <a href="#" class="list-group-item">
                                         <div class="media">
                                             <div class="pull-left">
                                                 <em class="fa fa-user-plus fa-2x text-info"></em>
@@ -162,12 +154,11 @@
                                         
                                                 <div class="media-heading"></div>
                                                 <p class="m-0">
-                                                    <small>{{$not->Notification}}</small>
+                                                    <small>Test</small>
                                                 </p>
                                             </div>
                                         </div>
                                     </a>
-                                        @endforeach
                                     </div>
                                     <!-- list item-->
 
