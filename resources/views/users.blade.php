@@ -1,5 +1,7 @@
 {{-- Home Page --}}
 
+
+
 @extends('master')
 
 @section('meta')
@@ -26,7 +28,7 @@
   <div class="wraper container-fluid">
       <div class="row">
           <div class="col-sm-12">
-              <div class="bg-picture text-center" style="background-image:url('images/big/bg.jpg')">
+              <div class="bg-picture text-center">
                   <div class="bg-picture-overlay">
                     <h3 class="text-white" style="margin-left: 20px; margin-top: 20px;">User Manager</h3>
 
@@ -70,6 +72,7 @@
           <div class="col-lg-6 col-md-3 col-sm-3 hidden-xs">
               <div class="pull-right">
                 <a href="{{ url('/dashboard/users/add-new') }}"><button class="btn btn-success waves-effect waves-light" id="render-form-button" type="submit">Add New User</button></a>
+                <button class="btn btn-success waves-effect waves-light" type="button" onclick="testNotification()">Test Notification</button>
               </div>
           </div>
       </div>
@@ -363,7 +366,46 @@ function confirmDelete(){
 </script>
 
 <script type="text/javascript">
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                function testNotification() {
+                
+                 swal(
+                      {title: "Send now?",
+                          text: "",
+                          type: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#DD6B55",
+                          confirmButtonText: "Show notification",
+                          cancelButtonText: "Cancel",
+                          closeOnConfirm: false
+                      },
+                      function(isConfirm){
+                          showPreloader();
+                          if (isConfirm) {
+                              $.ajax(
+                                  {
+                                      type: "post",
+                                      url: 'show_notification',
+                                      data: { 
+                                          'title': 'Your notification title', 
+                                          'message': 'Your notification body', 
+                                          'icon': 'fa-calendar',
+                                          'link': 'dashboard/settings'
+                                      },
+                                      success : function(data){
+                                          swal("Successful!", "", "success");
+                                          //console.log(data);
+                                          hidePreloader();
+                                      },
+                                      error: function(xhr, ajaxOptions, thrownError) {
+                                          console.log(thrownError);
+
+                                          swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
+                                      }
+                                  });
+                          }
+                      }
+                  );
+              }
 
             $(document).ready(function() {
                 $('#datatableAdmin').dataTable();
@@ -461,4 +503,5 @@ function confirmDelete(){
 
 <script src="{{asset('assets/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/datatables/dataTables.bootstrap.js')}}"></script>
+
 @endsection

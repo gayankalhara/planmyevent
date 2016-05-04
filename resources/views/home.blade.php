@@ -32,7 +32,7 @@
                                         </div>
 
                                         <div class="checkbox checkbox-info checkbox-circle">
-                                            <input id="checkbox2" type="checkbox" name="emailFriend">
+                                            <input id="checkbox2" type="checkbox" name="emailFriend" onChange="emailToggle()">
                                             <label for="checkbox2">
                                                 Email to a Friend
                                             </label>
@@ -317,7 +317,7 @@
 @section('footer-js')
  <!-- skycons -->
 <script src="{{asset('js/skycons.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('js/jquery.todo.js')}}"></script>
+
 
 
 <script>
@@ -363,4 +363,12 @@ function sendTodoEmail(){
 
     }
 </script>
+
+<script>
+function emailToggle(){
+    console.log("element.checked");
+}
+</script>
+
+<script src="{{asset('js/jquery.todo.js')}}"></script>
 @endsection

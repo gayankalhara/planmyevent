@@ -74,6 +74,9 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\AdminMiddleware']], f
     Route::get('dashboard/about-us', 'AdminPageController@AboutUs');
     Route::get('dashboard/test', 'AdminPageController@Test');
 
+    Route::post('dashboard/show_notification', 'NotificationController@ShowNotification');
+    Route::get('dashboard/setReadStatus', 'NotificationController@setStatus');
+
     Route::get('dashboard/sendmail', function () {
         Mail::send('emails.register-success', [], function($message) {
             $message->to('gayan.csnc@gmail.com')

@@ -1,3 +1,23 @@
+<?php
+    $notification_count = DB::table('notifications')
+            ->select('notification')
+            ->count();
+
+    $unread_notification_count = DB::table('notifications')
+            ->select('notification')
+            ->where('readStatus', '=', '0')
+            ->count();
+?>
+@if($notification_count != 0)
+<?php
+    $notifications = DB::table('notifications')
+            ->select('notification', 'body', 'readStatus')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+?>
+@endif
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,6 +78,8 @@
         document.getElementById('preloader').style.visibility="hidden";
     }
     </script>
+
+    <script src="//js.pusher.com/2.2/pusher.min.js"></script>
 
     @yield('header-css')
 
@@ -132,33 +154,82 @@
                             <a href="{{ url('/') }}" class="waves-effect waves-light"><i class="md md-home"></i></a>
                         </li>
                         <li class="dropdown hidden-xs">
-                            <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
-                                <i class="md md-notifications"></i>
-                                <span id="notificount" class="badge badge-xs badge-danger"> 2 </span>
+                            <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true" onclick="$('#message-count').text('');" >
+                                <i class="md md-question-answer"></i>
+                                <span id="message-count" class="badge badge-xs badge-danger">1</span>
                             </a>
 							
-                            <ul id="notification"  class="dropdown-menu dropdown-menu-lg">
-                                <li class="text-center notifi-title">Notification</li>
+                            <ul id="messages"  class="dropdown-menu dropdown-menu-lg">
+                                <li class="message-title"><span class="label label-default pull-right">0 New</span>Messages</li>
                                 <li class="list-group">
                                     <!-- list item-->
                                     <!-- list item-->
-                                    <div id="notifill">
-                                    <a href="#" class="list-group-item">
+                                    <div id="message">
+                                        <a href="javascript:void(0);" class="list-group-item">
                                         <div class="media">
-                                            <div class="pull-left">
-                                                <em class="fa fa-user-plus fa-2x text-info"></em>
+                                            <div class="pull-left p-r-10">
+                                                <em class="fa fa-cog fa-2x text-custom"></em>
                                             </div>
-
-
-                                            <div class="media-body clearfix">
-                                        
-                                                <div class="media-heading"></div>
+                                            <div class="media-body">
+                                                <h5 class="media-heading">Test</h5>
                                                 <p class="m-0">
                                                     <small>Test</small>
+                                                </p>
+
+                                                <p class="m-0" style="color: #14ADF3;">
+                                                    <small>20mins ago</small>
                                                 </p>
                                             </div>
                                         </div>
                                     </a>
+
+                                    </div>
+                                    <!-- list item-->
+
+                                    <a href="{{ url('/dashboard/all-notifications') }}" class="list-group-item">
+                                        <small>See all messages</small>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown hidden-xs">
+                            <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true" onclick="$('#notificount').text(''); setReadStatus()">
+                                <i class="md md-notifications"></i>
+                                <span id="notificount" class="badge badge-xs badge-danger">@if($unread_notification_count != 0) {{$unread_notification_count}} @endif</span>
+                            </a>
+                            
+                            <ul id="notification"  class="dropdown-menu dropdown-menu-lg">
+                                <li class="notifi-title"><span id="notificationNum" class="label label-default pull-right">{{$unread_notification_count}} New</span>Notifications</li>
+                                <li class="list-group notification-list" id="notificationList">
+                                    <!-- list item-->
+                                    <!-- list item-->
+                                    <div id="notifill">
+                                                @if($notification_count != 0)
+                                                    @foreach($notifications as $notification)
+                                                        @if($notification->readStatus == 0)
+                                                            <a href="javascript:void(0);" class="list-group-item list-group-item-success">
+                                                        @else
+                                                            <a href="javascript:void(0);" class="list-group-item">
+                                                        @endif
+                                                            <div class="media">
+                                                                <div class="pull-left p-r-10">
+                                                                    <em class="fa fa-cog fa-2x text-custom"></em>
+                                                                </div>
+                                                                <div class="media-body">
+                                                                    <h5 class="media-heading">{{$notification->notification}}</h5>
+                                                                    <p class="m-0">
+                                                                        <small>{{$notification->body}}</small>
+                                                                    </p>
+
+                                                                    <p class="m-0" style="color: #14ADF3;">
+                                                                        <small>20mins ago</small>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    @endforeach
+                                                @endif
                                     </div>
                                     <!-- list item-->
 
@@ -168,7 +239,7 @@
                                 </li>
                             </ul>
                         </li>
-                        
+
                         <li class="hidden-xs">
                             <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="md md-crop-free"></i></a>
                         </li>
@@ -460,45 +531,67 @@
 
 
     });
- 
 
-    function get_fb(){
-        var userid = $('#userid').val();
-        var time = moment().format('YYYY-MM-DD h:mm:ss'); 
-        var feedback = $.ajax({
-            type: "POST",
-            url: "{{ url('dashboard/checknotifications') }}",
-            data: {userid: userid,time:time, '_token': '{!! csrf_token() !!}'},
-            cache: false,
-        }).success(function(data){
-                var arr = JSON.parse(data);
-                var i;
-                var out = "";
+    function pusher(){
+        console.log("Pusher Called");
 
-                for(i = 0; i < arr.length; i++) {
-                out += "<a href=\"" + 
-                arr[i].Link +
-                "\" class='list-group-item'><div class='media'><div class='pull-left'><em class='fa fa-user-plus fa-2x text-info'></em></div><div class='media-body clearfix'><div class='media-heading'>" +
-                arr[i].Notification +
-                "</div><p class='m-0'><small>" +
-                arr[i].Notification +
-                "</small></p></div></div></a>";
+            Pusher.log = function(message) {
+                if (window.console && window.console.log) {
+                    window.console.log(message);
                 }
-               
-              
-                var newElement = document.createElement('div');
-                newElement.innerHTML = out;
-                setTimeout(function(){get_fb();}, 1000);
-            }).responseText;
+            };
 
-    $('div.feedback-box').html(feedback);
+            var pusher = new Pusher('a0ef59cfa159704595e3', {
+                cluster: 'ap1',
+                encrypted: true
+            });
 
-    $("img").error(function () { 
-        $(this).hide();
-    });
-}
+            var channel = pusher.subscribe('test_channel');
+            channel.bind('my_event', function(data) {
+                console.log(data.message);
+            });
+
+    }
+
+    function setReadStatus() {
+        $.ajax({url: "{{URL::to('dashboard/setReadStatus')}}", success: function(result){
+            console.log("setReadStatus success")
+        }});
+    }
+
 </script>
 
+<script>
+    $.ajaxSetup(
+    {
+        headers:
+        {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var notification_count = $('#notificount').text();
+
+    if($.trim($('#notificount').html()) == ''){
+        notification_count = 0;
+    }
+
+    var pusher = new Pusher('a0ef59cfa159704595e3');
+
+    var notificationsChannel = pusher.subscribe('notifications');
+
+    notificationsChannel.bind('success_notification', function(notification) {
+        var title = notification.title;
+        var message = notification.message;
+        var link = notification.link;
+        var icon = notification.icon;
+
+        console.log(notification);
+        $('#notificount').text(parseInt(notification_count) + 1); //Increase notification count
+        $('#notificationNum').text(parseInt(notification_count) + 1+" New"); //Increase New Notifications Count
+        $("#notificationList").prepend('<a href="' + link + '" class="list-group-item list-group-item-success"> <div class="media"> <div class="pull-left p-r-10"> <em class="fa ' + icon + ' fa-2x text-custom"></em> </div> <div class="media-body"> <h5 class="media-heading">' + title + '</h5> <p class="m-0"> <small>'+message+'</small> </p> </div> </div> </a>');
+    });
+</script>
 
 
 <!-- Modal-Effect -->

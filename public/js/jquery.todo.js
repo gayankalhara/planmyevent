@@ -1,13 +1,13 @@
 var todoAjax = [];
 
 //AJAX CSRF Setup
-$.ajaxSetup(
-{
-    headers:
-    {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+// $.ajaxSetup(
+// {
+//     headers:
+//     {
+//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//     }
+// });
 
 (function($){
 "use strict";
@@ -203,12 +203,6 @@ function($) {
                         }
                       }
                   }); //AJAX End
-
-
-
-               
-
-            
           }
         })
         

@@ -12,12 +12,15 @@ use Validator;
 use Redirect;
 use Session;
 use App\Models\Event_Types;
+
 use File;
 use App\Models\users;
 use DB;
 use App\Models\Todo;
 use Carbon\Carbon;
 use Mail;
+
+
 
 use Auth;
 
@@ -140,6 +143,8 @@ class AdminPageController extends Controller
             echo 1;
         }
     }   
+
+    
 
     /**
      * Show the application dashboard.

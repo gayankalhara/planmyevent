@@ -22,7 +22,7 @@
     <div class="wraper container-fluid">
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="bg-picture text-center" style="background-image:url('images/big/bg.jpg')">
+                            <div class="bg-picture text-center">
                                 <div class="bg-picture-overlay">
                                   
 
