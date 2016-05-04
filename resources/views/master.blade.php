@@ -1,17 +1,17 @@
 <?php
     $notification_count = DB::table('notifications')
-            ->select('notification')
+            ->select('title')
             ->count();
 
     $unread_notification_count = DB::table('notifications')
-            ->select('notification')
+            ->select('title')
             ->where('readStatus', '=', '0')
             ->count();
 ?>
 @if($notification_count != 0)
 <?php
     $notifications = DB::table('notifications')
-            ->select('notification', 'body', 'readStatus')
+            ->select('title', 'body', 'readStatus', 'link', 'icon')
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
@@ -208,16 +208,16 @@
                                                 @if($notification_count != 0)
                                                     @foreach($notifications as $notification)
                                                         @if($notification->readStatus == 0)
-                                                            <a href="javascript:void(0);" class="list-group-item list-group-item-success">
+                                                            <a href="{{$notification->link}}" class="list-group-item list-group-item-success">
                                                         @else
-                                                            <a href="javascript:void(0);" class="list-group-item">
+                                                            <a href="{{$notification->link}}" class="list-group-item">
                                                         @endif
                                                             <div class="media">
                                                                 <div class="pull-left p-r-10">
-                                                                    <em class="fa fa-cog fa-2x text-custom"></em>
+                                                                    <em class="fa {{$notification->icon}} fa-2x text-custom"></em>
                                                                 </div>
                                                                 <div class="media-body">
-                                                                    <h5 class="media-heading">{{$notification->notification}}</h5>
+                                                                    <h5 class="media-heading">{{$notification->title}}</h5>
                                                                     <p class="m-0">
                                                                         <small>{{$notification->body}}</small>
                                                                     </p>
@@ -570,7 +570,7 @@
         }
     });
 
-    var notification_count = $('#notificount').text();
+    
 
     if($.trim($('#notificount').html()) == ''){
         notification_count = 0;
@@ -581,12 +581,13 @@
     var notificationsChannel = pusher.subscribe('notifications');
 
     notificationsChannel.bind('success_notification', function(notification) {
+        var notification_count = parseInt($('#notificount').text());
         var title = notification.title;
         var message = notification.message;
         var link = notification.link;
         var icon = notification.icon;
 
-        console.log(notification);
+        console.log(parseInt(notification_count) + 1);
         $('#notificount').text(parseInt(notification_count) + 1); //Increase notification count
         $('#notificationNum').text(parseInt(notification_count) + 1+" New"); //Increase New Notifications Count
         $("#notificationList").prepend('<a href="' + link + '" class="list-group-item list-group-item-success"> <div class="media"> <div class="pull-left p-r-10"> <em class="fa ' + icon + ' fa-2x text-custom"></em> </div> <div class="media-body"> <h5 class="media-heading">' + title + '</h5> <p class="m-0"> <small>'+message+'</small> </p> </div> </div> </a>');

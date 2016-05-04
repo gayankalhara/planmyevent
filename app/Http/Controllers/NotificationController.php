@@ -19,10 +19,13 @@ class NotificationController extends Controller
      */
     public function ShowNotification(Request $request)
     {
+
         $newNotification = new Notifications();
 
-        $newNotification->notification = "Backup Failed!";
-        $newNotification->body = "User generated Backup failed.";
+        $newNotification->title = $request->input('title');
+        $newNotification->body = $request->input('message');
+        $newNotification->icon = $request->input('icon');
+        $newNotification->link = $request->input('link');
         $newNotification->readStatus = '0';
         $newNotification->save();
 
