@@ -6,9 +6,36 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
 
+@section('header-js')
+<script>
+
+    var ModalEffects = (function() 
+    {
+
+    function init2() 
+    {
+        var type = "<?php echo Session::get('type'); ?>";
+        var title = "<?php echo Session::get('title'); ?>";
+        var message = "<?php echo Session::get('message'); ?>";
+        sweetAlert("Oops...", message, type);
+    }
+
+    @if(Session::has('message'))
+        window.onload  = function() {
+            init2(); 
+        };
+    @endif       
+
+    })();
+
+    </script>
+@endsection
+
 @section('content')
 <div class="content">
     <div class="container">
+
+
 
         <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog"> 
@@ -70,7 +97,13 @@
                         <div class="row">
                             <div class="col-sm-3" style="margin-left: 18px;">
                                 <div class="row">
+                                @if(Auth::User()->gender == 'male')
                                     <img src="{{ asset('images/male.png') }}">
+                                @endif
+
+                                @if(Auth::User()->gender == 'female')
+                                    <img src="{{ asset('images/female.png') }}">
+                                @endif
                                 </div>
                             </div>
                             <div class="col-sm-7" style="margin-left: 10px;">
@@ -97,12 +130,12 @@
                                 <div class="">
                                     <div class="row">
                                         <div class="col-xs-6 text-center">
-                                            <canvas id="clear-day" width="115" height="115"></canvas>
+                                            <canvas id="partly-cloudy-day" width="115" height="115"></canvas>
                                         </div>
                                         <div class="col-xs-6">
-                                            <h2 class="m-t-0 text-white"><b> 27°</b></h2>
-                                            <p class="text-white">Clear Day</p>
-                                            <p class="text-white">W: 2km/h, H: 84%</p>
+                                            <h2 class="m-t-0 text-white"><b> 32°C</b></h2>
+                                            <p class="text-white">Partly Cloudy</p>
+                                            <p class="text-white">W: SSW 12 mph, H: 84%</p>
                                         </div>
                                     </div><!-- end row -->
                                 </div><!-- weather-widget -->
@@ -110,19 +143,19 @@
                             <div class="col-sm-5">
                                 <div class="row">
                                     <div class="col-xs-4 text-center">
-                                        <h4 class="text-white m-t-0">MON</h4>
+                                        <h4 class="text-white m-t-0">FRI</h4>
+                                        <canvas id="cloudy" width="35" height="35"></canvas>
+                                        <h4 class="text-white">30°C<i class="wi-degrees"></i></h4>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <h4 class="text-white m-t-0">SAT</h4>
+                                        <canvas id="rain" width="35" height="35"></canvas>
+                                        <h4 class="text-white">28°C<i class="wi-degrees"></i></h4>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <h4 class="text-white m-t-0">SUN</h4>
                                         <canvas id="sleet" width="35" height="35"></canvas>
-                                        <h4 class="text-white">30<i class="wi-degrees"></i></h4>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <h4 class="text-white m-t-0">TUE</h4>
-                                        <canvas id="fog" width="35" height="35"></canvas>
-                                        <h4 class="text-white">28<i class="wi-degrees"></i></h4>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <h4 class="text-white m-t-0">WED</h4>
-                                        <canvas id="partly-cloudy-night" width="35" height="35"></canvas>
-                                        <h4 class="text-white">33<i class="wi-degrees"></i></h4>
+                                        <h4 class="text-white">29°C<i class="wi-degrees"></i></h4>
                                     </div>
                                 </div><!-- End row -->
                             </div> <!-- col-->

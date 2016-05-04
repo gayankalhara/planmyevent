@@ -103,7 +103,8 @@
 
                     function(isConfirm){
                         if (isConfirm) {
-                            window.location.href = "http://www.planmyevent.me/quote-requests";
+                            window.location.href = "{{ url('dashboard/quote-requests') }}";
+
                         }
                     });
 

@@ -109,7 +109,8 @@
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
                                                         <button class="btn btn-success waves-effect waves-light" id="btnsub" type="submit">Save</button>
-                                                        <a href="javascript:;" class="md-trigger" data-modal="data-modal-sure"><button type="button" onclick="javascript:;" class="btn btn-danger waves-effect waves-light" data-modal="data-modal-sure">Delete</button></a>
+                                                        
+                                                        <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#data-modal-sure">Delete</button>
                                                     </div>
                                                 </div>
 
@@ -129,7 +130,7 @@
 </div>
 </div>
 
-<div  class="md-modal md-effect-1" id="data-modal-sure">
+<div  class="md-modal md-effect-1" id="data-modal-sures">
         <div class="md-content" style="background-color: #ff3333 ;">
 
             <div style="color: #fff;">
@@ -146,6 +147,7 @@
                 <input name = "evnamedel" hidden type="text" value = "{{$EventName}}">
                 <button type="submit" name="deltype" class="md-delete btn btn-danger waves-effect waves-light">Delete</button>
                 <button type="button" class="md-close btn btn-inverse waves-effect waves-light">Cancel</button>
+
                 </form>
                 
 
@@ -154,7 +156,30 @@
         </div>
 </div> 
 
+<div id="data-modal-sure" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h4 class="modal-title" id="myModalLabel">Are You Sure You Want To Delete This?</h4>
+              </div>
+              <div class="modal-body">
+              
+              <form  method="post" action="edit">
+                {!! csrf_field() !!}
+                <input name = "evnamedel" hidden type="text" value = "{{$EventName}}">
+                <button type="submit" name="deltype" class="md-delete btn btn-danger waves-effect waves-light">Delete</button>
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
 
+                </form>
+              
+              
+                 
+              
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div>
 <script type="text/javascript">
 
 function img_pathUrl(input){

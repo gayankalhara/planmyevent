@@ -2062,29 +2062,6 @@ var SEMICOLON = SEMICOLON || {};
 
 		init: function(){
 
-			SEMICOLON.widget.animations();
-			SEMICOLON.widget.youtubeBgVideo();
-			SEMICOLON.widget.tabs();
-			SEMICOLON.widget.tabsJustify();
-			SEMICOLON.widget.toggles();
-			SEMICOLON.widget.accordions();
-			SEMICOLON.widget.counter();
-			SEMICOLON.widget.roundedSkill();
-			SEMICOLON.widget.progress();
-			SEMICOLON.widget.twitterFeed();
-			SEMICOLON.widget.flickrFeed();
-			SEMICOLON.widget.instagramPhotos( '36286274.b9e559e.4824cbc1d0c94c23827dc4a2267a9f6b', 'b9e559ec7c284375bf41e9a9fb72ae01' );
-			SEMICOLON.widget.dribbbleShots( '01530280af335d298e756ed8ef786c8c4e92a50b88e53a185531b1a639e768b8' );
-			SEMICOLON.widget.navTree();
-			SEMICOLON.widget.textRotater();
-			SEMICOLON.widget.carousel();
-			SEMICOLON.widget.linkScroll();
-			SEMICOLON.widget.contactForm();
-			SEMICOLON.widget.subscription();
-			SEMICOLON.widget.quickContact();
-			SEMICOLON.widget.cookieNotify();
-			SEMICOLON.widget.extras();
-
 		},
 
 		parallax: function(){
@@ -3066,58 +3043,6 @@ var SEMICOLON = SEMICOLON || {};
 				return true;
 			}
 
-			var $contactForm = $('.contact-widget:not(.customjs)');
-			if( $contactForm.length < 1 ){ return true; }
-
-			$contactForm.each( function(){
-				var element = $(this),
-					elementAlert = element.attr('data-alert-type'),
-					elementLoader = element.attr('data-loader'),
-					elementResult = element.find('.contact-form-result');
-
-				element.find('form').validate({
-					submitHandler: function(form) {
-
-						elementResult.hide();
-
-						if( elementLoader == 'button' ) {
-							var defButton = $(form).find('button'),
-								defButtonText = defButton.html();
-
-							defButton.html('<i class="icon-line-loader icon-spin nomargin"></i>');
-						} else {
-							$(form).find('.form-process').fadeIn();
-						}
-
-						$(form).ajaxSubmit({
-							target: elementResult,
-							dataType: 'json',
-							resetForm: true,
-							success: function( data ) {
-								if( elementLoader == 'button' ) {
-									defButton.html( defButtonText );
-								} else {
-									$(form).find('.form-process').fadeOut();
-								}
-								if( elementAlert == 'inline' ) {
-									if( data.alert == 'error' ) {
-										var alertType = 'alert-danger';
-									} else {
-										var alertType = 'alert-success';
-									}
-
-									elementResult.addClass( 'alert ' + alertType ).html( data.message ).slideDown( 400 );
-								} else {
-									elementResult.attr( 'data-notify-type', data.alert ).attr( 'data-notify-msg', data.message ).html('');
-									SEMICOLON.widget.notifications( elementResult );
-								}
-								if( $(form).find('.g-recaptcha').children('div').length > 0 ) { grecaptcha.reset(); }
-							}
-						});
-					}
-				});
-
-			});
 		},
 
 		subscription: function(){
@@ -3185,73 +3110,7 @@ var SEMICOLON = SEMICOLON || {};
 			});
 		},
 
-		quickContact: function(){
-
-			if( !$().validate ) {
-				console.log('quickContact: Form Validate not Defined.');
-				return true;
-			}
-
-			if( !$().ajaxSubmit ) {
-				console.log('quickContact: jQuery Form not Defined.');
-				return true;
-			}
-
-			var $quickContact = $('.quick-contact-widget:not(.customjs)');
-			if( $quickContact.length < 1 ){ return true; }
-
-			$quickContact.each( function(){
-				var element = $(this),
-					elementAlert = element.attr('data-alert-type'),
-					elementLoader = element.attr('data-loader'),
-					elementResult = element.find('.quick-contact-form-result');
-
-				element.find('form').validate({
-					submitHandler: function(form) {
-
-						elementResult.hide();
-						$(form).animate({ opacity: 0.4 });
-
-						if( elementLoader == 'button' ) {
-							var defButton = $(form).find('button'),
-								defButtonText = defButton.html();
-
-							defButton.html('<i class="icon-line-loader icon-spin nomargin"></i>');
-						} else {
-							$(form).find('.form-process').fadeIn();
-						}
-
-						$(form).ajaxSubmit({
-							target: elementResult,
-							dataType: 'json',
-							resetForm: true,
-							success: function( data ) {
-								$(form).animate({ opacity: 1 });
-								if( elementLoader == 'button' ) {
-									defButton.html( defButtonText );
-								} else {
-									$(form).find('.form-process').fadeOut();
-								}
-								if( elementAlert == 'inline' ) {
-									if( data.alert == 'error' ) {
-										var alertType = 'alert-danger';
-									} else {
-										var alertType = 'alert-success';
-									}
-
-									elementResult.addClass( 'alert ' + alertType ).html( data.message ).slideDown( 400 );
-								} else {
-									elementResult.attr( 'data-notify-type', data.alert ).attr( 'data-notify-msg', data.message ).html('');
-									SEMICOLON.widget.notifications( elementResult );
-								}
-								if( $(form).find('.g-recaptcha').children('div').length > 0 ) { grecaptcha.reset(); }
-							}
-						});
-					}
-				});
-
-			});
-		},
+		
 
 		cookieNotify: function(){
 
@@ -3349,23 +3208,7 @@ var SEMICOLON = SEMICOLON || {};
 		init: function(){
 
 			var t = setTimeout( function(){
-				SEMICOLON.header.topsocial();
-				SEMICOLON.header.fullWidthMenu();
-				SEMICOLON.header.overlayMenu();
-				SEMICOLON.initialize.fullScreen();
-				SEMICOLON.initialize.verticalMiddle();
-				SEMICOLON.initialize.maxHeight();
-				SEMICOLON.initialize.testimonialsGrid();
-				SEMICOLON.initialize.stickyFooter();
-				SEMICOLON.slider.sliderParallaxDimensions();
-				SEMICOLON.slider.captionPosition();
-				SEMICOLON.portfolio.arrange();
-				SEMICOLON.portfolio.portfolioDescMargin();
-				SEMICOLON.widget.tabsJustify();
-				SEMICOLON.widget.html5Video();
-				SEMICOLON.widget.masonryThumbs();
-				SEMICOLON.initialize.dataResponsiveClasses();
-				SEMICOLON.initialize.dataResponsiveHeights();
+
 				if( $gridContainer.length > 0 ) {
 					if( !$gridContainer.hasClass('.customjs') ) {
 						if( $().isotope ) {
@@ -3459,26 +3302,10 @@ var SEMICOLON = SEMICOLON || {};
 	SEMICOLON.documentOnLoad = {
 
 		init: function(){
-			SEMICOLON.slider.captionPosition();
-			SEMICOLON.slider.swiperSliderMenu(true);
-			SEMICOLON.slider.revolutionSliderMenu(true);
 			SEMICOLON.initialize.maxHeight();
-			SEMICOLON.initialize.testimonialsGrid();
-			SEMICOLON.initialize.verticalMiddle();
-			SEMICOLON.initialize.stickFooterOnSmall();
-			SEMICOLON.initialize.stickyFooter();
-			SEMICOLON.portfolio.gridInit( $gridContainer );
-			SEMICOLON.portfolio.filterInit();
-			SEMICOLON.portfolio.shuffleInit();
-			SEMICOLON.portfolio.arrange();
-			SEMICOLON.portfolio.portfolioDescMargin();
+			SEMICOLON.portfolio.portfolioDescMargin(); // Photo Grid
 			SEMICOLON.widget.parallax();
-			SEMICOLON.widget.loadFlexSlider();
-			SEMICOLON.widget.html5Video();
-			SEMICOLON.widget.masonryThumbs();
-			SEMICOLON.header.topsocial();
 			SEMICOLON.header.responsiveMenuClass();
-			SEMICOLON.initialize.modal();
 		}
 
 	};

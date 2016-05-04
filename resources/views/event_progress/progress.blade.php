@@ -78,6 +78,7 @@
                                             <center><button id="btnsub"  class="btn btn-success waves-effect waves-light" type="submit">Update</button></center>
                                       </div>
                                  </div>
+                                 <button type="button" class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#data-modal-sure">Complete Event</button>
                                         </form>
                                         
                                     </div>
@@ -93,6 +94,10 @@
             <!-- End Right content here -->
             <!-- ============================================================== -->
 
+
+
+
+
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -105,7 +110,7 @@
                   <p>Event Status : {{$evedetails['Status']}}</p>
                   <p>Event Audience : {{$evedetails['EventFor']}}</p>
                   <p>Event Duration : {{$evedetails['NoOfDays']}} days</p>
-                  <p>No of Added Date : {{$evedetails['Guests']}}</p>
+                  
                   </div>
                   <div style="float:bottom">
                   <p>Event ID : {{$evedetails['id']}}</p>
@@ -150,7 +155,32 @@
         </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
+<div id="data-modal-sure" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h4 class="modal-title" id="myModalLabel">Are You Sure this Event is Complete?</h4>
+              </div>
+              <div class="modal-body">
+              Customer will be notified via email.
+              <form  method="post" action="">
+                {!! csrf_field() !!}
+               
+                <input name = "EventType" hidden type="text" value = "{{$evedetails['EventType']}}">
+                <input name = "DueDate" hidden type="text" value = "{{$evedetails['EventDate']}}">
+                
+                <button type="submit" name="doneprogress" class="btn btn-default waves-effect">Yes</button>
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">No</button>
+                </form>
+              
+              
+                 
+              
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div>
 
 
 @endsection

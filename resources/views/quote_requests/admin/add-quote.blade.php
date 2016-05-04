@@ -55,9 +55,12 @@
                                   echo '<div class="form-group ">
                                   <label for="'.$services[$i-1].'" class="control-label col-lg-4">'.$services[$i-1].' (USD)</label>
                                   <div class="col-lg-6">
-                                  <input class=" form-control" id="cost'.$i.'" name="cost'.$i.'" type="text" pattern="[0-9]+(\.[0-9][0-9]?)?" placeholder="eg: 1500.00" required>
-                                <input class=" form-control" id="serviceName'.$i.'" name="serviceName'.$i.'" type="hidden" value="'.$services[$i-1].'">
+                                  <input class=" form-control" style="text-align: right;" id="cost[]" name="cost[]" type="text" pattern="[0-9]+(\.[0-9][0-9]?)?" placeholder="eg: 1500.00" required>
+                                <input class=" form-control" id="serviceName[]" name="serviceName[]" type="hidden" value="'.$services[$i-1].'">
+
+
                               </div>
+
                                         </div>';
 
                          }
@@ -68,19 +71,19 @@
                   <div class="form-group ">
                         <label for="firstname" class="control-label col-lg-4">Sub Total (USD)</label>
                               <div class="col-lg-6">
-                                            <input class=" form-control" id="subtotal" name="subtotal" type="text" pattern="[0-9]+(\.[0-9][0-9]?)?" placeholder="eg: 1500.00" required>
+                                            <input class=" form-control" style="text-align: right;" id="subtotal" name="subtotal" type="text" pattern="[0-9]+(\.[0-9][0-9]?)?" readonly>
                       </div>
                     </div>
                     <div class="form-group ">
                         <label for="firstname" class="control-label col-lg-4">Down Payment (USD)</label>
                               <div class="col-lg-6">
-                                            <input class=" form-control" id="downpayment" name="downpayment" type="text" pattern="[0-9]+(\.[0-9][0-9]?)?" placeholder="eg: 1500.00" required>
+                                            <input class=" form-control" style="text-align: right;" id="downpayment" name="downpayment" type="text" pattern="[0-9]+(\.[0-9][0-9]?)?" readonly>
                       </div>
                     </div>
                     <div class="form-group ">
                         <label for="firstname" class="control-label col-lg-4">Total Payable (USD)</label>
                               <div class="col-lg-6">
-                                            <input class=" form-control" id="totalpay" name="totalpay" type="text" pattern="[0-9]+(\.[0-9][0-9]?)?" placeholder="eg: 1500.00" required>
+                                            <input class=" form-control" style="text-align: right;" id="totalpay" name="totalpay" type="text" pattern="[0-9]+(\.[0-9][0-9]?)?" readonly>
                       </div>
                     </div>
                     <hr>
@@ -131,7 +134,7 @@
 
                 function(isConfirm){
                     if (isConfirm) {
-                        window.location.href = "http://www.planmyevent.me/quote-requests";
+                        window.location.href = "http://www.planmyevent.me/dashboard/quote-requests";
                     }
                 });
 
@@ -147,8 +150,38 @@
         });
 
         @endif
+
 });
 </script>
 
+<script type="text/javascript">
+
+    $('#cost\\[\\]').keyup(function () {
+
+        // initialize the sum (total price) to zero
+        var sum = 0;
+        var downpayment = 0;
+        var total = 0;
+
+        // we use jQuery each() to loop through all the textbox with 'price' class
+        // and compute the sum for each loop
+        $('#cost\\[\\]').each(function() {
+            sum += Number($(this).val());
+            downpayment = sum*40/100;
+            total = sum - downpayment;
+        });
+
+        // set the computed value to 'totalPrice' textbox
+
+
+        $('#subtotal').val(sum.toFixed(2));
+        $('#downpayment').val(downpayment.toFixed(2));
+        $('#totalpay').val(total.toFixed(2));
+
+    });
+
+
+
+</script>
 
 @endsection

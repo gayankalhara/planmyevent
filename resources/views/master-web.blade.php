@@ -2,7 +2,6 @@
 <html lang="en-US">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="author" content="SemiColonWeb" />
 
     <!-- Stylesheets
     ============================================= -->
@@ -25,7 +24,7 @@
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" href="{{asset('assets/website/css/colors.php?color=2379CE')}}" type="text/css" />
+    <link rel="stylesheet" href="{{asset('assets/website/css/colors.php?color=1D81BB')}}" type="text/css" />
 
 
     <!-- SLIDER REVOLUTION 5.x CSS SETTINGS -->
@@ -110,7 +109,7 @@
     </style>
 </head>
 
-<body class="stretched">
+<body class="stretched no-transition">
     <!-- Document Wrapper
     ============================================= -->
     <div id="wrapper" class="clearfix">

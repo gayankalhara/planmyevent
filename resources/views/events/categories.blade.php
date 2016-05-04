@@ -153,7 +153,7 @@ foreach($types as $y => $y_value)
 }
 ?>
     <div  class="md-modal md-effect-11" id="data-modal-add">
-        <div class="md-content" <?php if(Session::get('message')=='Record Update Failed') {echo 'style="background-color: #ff3333 ;"';} else { echo 'style="background-color:#2379CE;"';} ?>>
+        <div class="md-content" <?php if(Session::get('message')=='Record Update Failed') {echo 'style="background-color: #ff3333 ;"';} else { echo 'style="background-color:#1D81BB;"';} ?>>
             
             <div style="color: #fff;">
             <h2 style="color: #fff; text-align: center;">Message</h2>

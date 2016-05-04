@@ -219,7 +219,7 @@ public function EditEventCategoriesPost()
       if(isset($_POST['deltype']))
       {
         $deliName = $input['evnamedel'];
-        Event_Types::where('EventName',$deliName)->delete();
+        Event_Types::where('EventName',$deliName)->delete(); 
         Event_Services::where('EventName',$deliName)->delete();
         return redirect('dashboard/events/categories')->with('message', 'Record Deleted Successfully');
       }

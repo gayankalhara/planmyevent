@@ -30,7 +30,7 @@
                                 	<div class="form-group ">
                                         <label for="firstname" class="control-label col-lg-3">Quote ID</label>
                                         <div class="col-lg-9">
-                                            <input class=" form-control" id="eventid" name="eventid" type="text" value="@foreach( $result as $quote){{$quote->QuoteID}}
+                                            <input class=" form-control" id="eventid" name="eventid" type="text" value="@foreach( $result as $quote){{$quote->id}}
                                             					@endforeach" readonly>
                                         </div>
                                     </div>
@@ -155,7 +155,7 @@
                                     <div class="form-group ">
                                         <div class="col-lg-offset-4 col-lg-8">
                                             <button class="btn btn-success waves-effect waves-light" type="submit">Approve Request</button>
-                                            <a href="reject-quote?id=@foreach( $result as $quote){{$quote->QuoteID}}
+                                            <a href="reject-quote?id=@foreach( $result as $quote){{$quote->id}}
                                             @endforeach"><button class="btn btn-default waves-effect" type="button">Reject Request</button>
                                         </div>
                                     </div>

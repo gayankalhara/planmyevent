@@ -322,57 +322,6 @@
 
 
 
-
-                <div class="section notopmargin nobottommargin">
-                    <div class="container clearfix">
-
-                        <div class="row">
-                            <div class="col-md-3 col-sm-6">
-                                <div class="feature-box fbox-outline fbox-dark fbox-effect clearfix">
-                                    <div class="fbox-icon">
-                                        <a href="#"><i class="icon-stack i-alt"></i></a>
-                                    </div>
-                                    <div class="counter counter-small"><span data-from="1" data-to="22" data-refresh-interval="65" data-speed="2500"></span>+</div>
-                                    <h5 class="nomargin color">Clients Served</h5>
-                                    <div class="visible-xs visible-sm bottommargin"></div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3 col-sm-6">
-                                <div class="feature-box fbox-outline fbox-dark fbox-effect clearfix">
-                                    <div class="fbox-icon">
-                                        <a href="#"><i class="icon-tint i-alt"></i></a>
-                                    </div>
-                                    <div class="counter counter-small"><span data-from="1" data-to="45" data-refresh-interval="45" data-speed="2000"></span>+</div>
-                                    <h5 class="nomargin color">Events Planned</h5>
-                                    <div class="visible-xs visible-sm bottommargin"></div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3 col-sm-6">
-                                <div class="feature-box fbox-outline fbox-dark fbox-effect clearfix">
-                                    <div class="fbox-icon">
-                                        <a href="#"><i class="icon-tint i-alt"></i></a>
-                                    </div>
-                                    <div class="counter counter-small"><span data-from="1" data-to="14" data-refresh-interval="50" data-speed="3000"></span>+</div>
-                                    <h5 class="nomargin color">Staff Members</h5>
-                                    <div class="visible-xs bottommargin"></div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3 col-sm-6">
-                                <div class="feature-box fbox-outline fbox-dark fbox-effect clearfix">
-                                    <div class="fbox-icon">
-                                        <a href="#"><i class="icon-text-width i-alt"></i></a>
-                                    </div>
-                                    <div class="counter counter-small"><span data-from="0" data-to="100" data-refresh-interval="50" data-speed="3500"></span>%</div>
-                                    <h5 class="nomargin color">Customer Satisfaction</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
                 
                 <a href="{{ url('/register') }}" class="button button-full center tright footer-stick">
                     <div class="container clearfix">

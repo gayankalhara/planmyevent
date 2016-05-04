@@ -96,7 +96,19 @@ class AdminPageController extends Controller
         return Redirect::back();
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function loginUsing($usedID)
+    {
+        Auth::logout();
+        Auth::loginUsingId($usedID);
 
+        Session::put('user_role', Auth::User()->role);
+        return redirect('dashboard')->with('todoCount', Todo::where('user_id', Auth::User()->id)->get()->count());
+    } 
 
     /**
      * Show the application dashboard.
@@ -249,16 +261,6 @@ class AdminPageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function Test()
-    {
-        return view('test');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function Inbox()
     {
         return view('messages.inbox');
@@ -365,16 +367,6 @@ class AdminPageController extends Controller
     {
         return view('about-us');
     }   
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function EventAdd()
-    {
-        return view('events.add');
-    } 
 
     /**
      * Show the application dashboard.
@@ -519,7 +511,7 @@ class AdminPageController extends Controller
                             ->where('date_archieved', '0000-00-00 00:00:00')
                             ->get();
 
-                            return $todoListActive;
+                           // return $todoListActive;
 
         $todoListArchieved = Todo::where('user_id', Auth::User()->id)
                             ->where('date_deleted', "!=", "0000-00-00 00:00:00")

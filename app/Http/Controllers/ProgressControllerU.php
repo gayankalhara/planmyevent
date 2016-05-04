@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Http\Response;
 use Input;
 use Validator;
+use Redirect;
+use Session;
+use Mail;
  
 //use models
 use App\Models\Event_Types;
@@ -16,10 +19,13 @@ use App\Models\Task_Templates;
 use App\Models\Team_Members;
 use App\Models\Quote_Requests;
 use App\Models\Event_Tasks;
-use App\Models\Notifications;
+
 use Carbon\Carbon;
 use App\Models\Users;
 
+//For Notifications
+use Vinkla\Pusher\Facades\Pusher;
+use App\Notifications;
 class ProgressControllerU extends Controller
 {
 
@@ -72,6 +78,8 @@ class ProgressControllerU extends Controller
  */
       public function EditProgress()
       {
+
+
         $input = Request::all();
         $iName = $input['EventID'];
         $user_id = \Auth::user()->id;
@@ -80,7 +88,50 @@ class ProgressControllerU extends Controller
          $iStatus = array();
          $iTaskID = array();
 
+ if(isset($_POST['doneprogress']))
+      {
+        $today = Carbon::today()->toDateString();
 
+        $em = Quote_Requests::select('*')->where('id',$iName)->first();
+        $mailData = [
+                  'EventID' => $iName,
+                  'EventType' => $em->EventType,
+                  'DueDate' => $em->DueDate, 
+                  'CompletedOn'=> $today,
+                  'FirstName' => $em->UserName
+                  
+                  ];
+                  //send email to customer
+                  Mail::send('emails.event-complete', $mailData, function($message) use ($em)
+                  {
+                        $message->to($em->Email, 'Test') 
+                                ->subject('Your Event Is Ready!');
+                  });
+
+                  //send a notification to customer
+                    $newNotification = new Notifications();
+                    $newNotification->title = 'Event Complete';
+                    $newNotification->body = $em->EventType.' planning is complete';
+                    $newNotification->icon = 'icon';
+                    $newNotification->link = 'dashboard/events/progresscustomer?EventID='.$iName;
+                    $newNotification->readStatus = '0';
+                    $newNotification->save();
+
+                    $message = $em->EventType.' planning is complete';
+                    $icon = 'icon';
+                    $link = 'dashboard/events/progresscustomer?EventID='.$iName;
+                    $title = 'Event Complete';
+
+                    Pusher::trigger('notifications', 'success_notification', ['message' => $message, 'icon' => $icon, 'link' => $icon, 'title' => $title]);
+
+
+
+
+
+                  return redirect('dashboard/events/myevents')->with('message', 'You Completed The Event');
+      }
+      else
+      {
         foreach( $input['percentage']  as $x) 
         {
             $iPercentage[] = $x;
@@ -108,6 +159,7 @@ class ProgressControllerU extends Controller
           
           return redirect('dashboard/events/myevents')->with('message', 'Record Added Successfully');
       }
+    }
 
 //=---------------------------------------------------------------------------------------------------------------------------
 

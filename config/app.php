@@ -206,7 +206,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        'LaravelPusher' => Vinkla\Pusher\Facades\Pusher::class
+        'LaravelPusher' => Vinkla\Pusher\Facades\Pusher::class,
+        'Paypalpayment'   => Anouar\Paypalpayment\Facades\PaypalPayment::class
 
     ],
 

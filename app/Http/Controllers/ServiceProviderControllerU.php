@@ -151,7 +151,7 @@ class ServiceProviderControllerU extends Controller
           if($result=='[]')
             return redirect('dashboard/service-providers');
           
-          return view('serviceproviders.service-providers')->with('result',$result);
+          return view('serviceproviders.edit-provider')->with('result',$result);
           return($input);
       }
 
@@ -175,53 +175,61 @@ class ServiceProviderControllerU extends Controller
           $input = Request::all();
 
           //create validation array
-          $rules = array(
-            'address' => 'regex:/[A-Za-z0-9 _.,!"]+$]*/',
-            'email' => 'required|email',
-            'telno' => 'digits:10' 
-            );
-
-          //use validation class
-          $validation = Validator::make($input, $rules);
-
-          //if validation fails, redirect.
-          if($validation->fails()){
-            return redirect('dashboard/service-providers/edit')->withErrors($validation)->withInput();
-          }
+          
           
           // check if delete button is clicked
           if(isset($_POST['delprov']))
           {
 
-            $iCompanyName = $input['delcname'];
-            $iServiceName = $input['delsname'];
+                        $iCompanyName = $input['delcname'];
+                        $iServiceName = $input['delsname'];
+                      try 
+                        {
+                        //delete the record from service_providers page
+                        Service_Providers::where('CompanyName',$iCompanyName)->where('Service',$iServiceName)->delete();
 
-            //delete the record from service_providers page
-            Service_Providers::where('CompanyName',$iCompanyName)->where('Service',$iServiceName)->delete();
-          
-            return redirect('dashboard/service-providers')->with('message', 'Record Deleted Successfully');
+                         return redirect('dashboard/service-providers')->with('message', 'Record Deleted Successfully');
+                        }
+                        catch(\Illuminate\Database\QueryException $e2)
+                        {
+                            return redirect('dashboard/service-providers')->with('message', 'Record Update Failed');
+                        }
+
           }
           else
           {
+                        $rules = array(
+                        'address' => 'regex:/[A-Za-z0-9 _.,!"]+$]*/',
+                        'email' => 'required|email',
+                        'telno' => 'digits:10' 
+                        );
+
+                      //use validation class
+                      $validation = Validator::make($input, $rules);
+
+                      //if validation fails, redirect.
+                      if($validation->fails()){
+                        return redirect('dashboard/service-providers/edit')->withErrors($validation)->withInput();
+                      }
           
-            //get post data to variables
-            $iCompanyName = $input['cname'];
-            $iServiceName = $input['sname'];
-            $iAddress = $input['address'];
-            $iTelNo = $input['telno'];
-            $iEmail = $input['email'];
+                      //get post data to variables
+                      $iCompanyName = $input['cname'];
+                      $iServiceName = $input['sname'];
+                      $iAddress = $input['address'];
+                      $iTelNo = $input['telno'];
+                      $iEmail = $input['email'];
 
-          try 
-          {
-            //update the service providers table data
-            Service_Providers::where('CompanyName', $iCompanyName)->where('Service', $iServiceName)->update(['Address' => $iAddress , 'TelNo' => $iTelNo , 'Email' => $iEmail ]);    
-            return redirect('dashboard/service-providers')->with('message', 'Record Updated Successfully');
-          }
+                    try 
+                    {
+                      //update the service providers table data
+                      Service_Providers::where('CompanyName', $iCompanyName)->where('Service', $iServiceName)->update(['Address' => $iAddress , 'TelNo' => $iTelNo , 'Email' => $iEmail ]);    
+                      return redirect('dashboard/service-providers')->with('message', 'Record Updated Successfully');
+                    }
 
-          catch(\Illuminate\Database\QueryException $e2)
-          {
-            return redirect('dashboard/service-providers')->with('message', 'Record Update Failed');
-          }
+                    catch(\Illuminate\Database\QueryException $e2)
+                    {
+                      return redirect('dashboard/service-providers')->with('message', 'Record Update Failed');
+                    }
         }
       }
 //----------------------------------------------------------------------------------------------------------------------------------------------

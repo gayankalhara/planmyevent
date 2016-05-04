@@ -20,7 +20,7 @@ class Quote_Requests extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'QuoteID';
+    protected $primaryKey = 'id';
 
 
     /**

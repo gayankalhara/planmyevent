@@ -266,7 +266,7 @@ function($) {
                 text: "All of your todo items will be permenently deleted.",
                 type: 'warning',
                 showCancelButton: true,
-                cancelButtonColor: '#2379CE',
+                cancelButtonColor: '#1D81BB',
                 confirmButtonColor: '#E02222',
                 confirmButtonText: 'Yes, delete all!',
                 closeOnConfirm: true
@@ -393,7 +393,7 @@ function todoDelClick(){
                         text: "Your todo item will be permenently deleted.",
                         type: 'warning',
                         showCancelButton: true,
-                        cancelButtonColor: '#2379CE',
+                        cancelButtonColor: '#1D81BB',
                         confirmButtonColor: '#E02222',
                         confirmButtonText: 'Yes, delete it!',
                         closeOnConfirm: true

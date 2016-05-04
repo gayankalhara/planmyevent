@@ -119,11 +119,14 @@
                                                                             <a data-toggle="dropdown" class="dropdown-toggle btn-rounded btn btn-success waves-effect waves-light" href="#"> Actions <span class="caret"></span></a>
                                                                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                                                                 <li><a href="#">Edit Details</a></li>
+                                                                                @if($userAdmin->id != 0)
                                                                                 <li><a href="#">Resend Email Confirmation</a></li>
+                                                                                <li><a href="{{ action('AdminPageController@loginUsing', [$userAdmin->id]) }}">Login as this User</a></li>
                                                                                 <li><a href="#" class="reset" data-id="{{ $userAdmin->id }}" data-email="{{ $userAdmin->email }}">Send Password Reset Link</a></li>
                                                                                 <li><a href="#" class="change-email" data-id="{{ $userAdmin->id }}">Change Email Address</a></li>
                                                                                 <li class="divider"></li>
                                                                                 <li><a onclick="confirmDelete();" href="#" style="color: #E62121;">Delete Account</a></li>
+                                                                                @endif
                                                                             </ul>
                                                                         </div>
                                                                     </div>
@@ -179,6 +182,7 @@
                                                                             <a data-toggle="dropdown" class="dropdown-toggle btn-rounded btn btn-success waves-effect waves-light" href="#"> Actions <span class="caret"></span></a>
                                                                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                                                                 <li><a href="#">Edit Details</a></li>
+                                                                                <li><a href="{{ action('AdminPageController@loginUsing', [$userAdmin->id]) }}">Login as this User</a></li>
                                                                                 <li><a href="#">Resend Email Confirmation</a></li>
                                                                                 <li><a href="#" class="reset" data-id="{{ $userAdmin->id }}" data-email="{{ $userAdmin->email }}">Send Password Reset Link</a></li>
                                                                                 <li><a href="#" class="change-email" data-id="{{ $userAdmin->id }}">Change Email Address</a></li>
@@ -236,6 +240,7 @@
                                                                             <a data-toggle="dropdown" class="dropdown-toggle btn-rounded btn btn-success waves-effect waves-light" href="#"> Actions <span class="caret"></span></a>
                                                                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                                                                 <li><a href="#">Edit Details</a></li>
+                                                                                <li><a href="{{ action('AdminPageController@loginUsing', [$userAdmin->id]) }}">Login as this User</a></li>
                                                                                 <li><a href="#">Resend Email Confirmation</a></li>
                                                                                 <li><a href="#" class="reset" data-id="{{ $userAdmin->id }}" data-email="{{ $userAdmin->email }}">Send Password Reset Link</a></li>
                                                                                 <li><a href="#" class="change-email" data-id="{{ $userAdmin->id }}">Change Email Address</a></li>
@@ -291,6 +296,7 @@
                                                                             <a data-toggle="dropdown" class="dropdown-toggle btn-rounded btn btn-success waves-effect waves-light" href="#"> Actions <span class="caret"></span></a>
                                                                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                                                                 <li><a href="#">Edit Details</a></li>
+                                                                                <li><a href="{{ action('AdminPageController@loginUsing', [$userAdmin->id]) }}">Login as this User</a></li>
                                                                                 <li><a href="#">Resend Email Confirmation</a></li>
                                                                                 <li><a href="#" class="reset" data-id="{{ $userAdmin->id }}" data-email="{{ $userAdmin->email }}">Send Password Reset Link</a></li>
                                                                                 <li><a href="#" class="change-email" data-id="{{ $userAdmin->id }}">Change Email Address</a></li>
@@ -344,7 +350,7 @@ function confirmDelete(){
       text: "You won't be able to recover the account once deleted!",
       type: 'warning',
       showCancelButton: true,
-      cancelButtonColor: '#2379CE',
+      cancelButtonColor: '#1D81BB',
       confirmButtonColor: '#E02222',
       confirmButtonText: 'Yes, delete it!',
       closeOnConfirm: false
@@ -419,7 +425,7 @@ function confirmDelete(){
                         text: "The user will receive an email with password reset link.",
                         type: 'warning',
                         showCancelButton: true,
-                        cancelButtonColor: '#2379CE',
+                        cancelButtonColor: '#1D81BB',
                         confirmButtonColor: '#E02222',
                         confirmButtonText: 'Yes, delete it!',
                         closeOnConfirm: false
@@ -462,7 +468,7 @@ function confirmDelete(){
                         text: "The user will not be able to login from previous email address.",
                         type: 'warning',
                         showCancelButton: true,
-                        cancelButtonColor: '#2379CE',
+                        cancelButtonColor: '#1D81BB',
                         confirmButtonColor: '#E02222',
                         confirmButtonText: 'Yes, change it!',
                         closeOnConfirm: false

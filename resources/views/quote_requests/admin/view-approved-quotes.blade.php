@@ -30,7 +30,7 @@
                                     <div class="form-group ">
                                         <label for="firstname" class="control-label col-lg-3">Quote ID</label>
                                         <div class="col-lg-9">
-                                            <input class=" form-control" id="eventid" name="eventid" type="text" value="@foreach( $result as $quote){{$quote->QuoteID}}
+                                            <input class=" form-control" id="eventid" name="eventid" type="text" value="@foreach( $result as $quote){{$quote->id}}
                                             @endforeach" readonly>
                                         </div>
                                     </div>
@@ -154,7 +154,7 @@
 
                                     <div class="form-group ">
                                         <div class="col-lg-offset-5 col-lg-4">
-                                            <a href="/quote-requests"><button class="btn btn-default waves-effect" type="button">Go Back</button></a>
+                                            <a href="{{ url('dashboard/quote-requests') }}"><button class="btn btn-default waves-effect" type="button">Go Back</button></a>
                                         </div>
                                     </div>
                                     {!! csrf_field() !!}

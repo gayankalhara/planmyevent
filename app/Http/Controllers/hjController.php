@@ -6,6 +6,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
+use App\Http\Controllers\EmailController;
 use Input;
 use Validator;
 use Redirect;
@@ -37,11 +38,31 @@ class hjController extends Controller
      *
      * @return request-a-quote view with all Event Types in database as $eventType variable
      */
-    public function LoadEventTypes()
+    public function LoadRequestQuote()
     {
+        $user = Auth::user();
+
+        foreach ($user as $key) {
+
+            $name = $user->name;
+            $email = $user->email;
+            $phone = $user->telephone;
+            $address = $user->address;
+            $city = $user->city;
+            $zip = $user->zip;
+
+        }
+
+        $fullname = explode(" ", $name);
+
+        if(!array_key_exists ( 1 , $fullname ))
+            $fullname[1] = "";
+
         $eventName = Event_Types::select('EventName')->get();
 
-        return view('quote_requests/customer/request-a-quote')->with('eventType', $eventName);
+        return view('quote_requests/customer/request-a-quote')->with( array('eventType' => $eventName, 'fullname' => $fullname,
+                                    'email' => $email,'phone' => $phone, 'address' => $address, 'city' => $city, 'zip' => $zip));
+
     }
 
 
@@ -79,7 +100,7 @@ class hjController extends Controller
         /*
          * Get all the existing Quote IDs from the database
          */
-        $getid = Quote_Requests::select('QuoteID')->get();
+        $getid = Quote_Requests::select('id')->get();
 
         /*
          * condition used to generate the Quote ID
@@ -89,11 +110,11 @@ class hjController extends Controller
          */
         if(!$getid->isEmpty()){
 
-            $getid = Quote_Requests::select('QuoteID')->orderBy('QuoteID', 'desc')->first()->get();
+            $getid = Quote_Requests::select('id')->orderBy('id', 'desc')->first()->get();
 
             foreach ($getid as $key) {
 
-                $id = ((int)$key->QuoteID) + 1;
+                $id = ((int)$key->id) + 1;
 
             }
 
@@ -111,7 +132,6 @@ class hjController extends Controller
          */
         $rules = array(
             'firstname' => 'required|alpha',
-            'lastname' => 'required|alpha',
             'address' => 'required',
             'city' => 'required|alpha',
             'zip' => 'numeric',
@@ -132,7 +152,7 @@ class hjController extends Controller
 
         if($validation->fails()){
 
-            return redirect('request-a-quote')->withErrors($validation)->withInput();
+            return redirect('dashboard/request-a-quote')->withErrors($validation)->withInput();
         }
 
         else {
@@ -176,7 +196,7 @@ class hjController extends Controller
                  */
                 $quoteRequests = new Quote_Requests;
 
-                $quoteRequests->QuoteID = $id;
+                $quoteRequests->id = $id;
                 $quoteRequests->UserID = $userID;
                 $quoteRequests->Username = $username;
                 $quoteRequests->FirstName = $fname;
@@ -214,6 +234,10 @@ class hjController extends Controller
                     $requestedServices->save();
 
                 }
+
+                $newemail = new EmailController;
+
+                $newemail->requestQuoteEmail($username, $email, $id);
 
                 return redirect('dashboard/request-a-quote')->with('message', 'success');
 
@@ -267,7 +291,7 @@ class hjController extends Controller
     {
         $quoteid = Request::all();
 
-        $result = Quote_Requests::select('*')->where('QuoteID', $quoteid['id'])->get();
+        $result = Quote_Requests::select('*')->where('id', $quoteid['id'])->get();
 
         $quote = Quote_Requests::find($quoteid['id']);
 
@@ -299,7 +323,7 @@ class hjController extends Controller
     {
         $quoteid = Request::all();
 
-        $result = Quote_Requests::select('*')->where('QuoteID', $quoteid['id'])->get();
+        $result = Quote_Requests::select('*')->where('id', $quoteid['id'])->get();
 
         $quote = Quote_Requests::find($quoteid['id']);
 
@@ -332,7 +356,7 @@ class hjController extends Controller
     {
         $quoteid = Request::all();
 
-        $result = Quote_Requests::select('*')->where('QuoteID', $quoteid['id'])->get();
+        $result = Quote_Requests::select('*')->where('id', $quoteid['id'])->get();
 
         $quote = Quote_Requests::find($quoteid['id']);
 
@@ -365,7 +389,7 @@ class hjController extends Controller
     {
         $quoteid = Request::all();
 
-        $result = Rejected_Quotes::select('*')->where('QuoteID', $quoteid['id'])->get();
+        $result = Rejected_Quotes::select('*')->where('id', $quoteid['id'])->get();
 
         return view('quote_requests/customer/reject-message')->with('result', $result);
     }
@@ -497,10 +521,8 @@ class hjController extends Controller
     {
         $quoteid = Request::all();
 
-        $result = Quote_Requests::select('*')->where('QuoteID', $quoteid['id'])->get();
+        $result = Quote_Requests::select('*')->where('id', $quoteid['id'])->get();
 
-        //$serviceList = DB::table('quote_requests')->join('requested_services', 'quote_requests.EventID', '=', 'requested_services.EventID')->select('requested_services.*')->where('quote_requests.EventID', $id['id'])->get();
-        
         $quote = Quote_Requests::find($quoteid['id']);
 
         $serviceList = $quote->getServices($quoteid['id'])->get();
@@ -531,7 +553,7 @@ class hjController extends Controller
     {
         $quoteid = Request::all();
 
-        $result = Quote_Requests::select('*')->where('QuoteID', $quoteid['id'])->get();
+        $result = Quote_Requests::select('*')->where('id', $quoteid['id'])->get();
 
         $quote = Quote_Requests::find($quoteid['id']);
 
@@ -563,7 +585,7 @@ class hjController extends Controller
     {
         $quoteid = Request::all();
 
-        $result = Quote_Requests::select('*')->where('QuoteID', $quoteid['id'])->get();
+        $result = Quote_Requests::select('*')->where('id', $quoteid['id'])->get();
 
         $quote = Quote_Requests::find($quoteid['id']);
 
@@ -681,11 +703,19 @@ class hjController extends Controller
         $remarks = $id['remarks'];
         $addedDate = date('Y-m-d H:i:s');
 
+        $cost = array();
+        $serviceName = array();
+
+        foreach( $id['cost']  as $key){
+            $cost[] = $key;
+        }
+
+        foreach( $id['serviceName']  as $key){
+            $serviceName[] = $key;
+        }
 
         try{
-            /*
-             *
-             */
+
             $approvedQuote = new Approved_Quotes;
 
             $approvedQuote->QuoteID = $quoteID;
@@ -698,19 +728,25 @@ class hjController extends Controller
 
             $approvedQuote->save();
 
-            for ($i=1; $i <= $serviceCount; $i++) {
-
-                $service = $id['serviceName'.$i.''];
-                $cost = $id['cost'.$i.''];
-
+            foreach($id['serviceName'] as $key=>$value){
                 Requested_Services::where('QuoteID', $quoteID)
-                                    ->where('Service', $service)
-                                    ->update(['Cost' => $cost]);
-
+                                    ->where('Service', $serviceName[$key])
+                                    ->update(['Cost' => $cost[$key]]);
             }
 
-            Quote_Requests::where('QuoteID', $quoteID)
+            Quote_Requests::where('id', $quoteID)
                             ->update(['Status' => 'Approved']);
+
+            $user = Quote_Requests::select('Username', 'Email')->where('id', $quoteID)->get();
+
+            foreach ($user as $key) {
+                $username = $key->Username;
+                $emailuser = $key->Email;
+            }
+
+            $newemail = new EmailController;
+
+            $newemail->quoteApprovedEmail($username, $emailuser, $quoteID);
 
             $result = array('eventID' => $quoteID, 'eventType' => $eventType, 'serviceCount' => $serviceCount, 'services' => $serviceList, 'message' => 'success');
 
@@ -749,7 +785,7 @@ class hjController extends Controller
 
             $eventID = $result['eventID'];
 
-            $quoteDetails = Quote_Requests::select('*')->where('QuoteID', $eventID)->get();
+            $quoteDetails = Quote_Requests::select('*')->where('id', $eventID)->get();
 
             $quote = Quote_Requests::find($eventID);
 
@@ -772,7 +808,7 @@ class hjController extends Controller
             $id = Request::all();
             $eventID = $id['id'];
 
-            $quoteDetails = Quote_Requests::select('*')->where('QuoteID', $eventID)->get();
+            $quoteDetails = Quote_Requests::select('*')->where('id', $eventID)->get();
 
             $quote = Quote_Requests::find($eventID);
 
@@ -827,12 +863,23 @@ class hjController extends Controller
 
             $rejectedQuote->save();
 
-            Quote_Requests::where('QuoteID', $quoteID)
+            Quote_Requests::where('id', $quoteID)
                 ->update(['Status' => 'Rejected']);
 
             $result = array('eventID' => $quoteID, 'message' => 'success');
 
-            return redirect('/quote-requests/reject-quote')->with('result', $result);
+            $user = Quote_Requests::select('Username', 'Email')->where('id', $quoteID)->get();
+
+            foreach ($user as $key) {
+                $username = $key->Username;
+                $emailuser = $key->Email;
+            }
+
+            $email = new EmailController;
+
+            $email->quoteRejectedEmail($username, $emailuser, $quoteID, $reason, $message);
+
+            return redirect('dashboard/quote-requests/reject-quote')->with('result', $result);
 
         }
 

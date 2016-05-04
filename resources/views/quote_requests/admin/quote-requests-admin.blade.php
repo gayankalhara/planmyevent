@@ -63,12 +63,12 @@
                                                 foreach($pending as $quotepending)
                                                 {
                                                     echo '<tr>';
-                                                    echo '<td>'.$quotepending->QuoteID.'</td>';
+                                                    echo '<td>'.$quotepending->id.'</td>';
                                                     echo '<td>'.$quotepending->FirstName.' '.$quotepending->LastName. '</td>';
                                                     echo '<td>'.$quotepending->Email.'</td>';
                                                     echo '<td>'.$quotepending->Phone.'</td>';
                                                     echo '<td>'.$quotepending->EventType.'</td>';
-                                                    echo '<td><a href ="quote-requests/view-pending?id='.$quotepending->QuoteID.'" ><center>View  <i class="fa fa-edit"></i></center></td>';
+                                                    echo '<td><a href ="quote-requests/view-pending?id='.$quotepending->id.'" ><center>View  <i class="fa fa-edit"></i></center></td>';
                                                     ?>
                                     <?php
                                                     echo '</tr>';
@@ -104,12 +104,12 @@
                                                 foreach($approved as $quoteapproved)
                                                 {
                                                     echo '<tr>';
-                                                    echo '<td>'.$quoteapproved->QuoteID.'</td>';
+                                                    echo '<td>'.$quoteapproved->id.'</td>';
                                                     echo '<td>'.$quoteapproved->FirstName.' '.$quoteapproved->LastName. '</td>';
                                                     echo '<td>'.$quoteapproved->Email.'</td>';
                                                     echo '<td>'.$quoteapproved->Phone.'</td>';
                                                     echo '<td>'.$quoteapproved->EventType.'</td>';
-                                                    echo '<td><a href ="quote-requests/view-approved?id='.$quoteapproved->QuoteID.'" ><center>View  <i class="fa fa-edit"></i></center></td>';
+                                                    echo '<td><a href ="quote-requests/view-approved?id='.$quoteapproved->id.'" ><center>View  <i class="fa fa-edit"></i></center></td>';
                                                     ?>
                                     <?php
                                                     echo '</tr>';
@@ -145,12 +145,12 @@
                                                 foreach($rejected as $quoterejected)
                                                 {
                                                     echo '<tr>';
-                                                    echo '<td>'.$quoterejected->QuoteID.'</td>';
+                                                    echo '<td>'.$quoterejected->id.'</td>';
                                                     echo '<td>'.$quoterejected->FirstName.' '.$quoterejected->LastName. '</td>';
                                                     echo '<td>'.$quoterejected->Email.'</td>';
                                                     echo '<td>'.$quoterejected->Phone.'</td>';
                                                     echo '<td>'.$quoterejected->EventType.'</td>';
-                                                    echo '<td><a href ="quote-requests/view-rejected?id='.$quoterejected->QuoteID.'" ><center>View  <i class="fa fa-edit"></i></center></td>';
+                                                    echo '<td><a href ="quote-requests/view-rejected?id='.$quoterejected->id.'" ><center>View  <i class="fa fa-edit"></i></center></td>';
                                                     ?>
                                     <?php
                                                     echo '</tr>';

@@ -35,86 +35,42 @@
                                     <div class="form-group ">
                                         <label for="firstname" class="control-label col-lg-3">Firstname *</label>
                                         <div class="col-lg-9">
-                                            <input class=" form-control" id="firstname" name="firstname" type="text" value="{{old('firstname')}}" required>
+                                            <input class=" form-control" id="firstname" name="firstname" type="text" value="{{$fullname[0]}}" readonly>
                                         </div>
-                                        @if ($errors->has('firstname'))
-                                        <div class="col-lg-9 col-lg-offset-3">
-                                            <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('firstname')}}</div>
-                                        </div>
-                                        @endif
                                     </div>
                                     <div class="form-group ">
                                         <label for="lastname" class="control-label col-lg-3">Lastname *</label>
                                         <div class="col-lg-9">
-                                            <input class=" form-control" id="lastname" name="lastname" type="text" value="{{old('lastname')}}" required>
+                                            <input class=" form-control" id="lastname" name="lastname" type="text" value="{{$fullname[1]}}" readonly>
                                         </div>
-                                        @if ($errors->has('lastname'))
-                                            <div class="col-lg-9 col-lg-offset-3">
-                                                <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('lastname')}}</div>
-                                            </div>
-                                        @endif
                                     </div>
                                     <div class="form-group ">
                                         <label for="address" class="control-label col-lg-3">Address *</label>
                                         <div class="col-lg-9">
-                                            <input class="form-control " id="address" name="address" type="text" value="{{old('address')}}" required>
+                                            <input class="form-control " id="address" name="address" type="text" value="{{$address}}" readonly>
                                         </div>
-                                        @if ($errors->has('address'))
-                                            <div class="col-lg-9 col-lg-offset-3">
-                                                <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('address')}}</div>
-                                            </div>
-                                        @endif
                                     </div>
                                     <div class="form-group ">
                                         <label for="city" class="control-label col-lg-3">City *</label>
                                         <div class="col-lg-4">
-                                            <input class="form-control " id="city" name="city" type="text" value="{{old('city')}}" required>
+                                            <input class="form-control " id="city" name="city" type="text" value="{{$city}}" readonly>
                                         </div>
                                         <label for="zip" class="control-label col-lg-1">Zip</label>
                                         <div class="col-lg-4">
-                                            <input class="form-control " id="zip" name="zip" type="text" value="{{old('zip')}}">
+                                            <input class="form-control " id="zip" name="zip" type="text" value="{{$zip}}" readonly>
                                         </div>
-
-                                        @if (($errors->has('city')) && ($errors->has('zip')))
-                                            <div class="col-lg-4 col-lg-offset-3">
-                                                <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('city')}}</div>
-                                            </div>
-                                            <div class="col-lg-4 col-lg-offset-1">
-                                                <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('zip')}}</div>
-                                            </div>
-
-                                            @elseif ($errors->has('city'))
-                                                <div class="col-lg-4 col-lg-offset-3">
-                                                    <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('city')}}</div>
-                                                </div>
-
-                                        @elseif ($errors->has('zip'))
-                                            <div class="col-lg-4 col-lg-offset-8">
-                                                <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('zip')}}</div>
-                                            </div>
-                                        @endif
                                     </div>
                                     <div class="form-group ">
                                         <label for="email" class="control-label col-lg-3">Email *</label>
                                         <div class="col-lg-9">
-                                            <input class="form-control " id="email" name="email" type="email" value="{{old('email')}}" required>
+                                            <input class="form-control " id="email" name="email" type="email" value="{{$email}}" readonly>
                                         </div>
-                                        @if ($errors->has('email'))
-                                            <div class="col-lg-9 col-lg-offset-3">
-                                                <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('email')}}</div>
-                                            </div>
-                                        @endif
                                     </div>
                                     <div class="form-group ">
                                         <label for="phone" class="control-label col-lg-3">Phone *</label>
                                         <div class="col-lg-9">
-                                            <input class="form-control " id="phone" name="phone" type="text" value="{{old('phone')}}" required>
+                                            <input class="form-control " id="phone" name="phone" type="text" value="{{$phone}}" readonly>
                                         </div>
-                                        @if ($errors->has('phone'))
-                                            <div class="col-lg-9 col-lg-offset-3">
-                                                <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('phone')}}</div>
-                                            </div>
-                                        @endif
                                     </div>
                                     <div class="form-group ">
                                         <label for="contact" class="control-label col-lg-3">Contact via *</label>
@@ -136,6 +92,10 @@
                                             </div>
                                         @endif
                                     </div>
+                                    <br/>
+                                    <hr>
+                                    <h4>EVENT DETAILS</h4> 
+                                    <br/>
                                     <div class="form-group ">
                                         <label for="eventType" class="control-label col-lg-3">Event Type *</label>
                                         <div class="col-md-8">
@@ -157,7 +117,7 @@
                                         <label for="task" class="control-label col-lg-3">Task *</label>
                                         <div class="col-md-8">
                                             <select multiple class="form-control" name="task[]" id="task" required>
-                                                </select>
+                                            </select>
                                             <p>Press Control to select multiple tasks</p>
                                         </div>
                                         @if ($errors->has('task'))
@@ -166,10 +126,6 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <br/>
-                                    <hr>
-                                    <h4>EVENT DETAILS</h4> 
-                                    <br/>
                                     <div class="form-group ">
                                         <label for="guests" class="control-label col-lg-3">No. of guests *</label>
                                         <div class="col-lg-9">
@@ -282,13 +238,19 @@
 
             var d = new Date();
 
-            var month = d.getMonth();
+            var month = d.getMonth().toString();
 
-            if(month.toString().length <2){
+            var day = d.getDate().toString();
+
+            if(month.length <2){
                 month = '0' + (d.getMonth()+1).toString();
             }
 
-            var date = d.getFullYear().toString() + '-' + month + '-' + d.getDate().toString();
+            if(day.length <2){
+                day = '0' + day;
+            }
+
+            var date = d.getFullYear().toString() + '-' + month + '-' + day;
 
             $('#eventdate').attr('min' , date);
 
@@ -296,14 +258,24 @@
 
                 var event = $('#eventType').val();
 
+                $.ajaxSetup(
+                        {
+                            headers:
+                            {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
                 $.ajax({
 
-                    type: 'post',
-                    url: 'request-a-quote/task',
+
+
+                    type: "POST",
+                    url: "{{ url('dashboard/request-a-quote/task') }}",
                     data: {event: event, '_token': '{!! csrf_token() !!}'},
+                    cache: false,
                     beforeSend: function(){
                         $('#spin').show();
-
                     },
                     success: function(data) {
 
@@ -373,13 +345,7 @@
 
         $("#demo").click(function(){
 
-            $("#firstname").val("Hasitha");
-            $("#lastname").val("Jayasinghe");
-            $("#address").val("Pitakotte");
-            $("#city").val("Pitakotte");
-            $("#zip").val("10100");
-            $("#email").val("hasitha.aja@gmail.com");
-            $("#phone").val("0773685526");
+
             $("#contact[value='Email']").prop('checked',true);
             $("#guests").val("20");
             $("#eventdate").val("2016-05-12");

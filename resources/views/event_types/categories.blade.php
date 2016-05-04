@@ -25,28 +25,6 @@
         $(window).resize();
 @endif       
 
-<?php
-                        switch (session()->get('user_role')){
-                            case "customer":
-                                $userRole = "Customer";
-                                break;
-
-                            case "admin":
-                                $userRole = "Administrator";
-                                break;
-
-                            case "event-planner":
-                                $userRole = "Event Planner";
-                                break;
-
-                            case "team-member":
-                                $userRole = "Team Member";
-                                break;
-
-                            default:
-                                $userRole = "Unknown User";
-                        }
-                    ?>        
 })();
 
 </script>
@@ -136,7 +114,7 @@ foreach($types as $y => $y_value)
                             <input  hidden type="text" name="EventName" id="EventName" value="<?php echo $y_value ;?>">
 
                             @if ($userRole == "Administrator" || $userRole == "Event Planner") 
-                            <button style="margin-top:5px" type ="submit" class="btn btn-success w-md waves-effect waves-light">Edit Services</button>
+                            <button style="margin-top:5px" type ="submit" class="btn btn-success w-md waves-effect waves-light">Edit Category</button>
                             <?php echo '<a href ="../question-builder?category='.$slug.'"  style="margin-top:5px" class="btn btn-success w-md waves-effect waves-light">Edit Questions</a>';?>
                             <?php echo '<a href ="../events/categories/tasks/edit?EventName='.$y_value.'"  style="margin-top:5px" class="btn btn-success w-md waves-effect waves-light">Edit Tasks</a>';?>
                             @endif

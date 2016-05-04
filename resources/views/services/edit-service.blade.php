@@ -12,7 +12,7 @@
 @section('header-js')
 
 @endsection
-
+ 
 
 <?php
 $service = $_GET['Service'];
@@ -77,7 +77,7 @@ $service = $_GET['Service'];
                                             <div class="form-group">
                                                     <div class="col-lg-offset-2 col-lg-10">
                                                         <button id="btnsub"  class="btn btn-success waves-effect waves-light" type="submit">Save</button>
-                                                        <a href="javascript:;" class="md-trigger" data-modal="data-modal-sure"><button type="button" onclick="javascript:;" class="btn btn-danger waves-effect waves-light" data-modal="data-modal-sure">Delete</button></a>
+                                                        <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#data-modal-sure">Delete</button>
                                                     </div>
                                             </div>
                                         </form>
@@ -93,32 +93,37 @@ $service = $_GET['Service'];
 
 </div>
 </div>
-<div  class="md-modal md-effect-1" id="data-modal-sure">
-        <div class="md-content" style="background-color: #ff3333 ;">
 
-            <div style="color: #fff;">
-            <h2 style="color: #fff; text-align: center;">Confirm</h2>
-                <p style="text-align: center;"> Are You Sure You Want To Delete This? </p>
-                 
-                <div class="row" style="margin-top: 15px; margin-bottom: 20px;">
-                            
-                </div>
 
-                <div class="row" style="text-align: center;">
-                <form  method="post" action="edit">
+<div id="data-modal-sure" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h4 class="modal-title" id="myModalLabel">Are You Sure You Want To Delete This?</h4>
+              </div>
+              <div class="modal-body">
+              
+              <form  method="post" action="edit">
                 {!! csrf_field() !!}
 
                 
                 <input hidden name = "delsname"  type="text" value = "<?php echo $service; ?>">
-                <button type="submit" name="delserv" class="md-delete btn btn-danger waves-effect waves-light">Delete</button>
-                <button type="button" class="md-close btn btn-inverse waves-effect waves-light">Cancel</button>
+                <button type="submit" name="delserv" class="btn btn-danger waves-effect">Delete</button>
+
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
                 </form>
                 
-
-                </div>
-            </div>
-        </div>
+              
+              
+                 
+              
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </div>
+
+
 @endsection
 
 @section('footer-css')

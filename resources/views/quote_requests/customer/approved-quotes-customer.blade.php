@@ -30,7 +30,7 @@
                                     <div class="form-group ">
                                         <label for="firstname" class="control-label col-lg-3">Event ID</label>
                                         <div class="col-lg-9">
-                                            <input class=" form-control" id="eventid" name="eventid" type="text" value="@foreach( $result as $quote){{$quote->QuoteID}}
+                                            <input class=" form-control" id="eventid" name="eventid" type="text" value="@foreach( $result as $quote){{$quote->id}}
                                             @endforeach" readonly>
                                         </div>
                                     </div>

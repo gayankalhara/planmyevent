@@ -35,10 +35,10 @@
                     .linkRemoveBorder{border-bottom:0 !important;}
                     table[class=flexibleContainerCellDivider] {padding-bottom:0 !important;padding-top:0 !important;}
 
-                    body, #bodyTable{background-color:#2379CE;}
-                    #emailHeader{background-color:#2379CE;}
+                    body, #bodyTable{background-color:#1D81BB;}
+                    #emailHeader{background-color:#1D81BB;}
                     #emailBody{background-color:#FFFFFF;}
-                    #emailFooter{background-color:#2379CE;}
+                    #emailFooter{background-color:#1D81BB;}
                     .textContent, .textContentLast{color:#8B8B8B; font-family:Helvetica; font-size:16px; line-height:125%; text-align:Left;}
                     .textContent a, .textContentLast a{color:#205478; text-decoration:underline;}
                     .nestedContainer{background-color:#F8F8F8; border:1px solid #CCCCCC;}
@@ -152,7 +152,7 @@
                     </style>
                 <![endif]-->
                 </head>
-                <body bgcolor="#2379CE" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+                <body bgcolor="#1D81BB" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
 
                     <!-- CENTER THE EMAIL // -->
                     <!--
@@ -165,7 +165,7 @@
                             the email starts from this center, so we try to
                             apply necessary styling e.g. background-color.
                     -->
-                    <center style="background-color:#2379CE;">
+                    <center style="background-color:#1D81BB;">
                         <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="padding-top: 75px; padding-bottom: 75px; table-layout: fixed;max-width:100% !important;width: 100% !important;min-width: 100% !important;">
                             <tr>
                                 <td align="center" valign="top" id="bodyCell">
@@ -177,7 +177,7 @@
                                         Its width can be set to 100% for a color band
                                         that spans the width of the page.
                                     -->
-                                    <table bgcolor="#2379CE" border="0" cellpadding="0" cellspacing="0" width="500" id="emailHeader">
+                                    <table bgcolor="#1D81BB" border="0" cellpadding="0" cellspacing="0" width="500" id="emailHeader">
 
                                         <!-- HEADER ROW // -->
                                         <tr>
@@ -353,7 +353,7 @@
                                         Its width can be set to 100% for a color band
                                         that spans the width of the page.
                                     -->
-                                    <table bgcolor="#2379CE" border="0" cellpadding="0" cellspacing="0" width="500" id="emailFooter">
+                                    <table bgcolor="#1D81BB" border="0" cellpadding="0" cellspacing="0" width="500" id="emailFooter">
 
                                         <!-- FOOTER ROW // -->
                                         <!--
@@ -373,7 +373,7 @@
                                                                     <td align="center" valign="top" width="500" class="flexibleContainerCell">
                                                                         <table border="0" cellpadding="30" cellspacing="0" width="100%">
                                                                             <tr>
-                                                                                <td valign="top" bgcolor="#2379CE">
+                                                                                <td valign="top" bgcolor="#1D81BB">
 
                                                                                     <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#fff;text-align:center;line-height:120%;">
                                                                                         <div>Copyright &#169; 2016 <a href="http://www.planmyevent.me" style="text-decoration:none;color:#fff;"><span style="color:#fff;">Plan My Event</span></a>. All&nbsp;rights&nbsp;reserved.</div>

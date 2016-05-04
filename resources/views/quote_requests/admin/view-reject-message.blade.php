@@ -55,9 +55,10 @@
                                     </div>
                                     <div class="form-group ">
                                         <div class="col-lg-offset-5 col-lg-4">
-                                            <a href="/quote-requests/view-rejected?id=@foreach( $result as $quote){{$quote->QuoteID}}
+                                            <a href="view-rejected?id=@foreach( $result as $quote){{$quote->QuoteID}}
                                             @endforeach"><button class="btn btn-default waves-effect" type="button">Go Back</button></a>
                                         </div>
+
                                     </div>
                                     {!! csrf_field() !!}
                                 </form><!-- .form -->

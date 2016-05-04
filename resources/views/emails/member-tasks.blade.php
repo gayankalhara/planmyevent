@@ -7,7 +7,7 @@
                 <meta name="format-detection" content="telephone=no" /> <!-- disable auto telephone linking in iOS -->
                 <title>Email Template</title>
                 <style type="text/css">
-                    /* RESET STYLES */
+                    /* RESET STYLES */ 
                     body, #bodyTable, #bodyCell, #bodyCell{height:100% !important; margin:0; padding:0; width:100% !important;font-family:Helvetica, Arial, "Lucida Grande", sans-serif;}
                     table{border-collapse:collapse;}
                     table[id=bodyTable] {width:100%!important;margin:auto;max-width:500px!important;color:#7A7A7A;font-weight:normal;}
@@ -209,7 +209,7 @@
                                                                                         <tr>
                                                                                             <td align="left" class="textContent">
                                                                                                 <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
-                                                                                                    Tasks Assigned For event of {{$FirstName}} {{$LastName}}}
+                                                                                                    Tasks Assigned For event of {{$FirstName}} {{$LastName}}
                                                                                                 </div>
                                                                                             </td>
                                                                                         </tr>
@@ -307,7 +307,7 @@
 
                                                                                                                     <h1 style="color: #6B6B6B; text-align: center;">Tasks Assigned For {{$FirstName}} {{$LastName}} 's Event</h1>
                                                                                                                                <h5>Event Date is {{$DueDate}} </h5>
-                                                                                                                               <h6> follow link to update status : <<a href="http://www.planmyevent.me/dashboard/events/progress?EventID={{$EventID}}">Click Here</a> </h6>
+                                                                                                                               <h6> follow link to update status : <a href="http://www.planmyevent.me/dashboard/events/progress?EventID={{$EventID}}">Click Here</a> </h6>
 
 
 

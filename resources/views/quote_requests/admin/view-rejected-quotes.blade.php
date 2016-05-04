@@ -26,7 +26,7 @@
                             <div class="col-lg-12">
                             <h4 class="pull-left">CUSTOMER DETAILS</h4>
 
-                            <a class="pull-right breadcrumb " href="reject-message?id=@foreach( $result as $quote){{$quote->QuoteID}}
+                            <a class="pull-right breadcrumb " href="reject-message?id=@foreach( $result as $quote){{$quote->id}}
                             @endforeach">
                                 <button class="btn btn-success waves-effect waves-light" id="btnsub" type="button">View Rejection Message</button>
                             </a>
@@ -161,8 +161,9 @@
 
                                     <div class="form-group ">
                                         <div class="col-lg-offset-5 col-lg-4">
-                                            <a href="/quote-requests"><button class="btn btn-default waves-effect" type="button">Go Back</button></a>
+                                            <a href="{{ url('dashboard/quote-requests') }}"><button class="btn btn-default waves-effect" type="button">Go Back</button></a>
                                         </div>
+
                                     </div>
                                     {!! csrf_field() !!}
                                 </form><!-- .form -->
