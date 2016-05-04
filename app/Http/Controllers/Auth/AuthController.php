@@ -98,7 +98,7 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        Session::put('user_role', 'admin');
+        Session::put('user_role', 'customer');
 
         // Send welcome email to the customer
         Mail::send('emails.register-success', [], function($message) use ($data) {
@@ -133,7 +133,7 @@ class AuthController extends Controller
 
         } else {
         
-            Session::put('user_role', 'admin');
+            Session::put('user_role', 'customer');
             /**
              * Random Generated Password for Social Logged Users
              *

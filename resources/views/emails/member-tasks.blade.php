@@ -307,7 +307,7 @@
 
                                                                                                                     <h1 style="color: #6B6B6B; text-align: center;">Tasks Assigned For {{$FirstName}} {{$LastName}} 's Event</h1>
                                                                                                                                <h5>Event Date is {{$DueDate}} </h5>
-                                                                                                                               <h6> follow link to update status : http://www.planmyevent.me/dashboard/events/progress?EventID={{$EventID}} </h6>
+                                                                                                                               <h6> follow link to update status : <<a href="http://www.planmyevent.me/dashboard/events/progress?EventID={{$EventID}}">Click Here</a> </h6>
 
 
 

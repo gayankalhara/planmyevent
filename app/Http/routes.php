@@ -39,7 +39,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('todoMoveDown','AdminPageController@todoMoveDown');
     Route::get('todoEmail','AdminPageController@todoEmail');
     Route::post('todoArchieve','AdminPageController@todoArchieve');
-    Route::get('dashboard/events/categories', 'ControllerU@EventCategoriesLoad');
+    Route::get('dashboard/events/categories', 'EveCategoryControllerU@EventCategoriesLoad');
     Route::get('dashboard/todo', 'AdminPageController@ToDo');
     Route::get('dashboard/profile', 'AdminPageController@Profile');
     Route::get('dashboard/settings', 'AdminPageController@Settings');
@@ -99,43 +99,80 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\AdminMiddleware']], f
      */
     
 
-    Route::get('dashboard/events/categories/add','ControllerU@AddEventCategoriesLoad');   
-    Route::post('dashboard/events/categories/add','ControllerU@AddEventCategoriesPost');   
-    Route::get('dashboard/events/categories/edit','ControllerU@EditEventCategoriesLoad');
-    Route::post('dashboard/events/categories/edit', 'ControllerU@EditEventCategoriesPost');
+    //***************************************new***********************************************
+
+    Route::get('dashboard/events/categories/add','EveCategoryControllerU@AddEventCategoriesLoad');   
+
+    Route::post('dashboard/events/categories/add','EveCategoryControllerU@AddEventCategoriesPost');   
+
+    Route::get('dashboard/events/categories/edit','EveCategoryControllerU@EditEventCategoriesLoad');
+
+    Route::post('dashboard/events/categories/edit', 'EveCategoryControllerU@EditEventCategoriesPost');  
     Route::get('dashboard/events/categories/success', function(){return  view('event_types.success'); });
-    Route::post('dashboard/events/categories/edit{id}', 'ControllerU@EditEventCategoriesPost');
-    Route::post('dashboard/events/categories/check_catname', 'ControllerU@CheckEventCatName');
-    Route::get('dashboard/services', 'ControllerU@Services');
-    Route::get('dashboard/services/add', 'ControllerU@AddServices');
-    Route::post('dashboard/services/add', 'ControllerU@AddServicesSubmit');
-    Route::get('dashboard/services/edit', 'ControllerU@EditServices');
-    Route::post('dashboard/services/edit', 'ControllerU@EditServicesSubmit');
-    Route::get('dashboard/service-providers', 'ControllerU@ServiceProviders');
-    Route::get('dashboard/service-providers/add','ControllerU@AddServiceProviderLoad');
-    Route::post('dashboard/service-providers/add','ControllerU@AddServiceProviderSubmit');
-    Route::get('dashboard/service-providers/edit','ControllerU@EditServiceProviderLoad');
-    Route::post('dashboard/service-providers/edit','ControllerU@EditServiceProviderSubmit');
-    Route::post('dashboard/service-providers/check_service', 'ControllerU@CheckService');
-    Route::get('dashboard/events/categories/todotemp/add', 'ControllerU@ToDoTemplateAddLoad');
-    Route::post('dashboard/events/categories/todotemp/add', 'ControllerU@ToDoTemplateAddPost');
-    Route::get('dashboard/events/categories/todotemp/edit', 'ControllerU@ToDoTemplateEditLoad');
-    Route::post('dashboard/events/categories/todotemp/edit', 'ControllerU@ToDoTemplateEditPost');
-    Route::get('dashboard/events/categories/todotemp', 'ControllerU@ToDoTemplateLoad');
-    Route::post('dashboard/events/categories/todotemp/check', 'ControllerU@GetToDoDetails');
-    Route::get('dashboard/events/categories/tasks/add', 'ControllerU@TaskTemplateAddLoad');
-    Route::post('dashboard/events/categories/tasks/add', 'ControllerU@TaskTemplateAddPost');
-    Route::get('dashboard/events/categories/tasks/edit', 'ControllerU@TaskTemplateEditLoad');
-    Route::post('dashboard/events/categories/tasks/edit', 'ControllerU@TaskTemplateEditPost');
-    Route::get('dashboard/events/categories/tasks', 'ControllerU@TaskTemplateLoad');
-    Route::post('dashboard/events/categories/tasks/check', 'ControllerU@GetTaskDetails');
-    Route::post('dashboard/events/categories/tasks/check', 'ControllerU@GetTaskDetails');
 
-    Route::get('dashboard/events/assign-tasks', 'ControllerU@AssignTasks');
-    
-    Route::get('dashboard/events/assign', 'ControllerU@Assign');
+    Route::post('dashboard/events/categories/edit{id}', 'EveCategoryControllerU@EditEventCategoriesPost');
 
-    Route::post('dashboard/events/assign', 'ControllerU@AssignPOST');
+    Route::post('dashboard/events/categories/check_catname', 'EveCategoryControllerU@CheckEventCatName');
+
+
+
+
+    Route::get('dashboard/services', 'ServicesControllerU@Services');
+
+    Route::get('dashboard/services/add', 'ServicesControllerU@AddServices');
+
+    Route::post('dashboard/services/add', 'ServicesControllerU@AddServicesSubmit');
+
+    Route::get('dashboard/services/edit', 'ServicesControllerU@EditServices');
+
+    Route::post('dashboard/services/edit', 'ServicesControllerU@EditServicesSubmit');
+
+
+
+    Route::get('dashboard/service-providers', 'ServiceProviderControllerU@ServiceProviders');
+
+    Route::get('dashboard/service-providers/add','ServiceProviderControllerU@AddServiceProviderLoad');
+
+    Route::post('dashboard/service-providers/add','ServiceProviderControllerU@AddServiceProviderSubmit');
+
+    Route::get('dashboard/service-providers/edit','ServiceProviderControllerU@EditServiceProviderLoad');
+
+    Route::post('dashboard/service-providers/edit','ServiceProviderControllerU@EditServiceProviderSubmit');
+
+    Route::post('dashboard/service-providers/check_service', 'ServiceProviderControllerU@CheckService');
+
+
+
+
+
+
+
+
+
+
+    Route::get('dashboard/events/categories/tasks/add', 'TaskTemplateControllerU@TaskTemplateAddLoad');
+
+    Route::post('dashboard/events/categories/tasks/add', 'TaskTemplateControllerU@TaskTemplateAddPost');
+
+    Route::get('dashboard/events/categories/tasks/edit', 'TaskTemplateControllerU@TaskTemplateEditLoad');
+
+    Route::post('dashboard/events/categories/tasks/edit', 'TaskTemplateControllerU@TaskTemplateEditPost');
+
+    Route::get('dashboard/events/categories/tasks', 'TaskTemplateControllerU@TaskTemplateLoad');
+
+    Route::post('dashboard/events/categories/tasks/check', 'TaskTemplateControllerU@GetTaskDetails');
+
+ 
+
+
+    Route::get('dashboard/events/assign-tasks', 'TaskAssignControllerU@AssignTasks');
+
+
+    Route::get('dashboard/events/assign', 'TaskAssignControllerU@Assign');
+
+
+    Route::post('dashboard/events/assign', 'TaskAssignControllerU@AssignPOST');
+
     Route::get('dashboard/test', function(){ return view('emails.register-success') ;    });
 
    
@@ -190,6 +227,9 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\CustomerMiddleware']]
         'as' => 'original-route', 'uses' => 'hjController@DisplayPaymentFail'
     ]);
     Route::get('dashboard/view-all-events', 'hjController@ViewAllEventsCustomer');
+
+    Route::get('dashboard/events/customerevents', 'ProgressControllerU@CustomerEvents'); 
+     Route::get('dashboard/events/progresscustomer', 'ProgressControllerU@ProgressCustomer'); 
 });
 
 
@@ -201,7 +241,9 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\EventPlannerMiddlewar
 
 //Routes that are only accessible by Team Members (Admins also can access by changing the user role)
 Route::group(['middleware' => ['web', 'App\Http\Middleware\TeamMemberMiddleware']], function () {
-    Route::get('dashboard/events/progress', 'ControllerU@Progress'); 
+    Route::get('dashboard/events/progress', 'ProgressControllerU@Progress'); 
+    Route::post('dashboard/events/progress', 'ProgressControllerU@EditProgress'); 
+    Route::get('dashboard/events/myevents', 'ProgressControllerU@MyEvents');  
 });
 
 Route::group(['prefix' => 'messages'], function () {

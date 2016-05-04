@@ -109,7 +109,7 @@
                                                     <option value="">-- Select a Member --</option>
                                                         @foreach ($team as $teammem)
                                                             
-                                                            <option value="{{ $teammem -> id }}">{{$teammem->name}}</option>
+                                                            <option  value="{{ $teammem->id }}">{{$teammem->name}}  </option>
                                                         @endforeach
                                                     </select>
                                                 </td>

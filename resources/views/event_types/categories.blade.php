@@ -16,7 +16,7 @@
 
     function init2() 
     {
-        <?php if(Session::get('message')=='Record Update Failed') {echo 'sweetAlert("Oops...", "You forgot to add some elements.", "error");';} else { echo 'sweetAlert("Updated successfully!", "Your record is updated...", "success");';} ?>
+        <?php if(Session::get('message')=='Record Update Failed') {echo 'sweetAlert("Oops...", "You forgot to add some elements.", "error");';} else { echo 'sweetAlert("'.Session::get('message').'", "Your record is updated...", "success");';} ?>
     }
 
 @if(Session::has('message'))
@@ -81,7 +81,7 @@
 foreach($types as $y => $y_value)
 {
 ?>
- @if ($userRole == "Customer") <a href="#" class=""> @endif       
+ @if ($userRole == "Customer") <a href="{{ url('dashboard/request-a-quote') }}" class=""> @endif       
     <div class="etypes col-sm-6 col-md-6 col-lg-3" style="height: 440px;">
         <div class="pricing-item">
             <div class="pricing-item-inner">
