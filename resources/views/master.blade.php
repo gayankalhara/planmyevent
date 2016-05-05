@@ -1,17 +1,30 @@
 <?php
+use Carbon\Carbon;
+
+ 
+
     $notification_count = DB::table('notifications')
             ->select('title')
+            ->where('for', Auth::User()->id)
+            ->orWhere('for', Auth::User()->role)
             ->count();
 
     $unread_notification_count = DB::table('notifications')
             ->select('title')
             ->where('readStatus', '=', '0')
+            ->where(function ($query) {
+                $query->where('for', Auth::User()->id)
+                      ->orWhere('for', Auth::User()->role);
+            })
+            
             ->count();
 ?>
 @if($notification_count != 0)
 <?php
     $notifications = DB::table('notifications')
-            ->select('title', 'body', 'readStatus', 'link', 'icon')
+            ->select('title', 'body', 'readStatus', 'link', 'icon', 'created_at')
+            ->where('for', Auth::User()->id)
+            ->orWhere('for', Auth::User()->role)
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
@@ -223,7 +236,10 @@
                                                                     </p>
 
                                                                     <p class="m-0" style="color: #14ADF3;">
-                                                                        <small>20mins ago</small>
+                                                                        <?php
+                                                                            $timeAgo = Carbon::createFromTimeStamp(strtotime($notification->created_at))->diffForHumans();
+                                                                        ?>
+                                                                        <small>{{ $timeAgo }}</small>
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -570,18 +586,17 @@
         }
     });
 
-    
-
-    if($.trim($('#notificount').html()) == ''){
-        notification_count = 0;
-    }
-
     var pusher = new Pusher('a0ef59cfa159704595e3');
 
     var notificationsChannel = pusher.subscribe('notifications');
 
     notificationsChannel.bind('success_notification', function(notification) {
-        var notification_count = parseInt($('#notificount').text());
+        var notification_count = 0;
+
+        if($.trim($('#notificount').html()) != ''){
+            notification_count = parseInt($('#notificount').text());
+        }
+
         var title = notification.title;
         var message = notification.message;
         var link = notification.link;
@@ -590,7 +605,7 @@
         console.log(parseInt(notification_count) + 1);
         $('#notificount').text(parseInt(notification_count) + 1); //Increase notification count
         $('#notificationNum').text(parseInt(notification_count) + 1+" New"); //Increase New Notifications Count
-        $("#notificationList").prepend('<a href="' + link + '" class="list-group-item list-group-item-success"> <div class="media"> <div class="pull-left p-r-10"> <em class="fa ' + icon + ' fa-2x text-custom"></em> </div> <div class="media-body"> <h5 class="media-heading">' + title + '</h5> <p class="m-0"> <small>'+message+'</small> </p> </div> </div> </a>');
+        $("#notificationList").prepend('<a href="' + link + '" class="list-group-item list-group-item-success"> <div class="media"> <div class="pull-left p-r-10"> <em class="fa ' + icon + ' fa-2x text-custom"></em> </div> <div class="media-body"> <h5 class="media-heading">' + title + '</h5> <p class="m-0"> <small>'+message+'</small> </p> <p class="m-0" style="color: #14ADF3;"><small>1 minute ago</small></p> </div> </div> </a>');
     });
 </script>
 

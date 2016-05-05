@@ -14,6 +14,9 @@ use Mail;
 
 use Illuminate\Support\Facades\Hash;
 
+use App\Notifications;
+use Vinkla\Pusher\Facades\Pusher;
+
 class AuthController extends Controller
 {
     /*
@@ -100,6 +103,24 @@ class AuthController extends Controller
     {
         Session::put('user_role', 'customer');
 
+        $newNotification = new Notifications();
+
+        $title = "New user registered!";
+        $message = $data['name'] . ' just registered using email ' . $data['email'] . '.';
+        $icon = "fa-user";
+        $link = 'dashboard/users';
+        $for = "admin";
+
+        $newNotification->title = $title;
+        $newNotification->body = $message;
+        $newNotification->icon = $icon;
+        $newNotification->link = $link;
+        $newNotification->for = $for;
+        $newNotification->readStatus = '0';
+        $newNotification->save();
+
+        Pusher::trigger('notifications', 'success_notification', ['message' => $message, 'icon' => $icon, 'link' => $link, 'title' => $title, 'for' => $for]);
+
         // Send welcome email to the customer
         Mail::send('emails.register-success', [], function($message) use ($data) {
             $message->to($data['email'])
@@ -162,6 +183,24 @@ class AuthController extends Controller
                'provider' => $providerName,
                'email' => $user->email,
             ];
+
+            $newNotification = new Notifications();
+            
+            $title = "New user registered!";
+            $message = $user->name . ' just registered using ' . $providerName . '.';
+            $icon = "fa-user";
+            $link = 'dashboard/users';
+            $for = "admin";
+
+            $newNotification->title = $title;
+            $newNotification->body = $message;
+            $newNotification->icon = $icon;
+            $newNotification->link = $link;
+            $newNotification->for = $for;
+            $newNotification->readStatus = '0';
+            $newNotification->save();
+
+            Pusher::trigger('notifications', 'success_notification', ['message' => $message, 'icon' => $icon, 'link' => $link, 'title' => $title, 'for' => $for]);
 
             //Send Welcome Email
             Mail::send('emails.register-success-social', $mailData, function($message) use ($user) {

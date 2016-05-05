@@ -26,6 +26,7 @@ class NotificationController extends Controller
         $newNotification->body = $request->input('message');
         $newNotification->icon = $request->input('icon');
         $newNotification->link = $request->input('link');
+        $newNotification->for = $request->input('for');
         $newNotification->readStatus = '0';
         $newNotification->save();
 
@@ -33,8 +34,9 @@ class NotificationController extends Controller
         $icon = $request->input('icon');
         $link = $request->input('link');
         $title = $request->input('title');
+        $for = $request->input('title');
 
-        Pusher::trigger('notifications', 'success_notification', ['message' => $message, 'icon' => $icon, 'link' => $icon, 'title' => $title]);
+        Pusher::trigger('notifications', 'success_notification', ['message' => $message, 'icon' => $icon, 'link' => $icon, 'title' => $title, 'for' => $for]);
 
         //return $request->input('message');
     }

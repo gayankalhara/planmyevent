@@ -64,6 +64,8 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::get('dashboard/events/categories', 'EveCategoryControllerU@EventCategoriesLoad');
 
+        Route::get('dashboard/deactivate', 'UserController@deactivate');
+
 });
 
 /*
@@ -81,9 +83,8 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\AdminMiddleware']], f
         Route::get('auth/{provider?}', 'Auth\AuthController@redirectToProvider');
         Route::get('auth/{provider?}/callback', 'Auth\AuthController@handleProviderCallback');
         Route::post('password/email/resend', 'AccountController@resendEmail');
-        Route::post('change-email', 'AdminPageController@changeEmail');
+        Route::get('dashboard/change-email', 'UserController@changeEmail');
         Route::get('dashboard/loginAs/{userID}', 'AdminPageController@loginUsing');
-        Route::get('dashboard/deactivate', 'UserController@Deactivate');
         Route::get('dashboard/users/role/switch/{role}', 'AdminPageController@SwitchUser' );
         Route::get('dashboard/users/role/switch/reset', 'AdminPageController@SwitchUserReset' );
 

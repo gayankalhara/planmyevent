@@ -37,6 +37,32 @@
 
     <script src="js/modernizr.min.js"></script>
 
+    <!-- sweet alerts -->
+    <link href="{{asset('assets/sweet-alert/sweet-alert.min.css')}}" rel="stylesheet">
+
+    <script>
+
+    var ModalEffects = (function() 
+    {
+
+    function init2() 
+    {
+        var type = "<?php echo Session::get('type'); ?>";
+        var title = "<?php echo Session::get('title'); ?>";
+        var message = "<?php echo Session::get('message'); ?>";
+        sweetAlert(title, message, type);
+    }
+
+    @if(Session::has('message'))
+        window.onload  = function() {
+            init2(); 
+        };
+    @endif       
+
+    })();
+
+    </script>
+
 </head>
 <body id="login">
 
@@ -52,30 +78,27 @@
             <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
             {!! csrf_field() !!}
 
-                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                @if ($errors->has('email'))
+                    <span class="help-block help-block-login">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
+
+                <div class="form-group">
                     <div class="col-xs-12">
                         <input class="form-control input-lg " name="email" type="email" required="" placeholder="Email Address" value="{{ old('email') }}">
 
-                        @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <script>console.log("<?php dd($errors); ?>")</script>
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                        @endif
+                        
                     </div>
                 </div>
 
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                <div class="form-group">
                     <div class="col-xs-12">
                         <input class="form-control input-lg" type="password" name="password" required="" placeholder="Password">
-
-                        @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                        @endif
                     </div>
                 </div>
+
+
 
                 <div class="form-group ">
                     <div class="col-xs-12">
@@ -138,6 +161,10 @@
 <script src="assets/click/click.js"></script>
 <script src="assets/jquery-slimscroll/jquery.slimscroll.js"></script>
 <script src="assets/jquery-blockui/jquery.blockUI.js"></script>
+
+<!-- sweet alerts -->
+<script src="{{asset('assets/sweet-alert/sweet-alert.min.js')}}"></script>
+<script src="{{asset('assets/sweet-alert/sweet-alert.init.js')}}"></script>
 
 
 <!-- CUSTOM JS -->

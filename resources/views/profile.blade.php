@@ -35,7 +35,7 @@
                                                 <div class="about-info-p">
                                                     <strong>Full Name</strong>
                                                     <br/>
-                                                    <p class="text-muted">Johnathan Deo</p>
+                                                    <p class="text-muted">{{ $userDetails[0]->name }}</p>
                                                 </div>
                                                 <div class="about-info-p">
                                                     <strong>Mobile</strong>

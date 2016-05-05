@@ -14,6 +14,7 @@ use Session;
 use App\Models\Event_Types;
 
 use File;
+use App\Models\Events;
 use App\Models\users;
 use DB;
 use App\Models\Todo;
@@ -70,7 +71,8 @@ class AdminPageController extends Controller
      */
     public function dashboard()
     {
-        return view('home')->with('todoCount', Todo::where('user_id', Auth::User()->id)->get()->count());
+        return view('home')->with('eventCount', Events::where('UserID', Auth::User()->id)->get()->count())
+                           ->with('todoCount', Todo::where('user_id', Auth::User()->id)->get()->count());
     }
 
     /**
@@ -123,18 +125,7 @@ class AdminPageController extends Controller
         return view('about-us');
     }   
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function changeEmail()
-    {
-        //get form inputs
-        $input = Request::all();
 
-        return dd($input);
-    }   
 
     /**
      * Show the application dashboard.
@@ -378,6 +369,11 @@ class AdminPageController extends Controller
         return view('request-a-quote');
     } 
 
+    /**
+     * Gettings List of Event Categories
+     *
+     * @return view
+     */
     public function getListOfEventCategories()
     {
       $result = \DB::select('select * from event_types');

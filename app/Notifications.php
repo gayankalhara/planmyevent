@@ -18,5 +18,5 @@ class Notifications extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'readStatus', 'body', 'icon', 'link'];
+    protected $fillable = ['title', 'readStatus', 'body', 'icon', 'link', 'for'];
 }

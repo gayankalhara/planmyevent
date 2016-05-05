@@ -84,11 +84,11 @@
                                     <div class="panel-body"> 
                                         <form role="form" lpformnum="1">
                                             <div class="form-group">
-                                                <label for="FullName">Enter <span style="color: red;">deleteme</span> in the text box below to deactivate your account.</label>
-                                                <input type="text" value="" id="FullName" class="form-control" style="background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
+                                                <label for="deleteme">Enter <span style="color: red;">deleteme</span> in the text box below to delete your account.</label>
+                                                <input type="text" value="" id="deleteme" class="form-control" style="background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
                                             </div>
                                             
-                                            <a href="{{ url('/deactivate') }}"><button class="btn btn-primary waves-effect waves-light w-md" type="button" style="background-color: #E51E1E; border: 1px solid #E51E1E;">Deactivate</button></a>
+                                            <button class="btn btn-primary waves-effect waves-light w-md" type="button" style="background-color: #E51E1E; border: 1px solid #E51E1E;" onclick="deactivateConfirm()">Deactivate</button>
                                         </form>
 
                                     </div> 
@@ -98,4 +98,37 @@
 
 @endforeach
 
+@endsection
+
+
+@section('footer-js')
+
+<script>
+function deactivateConfirm() {
+  if(document.getElementById('deleteme').value == "deleteme"){
+      swal(
+          {title: "Deactivate your account now?",
+              text: "This will permanently delete your account. Are you sure?",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "Delete Now",
+              cancelButtonText: "Cancel",
+              closeOnConfirm: false
+          },
+          function(isConfirm){
+              if (isConfirm) {
+                  window.location.href = "{{ url('dashboard/deactivate') }}";
+              }
+          }
+      );
+  } else{
+    swal(
+      'Phrase Incorrect!',
+      'Enter deleteme in the text box to delete your account.',
+      'error'
+    )
+  }
+}
+</script>
 @endsection

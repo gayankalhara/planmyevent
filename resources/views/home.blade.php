@@ -17,7 +17,7 @@
         var type = "<?php echo Session::get('type'); ?>";
         var title = "<?php echo Session::get('title'); ?>";
         var message = "<?php echo Session::get('message'); ?>";
-        sweetAlert("Oops...", message, type);
+        sweetAlert(title, message, type);
     }
 
     @if(Session::has('message'))
@@ -173,7 +173,7 @@
                 <div class="mini-stat clearfix bx-shadow">
                     <span class="mini-stat-icon bg-success"><i class="ion-calendar"></i></span>
                     <div class="mini-stat-info text-right text-muted">
-                        <span class="counter">23</span>
+                        <span class="counter">{{ $eventCount }}</span>
                         Events this week
                     </div>
                 </div>
@@ -192,7 +192,7 @@
                 <div class="mini-stat clearfix bx-shadow">
                     <span class="mini-stat-icon bg-purple"><i class="ion-email"></i></span>
                     <div class="mini-stat-info text-right text-muted">
-                        <span class="counter">12</span>
+                        <span class="counter">6</span>
                         Personal Messages
                     </div>
                 </div>

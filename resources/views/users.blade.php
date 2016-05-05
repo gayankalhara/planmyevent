@@ -372,46 +372,50 @@ function confirmDelete(){
 </script>
 
 <script type="text/javascript">
-                function testNotification() {
-                
-                 swal(
-                      {title: "Send now?",
-                          text: "",
-                          type: "warning",
-                          showCancelButton: true,
-                          confirmButtonColor: "#DD6B55",
-                          confirmButtonText: "Show notification",
-                          cancelButtonText: "Cancel",
-                          closeOnConfirm: false
-                      },
-                      function(isConfirm){
+            function testNotification() {
+              swal(
+                  {title: "Send now?",
+                      text: "",
+                      type: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#DD6B55",
+                      confirmButtonText: "Show notification",
+                      cancelButtonText: "Cancel",
+                      closeOnConfirm: false
+                  },
+                  function(isConfirm){
+                      if (isConfirm) {
+                          document.getElementById('preloader').style.zIndex = "999999";
                           showPreloader();
-                          if (isConfirm) {
-                              $.ajax(
-                                  {
-                                      type: "post",
-                                      url: 'show_notification',
-                                      data: { 
-                                          'title': 'Your notification title', 
-                                          'message': 'Your notification body', 
-                                          'icon': 'fa-calendar',
-                                          'link': 'dashboard/settings'
-                                      },
-                                      success : function(data){
-                                          swal("Successful!", "", "success");
-                                          //console.log(data);
-                                          hidePreloader();
-                                      },
-                                      error: function(xhr, ajaxOptions, thrownError) {
-                                          console.log(thrownError);
+                          $.ajax(
+                              {
+                                  type: "post",
+                                  url: 'show_notification',
+                                  data: { 
+                                      'title': 'Your notification title', 
+                                      'message': 'Your notification body', 
+                                      'icon': 'fa-calendar',
+                                      'link': 'dashboard/settings',
+                                      'for': 'admin'
+                                  },
+                                  success : function(data){
+                                      swal("Successful!", "", "success");
+                                      //console.log(data);
+                                      hidePreloader();
+                                      document.getElementById('preloader').style.zIndex = "20000";
+                                  },
+                                  error: function(xhr, ajaxOptions, thrownError) {
+                                      console.log(thrownError);
 
-                                          swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
-                                      }
-                                  });
-                          }
+                                      swal("Ooops!", "Something Went Wrong! ("+thrownError+")", "error");
+                                  }
+
+                                  
+                              });
                       }
-                  );
-              }
+                  }
+              );
+            }
 
             $(document).ready(function() {
                 $('#datatableAdmin').dataTable();
@@ -432,6 +436,7 @@ function confirmDelete(){
                       },
                       function(isConfirm) {
                         if (isConfirm) {
+                          showPreloader();
                           $.ajax({
                               url: '/password/email/resend',
                               type: 'POST',
@@ -443,6 +448,7 @@ function confirmDelete(){
                                     'The user will now be able to reset the password.',
                                     'success'
                                   );
+                                  hidePreloader();
                               }, 
                               error: function() {
                                   sweetAlert(
@@ -450,6 +456,7 @@ function confirmDelete(){
                                     'The user will now be able to reset the password.',
                                     'error'
                                   );
+                                  hidePreloader();
                               }
                           });
 
@@ -477,10 +484,8 @@ function confirmDelete(){
                         if (isConfirm) {
 
                           $.ajax({
-                              url: '/change-email',
-                              type: 'POST',
-                              data: {_token: CSRF_TOKEN, id: 'TEST'},
-                              dataType: 'JSON',
+                              url: 'dashboard/change-email',
+                              type: 'get',
                               success: function () {
                                   sweetAlert(
                                     'Email Sent!',
