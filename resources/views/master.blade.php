@@ -1,35 +1,4 @@
-<?php
-use Carbon\Carbon;
 
- 
-
-    $notification_count = DB::table('notifications')
-            ->select('title')
-            ->where('for', Auth::User()->id)
-            ->orWhere('for', Auth::User()->role)
-            ->count();
-
-    $unread_notification_count = DB::table('notifications')
-            ->select('title')
-            ->where('readStatus', '=', '0')
-            ->where(function ($query) {
-                $query->where('for', Auth::User()->id)
-                      ->orWhere('for', Auth::User()->role);
-            })
-            
-            ->count();
-?>
-@if($notification_count != 0)
-<?php
-    $notifications = DB::table('notifications')
-            ->select('title', 'body', 'readStatus', 'link', 'icon', 'created_at')
-            ->where('for', Auth::User()->id)
-            ->orWhere('for', Auth::User()->role)
-            ->orderBy('created_at', 'desc')
-            ->limit(5)
-            ->get();
-?>
-@endif
 
 <!DOCTYPE html>
 <html>
@@ -205,13 +174,45 @@ use Carbon\Carbon;
                                 </li>
                             </ul>
                         </li>
+
+                        <?php
+                            use Carbon\Carbon;
+
+                                $notification_count = DB::table('notifications')
+                                        ->select('title')
+                                        ->where('for', Auth::User()->id)
+                                        ->orWhere('for', Auth::User()->role)
+                                        ->count();
+
+                                $unread_notification_count = DB::table('notifications')
+                                        ->select('title')
+                                        ->where('readStatus', '=', '0')
+                                        ->where(function ($query) {
+                                            $query->where('for', Auth::User()->id)
+                                                  ->orWhere('for', Auth::User()->role);
+                                        })
+                                        
+                                        ->count();
+                            ?>
+
+                            @if($notification_count != 0)
+                                <?php
+                                    $notifications = DB::table('notifications')
+                                            ->select('title', 'body', 'readStatus', 'link', 'icon', 'created_at')
+                                            ->where('for', Auth::User()->id)
+                                            ->orWhere('for', Auth::User()->role)
+                                            ->orderBy('created_at', 'desc')
+                                            ->limit(5)
+                                            ->get();
+                                ?>
+                            @endif
                         
                         <li class="dropdown hidden-xs">
                             <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true" onclick="$('#notificount').text(''); setReadStatus()">
                                 <i class="md md-notifications"></i>
                                 <span id="notificount" class="badge badge-xs badge-danger">@if($unread_notification_count != 0) {{$unread_notification_count}} @endif</span>
-                            </a>
-                            
+                            </a>    
+
                             <ul id="notification"  class="dropdown-menu dropdown-menu-lg">
                                 <li class="notifi-title"><span id="notificationNum" class="label label-default pull-right">{{$unread_notification_count}} New</span>Notifications</li>
                                 <li class="list-group notification-list" id="notificationList">
@@ -310,15 +311,26 @@ use Carbon\Carbon;
                         <a href="{{ url('dashboard') }}" class="waves-effect {{ Request::is('dashboard') ? 'active' : null }}"><i class="md md-dashboard"></i><span> Dashboard </span></a>
                     </li>
                     
-                    <?php if($userRole == "Administrator"){?>
-                        <li>
-                            <a href="{{ url('dashboard/events/view-all') }}" class="waves-effect {{ Request::is('events*') && !(Request::is('dashboard/events/categories*'))  ? 'active' : null }}"><i class="md md-event"></i><span> Events </span></a>
-                        </li>
-                    <?php }; ?>
+                        <li class="has_sub">
+                            <a href="{{ url('dashboard/events/*') }}" class="waves-effect {{ Request::is('dashboard/events*') && !(Request::is('dashboard/events/categories*'))  ? 'active' : null }}"><i class="md md-event"></i><span> Events </span></a>
+                            <ul class="list-unstyled">
+                                <?php if($userRole == "Administrator" || $userRole == "Event Planner" || $userRole == "Team Member"){?>
+                                   <li class="{{ Request::is('dashboard/events/view-all') ? 'active' : null }}"><a href="{{ url('/dashboard/events/view-all') }}">View All</a></li>
+                                <?php }; ?>
+
+                                <?php if($userRole == "Administrator" || $userRole == "Customer"){?>
+                                   <li class="{{ Request::is('dashboard/events/customerevents') ? 'active' : null }}"><a href="{{ url('/dashboard/events/customerevents') }}">My Events</a></li>
+                                <?php }; ?>
+                                
+                                <?php if($userRole == "Administrator" || $userRole == "Team Member"){?>
+                                    <li class="{{ Request::is('dashboard/events/myevents') ? 'active' : null }}"><a href="{{ url('/dashboard/events/myevents') }}">My Events</a></li>
+                                <?php }; ?>
+                            </ul>
+                        </li>               
                     
                     <?php if($userRole == "Administrator"){?>
                         <li class="has_sub">
-                            <a class="disabled waves-effect {{ Request::is('dashboard/messages*') ? 'active' : null }}"><i class="md md-question-answer"></i><span> Messages </span><span class="pull-right"><i class="md md-add"></i></span></a>
+                            <a class="waves-effect {{ Request::is('dashboard/messages*') ? 'active' : null }}"><i class="md md-question-answer"></i><span> Messages </span><span class="pull-right"><i class="md md-add"></i></span></a>
                             <ul class="list-unstyled">
                                 <li class="{{ Request::is('dashboard/messages/new*') ? 'active' : null }}"><a href="{{ url('/dashboard/messages/new') }}">New Message</a></li>
                                 <li class="{{ Request::is('dashboard/messages/inbox*') ? 'active' : null }}"><a href="{{ url('/dashboard/messages/inbox') }}">Inbox</a></li>
@@ -329,7 +341,7 @@ use Carbon\Carbon;
                     
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a href="{{ url('dashboard/calendar') }}" class="disabled waves-effect {{ Request::is('dashboard/calendar*') ? 'active' : null }}"><i class="md md-event"></i><span> Calendar </span></a>
+                            <a href="{{ url('dashboard/calendar') }}" class="waves-effect {{ Request::is('dashboard/calendar*') ? 'active' : null }}"><i class="md md-event"></i><span> Calendar </span></a>
                         </li>
                     <?php }; ?>
                     
@@ -391,7 +403,7 @@ use Carbon\Carbon;
 
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a href="{{ url('dashboard/reviews') }}" class="disabled waves-effect {{ Request::is('dashboard/reviews*') ? 'active' : null }}"><i class="md  md-star"></i><span> Reviews </span></a>
+                            <a href="{{ url('dashboard/reviews') }}" class="waves-effect {{ Request::is('dashboard/reviews*') ? 'active' : null }}"><i class="md  md-star"></i><span> Reviews </span></a>
                         </li>
                     <?php }; ?>
                     
@@ -415,19 +427,19 @@ use Carbon\Carbon;
 
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a href="{{ url('dashboard/invoices') }}" class="disabled waves-effect {{ Request::is('dashboard/invoices*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Invoices </span></a>
+                            <a href="{{ url('dashboard/invoices') }}" class="waves-effect {{ Request::is('dashboard/invoices*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Invoices </span></a>
                         </li>
                     <?php }; ?>
                     
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a href="{{ url('dashboard/payments') }}" class="disabled waves-effect {{ Request::is('dashboard/payments*') ? 'active' : null }}"><i class="md md-payment"></i><span> Payments </span></a>
+                            <a href="{{ url('dashboard/payments') }}" class="waves-effect {{ Request::is('dashboard/payments*') ? 'active' : null }}"><i class="md md-payment"></i><span> Payments </span></a>
                         </li>
                     <?php }; ?>
 
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a href="{{ url('dashboard/statistics') }}" class="disabled waves-effect {{ Request::is('dashboard/statistics*') ? 'active' : null }}"><i class="md md-insert-chart"></i><span> Statistics </span></a>
+                            <a href="{{ url('dashboard/statistics') }}" class="waves-effect {{ Request::is('dashboard/statistics*') ? 'active' : null }}"><i class="md md-insert-chart"></i><span> Statistics </span></a>
                         </li>
                     <?php }; ?>
                     
