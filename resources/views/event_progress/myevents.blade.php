@@ -69,7 +69,7 @@
                                         
                                         use App\Models\Quote_Requests;
 
-                                        if($result[0]=='')
+                                        if($result=='[]')
                                         {
                                                 echo '<tr><td>No Events In Progress</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
                                         }

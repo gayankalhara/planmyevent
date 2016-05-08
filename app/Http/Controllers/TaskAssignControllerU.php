@@ -149,7 +149,7 @@ class TaskAssignControllerU extends Controller
 
                   $time = Carbon::now();
                   
-                  //Notifications::insert([['user_ID' => $memb->MemberID, 'Icon' => 'NULL'  , 'Status' => 'Unread', 'Notification' => 'New Event Tasks Assigned for event ID '.$iName, 'Time' => $time, 'Type'=>'Specific', 'Link'=>'dashboard/events/progress?EventID='.$iName ]]);
+                  
                   $em = Users::select('*')->where('id',$memb->MemberID)->first();
                   
 

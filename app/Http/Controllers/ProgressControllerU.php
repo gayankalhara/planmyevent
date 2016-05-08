@@ -179,7 +179,7 @@ class ProgressControllerU extends Controller
         $user_id = \Auth::user()->id;
         $mytasks= Event_Tasks::distinct()->select('EventID')->where('MemberID',$user_id)->get();
 
-      
+        //return $mytasks;
         return view('event_progress.myevents')->with('result', $mytasks);
       }
 //=---------------------------------------------------------------------------------------------------------------------------

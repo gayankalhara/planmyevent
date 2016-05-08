@@ -1,3 +1,7 @@
+<?php 
+use Carbon\Carbon;
+?>
+
 {{-- Home Page --}}
 
 @extends('master')
@@ -143,8 +147,8 @@
                             <div class="col-sm-5">
                                 <div class="row">
                                     <div class="col-xs-4 text-center">
-                                        <h4 class="text-white m-t-0">FRI</h4>
-                                        <canvas id="cloudy" width="35" height="35"></canvas>
+                                        <h4 class="text-white m-t-0">{{ strtoupper(Carbon::tomorrow()->format('D')) }}</h4>
+                                        <canvas iD="cloudy" width="35" height="35"></canvas>
                                         <h4 class="text-white">30°C<i class="wi-degrees"></i></h4>
                                     </div>
                                     <div class="col-xs-4 text-center">
