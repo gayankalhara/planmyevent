@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+
+
 <html lang="en-US">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -107,6 +110,29 @@
         .tp-caption { white-space: nowrap; }
 
     </style>
+
+    <script>
+
+    var ModalEffects = (function() 
+    {
+
+    function init2() 
+    {
+        var type = "<?php echo Session::get('type'); ?>";
+        var title = "<?php echo Session::get('title'); ?>";
+        var message = "<?php echo Session::get('message'); ?>";
+        sweetAlert(title, message, type);
+    }
+
+    @if(Session::has('message'))
+        window.onload  = function() {
+            init2(); 
+        };
+    @endif       
+
+    })();
+
+    </script>
 </head>
 
 <body class="stretched no-transition">
@@ -357,6 +383,10 @@
     ============================================= -->
     <script type="text/javascript" src="{{asset('assets/website/js/jquery.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/website/js/plugins.js')}}"></script>
+
+    <!-- sweet alerts -->
+    <script src="{{asset('assets/sweet-alert/sweet-alert.min.js')}}"></script>
+    <script src="{{asset('assets/sweet-alert/sweet-alert.init.js')}}"></script>
 
     @yield('footer-js')
 

@@ -76,6 +76,29 @@
     <script src="{{asset('js/cookie.js')}}"></script>
 
     <script>
+
+    var ModalEffects = (function() 
+    {
+
+    function init2() 
+    {
+        var type = "<?php echo Session::get('type'); ?>";
+        var title = "<?php echo Session::get('title'); ?>";
+        var message = "<?php echo Session::get('message'); ?>";
+        sweetAlert(title, message, type);
+    }
+
+    @if(Session::has('message'))
+        window.onload  = function() {
+            init2(); 
+        };
+    @endif       
+
+    })();
+
+    </script>
+
+    <script>
     function checkSidebarState(){
         if(getCookie("sidebarState")=="forced enlarged"){
             document.getElementById("wrapper").className = "forced enlarged";
@@ -141,30 +164,49 @@
                                 <span id="message-count" class="badge badge-xs badge-danger">1</span>
                             </a>
 							
-                            <ul id="messages"  class="dropdown-menu dropdown-menu-lg">
+                            <ul id="messages"  class="dropdown-menu dropdown-menu-lg" style="width: 475px;">
                                 <li class="message-title"><span class="label label-default pull-right">0 New</span>Messages</li>
                                 <li class="list-group">
                                     <!-- list item-->
                                     <!-- list item-->
-                                    <div id="message">
+                                    <div>
                                         <a href="javascript:void(0);" class="list-group-item">
-                                        <div class="media">
-                                            <div class="pull-left p-r-10">
-                                                <em class="fa fa-cog fa-2x text-custom"></em>
-                                            </div>
-                                            <div class="media-body">
-                                                <h5 class="media-heading">Test</h5>
-                                                <p class="m-0">
-                                                    <small>Test</small>
-                                                </p>
+                                            <div class="media">
+                                                <div class="pull-left p-r-10">
+                                                    <em class="fa fa-envelope fa-2x text-custom"></em>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="media-heading">Inquiry about photography package prices for a Wedding</h5>
+                                                    <p class="m-0">
+                                                        <small>Hasitha Jayasinghe</small>
+                                                    </p>
 
-                                                <p class="m-0" style="color: #14ADF3;">
-                                                    <small>20mins ago</small>
-                                                </p>
+                                                    <p class="m-0" style="color: #14ADF3;">
+                                                        <small>5 days ago</small>
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    </div>
 
+                                    <div>
+                                        <a href="javascript:void(0);" class="list-group-item">
+                                            <div class="media">
+                                                <div class="pull-left p-r-10">
+                                                    <em class="fa fa-envelope fa-2x text-custom"></em>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="media-heading">Request for getting list of venues for a party around Nugegoda</h5>
+                                                    <p class="m-0">
+                                                        <small>Udesh Hewagama</small>
+                                                    </p>
+
+                                                    <p class="m-0" style="color: #14ADF3;">
+                                                        <small>1 day ago</small>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </a>
                                     </div>
                                     <!-- list item-->
 
@@ -318,11 +360,15 @@
                                    <li class="{{ Request::is('dashboard/events/view-all') ? 'active' : null }}"><a href="{{ url('/dashboard/events/view-all') }}">View All</a></li>
                                 <?php }; ?>
 
-                                <?php if($userRole == "Administrator" || $userRole == "Customer"){?>
+                                <?php if($userRole == "Customer"){?>
                                    <li class="{{ Request::is('dashboard/events/customerevents') ? 'active' : null }}"><a href="{{ url('/dashboard/events/customerevents') }}">My Events</a></li>
                                 <?php }; ?>
+
+                                <?php if($userRole == "Administrator"){?>
+                                   <li class="{{ Request::is('dashboard/events/customerevents') ? 'active' : null }}"><a href="{{ url('/dashboard/events/customerevents') }}">Customer Events</a></li>
+                                <?php }; ?>
                                 
-                                <?php if($userRole == "Administrator" || $userRole == "Team Member"){?>
+                                <?php if($userRole == "Team Member"){?>
                                     <li class="{{ Request::is('dashboard/events/myevents') ? 'active' : null }}"><a href="{{ url('/dashboard/events/myevents') }}">My Events</a></li>
                                 <?php }; ?>
                             </ul>
@@ -333,7 +379,8 @@
                             <a class="waves-effect {{ Request::is('dashboard/messages*') ? 'active' : null }}"><i class="md md-question-answer"></i><span> Messages </span><span class="pull-right"><i class="md md-add"></i></span></a>
                             <ul class="list-unstyled">
                                 <li class="{{ Request::is('dashboard/messages/new*') ? 'active' : null }}"><a href="{{ url('/dashboard/messages/new') }}">New Message</a></li>
-                                <li class="{{ Request::is('dashboard/messages/inbox*') ? 'active' : null }}"><a href="{{ url('/dashboard/messages/inbox') }}">Inbox</a></li>
+                                <li class="{{ Request::is('dashboard/messages/inbox*') ? 'active' : null }}"><a href="{{ url('/dashboard/messages/inbox') }}">Inbox (2)</a></li>
+                                <li class="{{ Request::is('dashboard/messages/sent*') ? 'active' : null }}"><a href="{{ url('/dashboard/messages/sent') }}">Drafts (1)</a></li>
                                 <li class="{{ Request::is('dashboard/messages/sent*') ? 'active' : null }}"><a href="{{ url('/dashboard/messages/sent') }}">Sent Items</a></li>
                             </ul>
                         </li>
@@ -392,7 +439,7 @@
 
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a class="waves-effect {{ Request::is('dashboard/events/categories/tasks*') ? 'active' : null }}"><i class="md md-check-box"></i><span> Event Tasks </span></a>
+                            <a class="waves-effect {{ Request::is('dashboard/events/categories/tasks*') ? 'active' : null }}"><i class="md md-check-box"></i><span> Event Tasks</span></a>
 
                             <ul class="list-unstyled">
                                 <li class="{{ Request::is('dashboard/events/categories/tasks') ? 'active' : null }}"><a href="{{ url('/dashboard/events/categories/tasks') }}">View All</a></li>
@@ -403,43 +450,61 @@
 
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a href="{{ url('dashboard/reviews') }}" class="waves-effect {{ Request::is('dashboard/reviews*') ? 'active' : null }}"><i class="md  md-star"></i><span> Reviews </span></a>
+                            <a href="{{ url('dashboard/reviews') }}" class="waves-effect {{ Request::is('dashboard/reviews*') ? 'active' : null }}"><i class="md  md-star"></i><span> Reviews</span></a>
+                        </li>
+                    <?php }; ?>
+
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('dashboard/venues') }}" class="waves-effect {{ Request::is('dashboard/venues*') ? 'active' : null }}"><i class="md md-pin-drop"></i><span> Venues</span></a>
                         </li>
                     <?php }; ?>
                     
                     <?php if($userRole == "Customer"){?>
                         <li>
-                            <a href="{{ url('dashboard/request-a-quote') }}" class="waves-effect {{ Request::is('dashboard/request-a-quote*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Request a Quote </span></a>
+                            <a href="{{ url('dashboard/request-a-quote') }}" class="waves-effect {{ Request::is('dashboard/request-a-quote*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Request a Quote</span></a>
                         </li>
                     <?php }; ?>
 
                     <?php if($userRole == "Customer"){?>
                         <li>
-                            <a href="{{ url('dashboard/view-quote-requests') }}" class="waves-effect {{ Request::is('dashboard/view-quote-requests*') ? 'active' : null }}"><i class="md md-my-library-books"></i><span> Quote Requests </span></a>
+                            <a href="{{ url('dashboard/view-quote-requests') }}" class="waves-effect {{ Request::is('dashboard/view-quote-requests*') ? 'active' : null }}"><i class="md md-my-library-books"></i><span> Quote Requests</span></a>
                         </li>
                     <?php }; ?>
                     
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a href="{{ url('dashboard/quote-requests') }}" class="waves-effect {{ Request::is('dashboard/quote-requests*') ? 'active' : null }}"><i class="md md-my-library-books"></i><span> Quote Requests </span></a>
+                            <a href="{{ url('dashboard/quote-requests') }}" class="waves-effect {{ Request::is('dashboard/quote-requests*') ? 'active' : null }}"><i class="md md-my-library-books"></i><span> Quote Requests</span></a>
                         </li>
                     <?php }; ?>
 
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a href="{{ url('dashboard/invoices') }}" class="waves-effect {{ Request::is('dashboard/invoices*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Invoices </span></a>
+                            <a href="{{ url('dashboard/invoices') }}" class="waves-effect {{ Request::is('dashboard/invoices*') ? 'active' : null }}"><i class="md md-content-paste"></i><span> Invoices</span></a>
                         </li>
                     <?php }; ?>
                     
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a href="{{ url('dashboard/payments') }}" class="waves-effect {{ Request::is('dashboard/payments*') ? 'active' : null }}"><i class="md md-payment"></i><span> Payments </span></a>
+                            <a href="{{ url('dashboard/payments') }}" class="waves-effect {{ Request::is('dashboard/payments*') ? 'active' : null }}"><i class="md md-payment"></i><span> Payments</span></a>
                         </li>
                     <?php }; ?>
 
                     <?php if($userRole == "Administrator"){?>
                         <li>
-                            <a href="{{ url('dashboard/statistics') }}" class="waves-effect {{ Request::is('dashboard/statistics*') ? 'active' : null }}"><i class="md md-insert-chart"></i><span> Statistics </span></a>
+                            <a href="{{ url('dashboard/statistics') }}" class="waves-effect {{ Request::is('dashboard/statistics*') ? 'active' : null }}"><i class="md md-insert-chart"></i><span> Statistics</span></a>
+                        </li>
+                    <?php }; ?>
+
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('dashboard/feedbacks') }}" class="waves-effect {{ Request::is('dashboard/feedbacks*') ? 'active' : null }}"><i class="md  md-reply"></i><span> Feedbacks</span></a>
+                        </li>
+                    <?php }; ?>
+
+                    <?php if($userRole == "Administrator"){?>
+                        <li>
+                            <a href="{{ url('dashboard/website-issues') }}" class="waves-effect {{ Request::is('dashboard/website-issues*') ? 'active' : null }}"><i class="md md-report"></i><span> Website Issues</span></a>
                         </li>
                     <?php }; ?>
                     
@@ -517,10 +582,7 @@
 <script src="{{asset('assets/sweet-alert/sweet-alert.min.js')}}"></script>
 <script src="{{asset('assets/sweet-alert/sweet-alert.init.js')}}"></script>
 
-<!-- Calendar -->
-<script src="{{asset('assets/fullcalendar/moment.min.js')}}"></script>
-<script src="{{asset('assets/fullcalendar/fullcalendar.min.js')}}"></script>
-<script src="{{asset('assets/fullcalendar/fullcalendar.js')}}"></script>
+
 
 <!-- Counter-up -->
 <script src="{{asset('assets/counterup/waypoints.min.js')}}" type="text/javascript"></script>

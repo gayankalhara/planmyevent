@@ -20,7 +20,7 @@ use DB;
 use App\Models\Todo;
 use Carbon\Carbon;
 use Mail;
-
+use Hash;
 
 
 use Auth;
@@ -189,24 +189,45 @@ class AdminPageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function SettingsSubmit()
+    public function SettingsSubmit(Request $request)
     {
-          $input = Request::all();
+          $input = $request -> all();
           $UserId = Auth::user()->id;
           $Name =$input['Name'];
           $Email =$input['Email'];
           $Telephone =$input['Telephone'];
-          $Password =$input['Password'];
-          $RePassword =$input['RePassword'];
+          $Password =$input['password'];
+          $RePassword =$input['password_confirmation'];
+          
           
           //create validation array
-          $rules = array(
-            'Name' => 'regex:/(^[A-Za-z ]+$)+/',
-            'Email' => 'required|email',
-            'Telephone' => 'required|digits:10',
-            'Password'=> 'required|min:6',
-            
-            );
+              if($Password == ""){
+                  $rules = array(
+                    'Name' => 'regex:/(^[A-Za-z ]+$)+/',
+                    'Email' => 'required|email',
+                    'Telephone' => 'regex:/(^\(?0\d{2}\)?[\s\-]?\d{7}$)+/',
+                    );
+              } else{
+                    $rules = array(
+                    'Name' => 'regex:/(^[A-Za-z ]+$)+/',
+                    'Email' => 'required|email',
+                    'Telephone' => 'regex:/(^\(?0\d{2}\)?[\s\-]?\d{7}$)+/',   
+                    'password'=> 'required|min:6|confirmed',  
+                    );
+              }
+
+          
+
+          // $messages = [
+
+          //       'b_name.required' => 'please fill Broadcast Name field',
+          //       'base_size.required' => 'please fill Base Size field',
+          //       'base_size.integer' => 'Please insert integer',
+          //       'date.required' => 'please fill Broadcast Date',
+          //       'start_date.date' => 'Please insert valid start_date format',
+          //       'end_date.date' => 'Please insert valid end_date format',
+
+          //   ];
 
           //use validation class
           $validation = Validator::make($input, $rules);
@@ -215,13 +236,19 @@ class AdminPageController extends Controller
             return redirect('dashboard/settings')->withErrors($validation)->withInput();
           }
           try 
-          {
-          users::where('id', $UserId)->update(['name' => $Name , 'Email' => $Email , 'telephone' => $Telephone , 'password' => bcrypt($Password) ]); 
-          return redirect('dashboard/settings')->with('Message','Updated Successfully');   
+          { 
+            if($Password == ""){
+                users::where('id', $UserId)->update(['name' => $Name , 'Email' => $Email , 'telephone' => $Telephone]); 
+                return redirect('dashboard/settings')->with('message', 'Your settings have been updated Successfully.')->with('type', 'success')->with('title', 'Settings Saved!') ;
+            }else{
+                users::where('id', $UserId)->update(['name' => $Name , 'Email' => $Email , 'telephone' => $Telephone , 'password' => bcrypt($Password) ]); 
+                return redirect('dashboard/settings')->with('message', 'Your settings have been updated Successfully.')->with('type', 'success')->with('title', 'Settings Saved!') ;
+            }
+          
         }
         catch(\Illuminate\Database\QueryException $e2)
         {
-            return redirect('dashboard/settings')->with('Message','Update Failed');   
+            return redirect('dashboard/settings')->with('message', 'Failed to update!')->with('type', 'error')->with('title', 'Error') ;
         }
 
 

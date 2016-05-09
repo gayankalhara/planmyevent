@@ -5,8 +5,7 @@
 * 
 */
 
-
-
+var defaultEvents = [];
 
 !function($) {
     "use strict";
@@ -21,7 +20,6 @@
         this.$extEvents = $('#external-events'),
         this.$calendarObj = null
     };
-
 
     /* on drop */
     CalendarApp.prototype.onDrop = function (eventObj, date) { 
@@ -137,20 +135,7 @@
         var form = '';
         var today = new Date($.now());
 
-        var defaultEvents =  [{
-                title: 'Contact GH Photographers to register as a service provider',
-                start: new Date($.now() + 158000000),
-                className: 'bg-purple'
-            }, {
-                title: 'Book Hotel for Event #264452',
-                start: today,
-                end: today,
-                className: 'bg-danger'
-            }, {
-                title: 'Refund payment of PAYMENT #458476',
-                start: new Date($.now() + 338000000),
-                className: 'bg-primary'
-            }];
+        
 
         var $this = this;
         $this.$calendarObj = $this.$calendar.fullCalendar({
@@ -196,5 +181,40 @@
 //initializing CalendarApp
 function($) {
     "use strict";
-    $.CalendarApp.init()
+
+    $.ajax({
+        url:"http://www.planmyevent.me/todoList",
+        type:"get",
+        data:{},
+        success:function(data){
+
+            var today = new Date($.now());
+
+            defaultEvents =  [{
+                title: 'Contact GH Photographers to register as a service provider',
+                start: new Date($.now() + 158000000),
+                className: 'bg-purple'
+            }, {
+                title: 'Book Hotel for Event #264452',
+                start: today,
+                end: today,
+                className: 'bg-danger'
+            }, {
+                title: 'Refund payment of PAYMENT #458476',
+                start: new Date($.now() + 338000000),
+                className: 'bg-primary'
+            }];
+
+            document.getElementById('calLoad').style.display = "none";
+            $.CalendarApp.init();
+                if(VIEW == "AGENDA_WEEK"){
+                    $.CalendarApp.$calendar.fullCalendar( 'changeView', 'agendaWeek');
+                }
+        },
+        error: function(err){
+
+        }
+    });
+
+    
 }(window.jQuery);

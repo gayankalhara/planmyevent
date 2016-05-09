@@ -38,33 +38,38 @@
 
 						<!-- Contact Form
 						============================================= -->
-						<form class="nobottommargin" action="/test" method="post">
-
+						<form class="nobottommargin" action="/contact-us" method="post">
+							{!! csrf_field() !!}
 							<div class="col_half">
 								<label for="template-contactform-name">Name <small>*</small></label>
-								<input type="text" id="template-contactform-name" name="template-contactform-name" value="" class="sm-form-control required" />
+								<input type="text" id="template-contactform-name" name="name" value="" class="sm-form-control required" />
 							</div>
 
 							<div class="col_half col_last">
 								<label for="template-contactform-email">Email <small>*</small></label>
-								<input type="email" id="template-contactform-email" name="template-contactform-email" value="" class="required email sm-form-control" />
+								<input type="email" id="template-contactform-email" name="email" value="" class="required email sm-form-control" />
 							</div>
 
 							<div class="clear"></div>
 
 							<div class="col_half">
 								<label for="template-contactform-phone">Phone</label>
-								<input type="text" id="template-contactform-phone" name="template-contactform-phone" value="" class="sm-form-control" />
+								<input type="text" id="template-contactform-phone" name="phone" value="" class="sm-form-control" />
 							</div>
 
 							<div class="col_half col_last">
-								<label for="template-contactform-service">Services</label>
-								<select id="template-contactform-service" name="template-contactform-service" class="sm-form-control">
+								<label for="template-contactform-service">Interested Event Type</label>
+								<select id="template-contactform-service" name="service" class="sm-form-control">
 									<option value="">-- Select One --</option>
-									<option value="Wordpress">Wordpress</option>
-									<option value="PHP / MySQL">PHP / MySQL</option>
-									<option value="HTML5 / CSS3">HTML5 / CSS3</option>
-									<option value="Graphic Design">Graphic Design</option>
+									<?php 
+
+									foreach($eventCatlist as $cat)
+                                    {
+
+                                   	?>
+									<option value="{{ $cat->EventName }}">{{ $cat->EventName }}</option>
+									
+									<?php } ?>
 								</select>
 							</div>
 
@@ -72,16 +77,12 @@
 
 							<div class="col_full">
 								<label for="template-contactform-subject">Subject <small>*</small></label>
-								<input type="text" id="template-contactform-subject" name="template-contactform-subject" value="" class="required sm-form-control" />
+								<input type="text" id="template-contactform-subject" name="subject" value="" class="required sm-form-control" />
 							</div>
 
 							<div class="col_full">
 								<label for="template-contactform-message">Message <small>*</small></label>
-								<textarea class="required sm-form-control" id="template-contactform-message" name="template-contactform-message" rows="6" cols="30"></textarea>
-							</div>
-
-							<div class="col_full hidden">
-								<input type="text" id="template-contactform-botcheck" name="template-contactform-botcheck" value="" class="sm-form-control" />
+								<textarea class="required sm-form-control" id="template-contactform-message" name="message" rows="6" cols="30"></textarea>
 							</div>
 
 							<div class="col_full">
@@ -137,9 +138,9 @@
 	<script type="text/javascript">
 
 		$('#google-map').gMap({
-			address: 'Melbourne, Australia',
+			address: 'Malabe, Sri Lanka',
 			maptype: 'ROADMAP',
-			zoom: 14,
+			zoom: 16,
 			doubleclickzoom: false,
 			controls: {
 				panControl: true,

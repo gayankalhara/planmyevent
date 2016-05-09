@@ -31,7 +31,6 @@ class CoreController extends Controller
  public function __construct(Request $request)
     {
          $this->request = $request;
-      $this->middleware('auth');
     }
 
     public function Feedback()
@@ -46,7 +45,7 @@ class CoreController extends Controller
                
         } catch(\Illuminate\Database\QueryException $e)
         {
-            //return redirect('dashboard/feedback')->with('message', 'Record Update Failed');
+            return redirect('dashboard')->with('message', 'Error occured while getting data from the database')->with('type', 'error')->with('title', 'Error');
         }
 
         return view('feedback', ['customerId' => $customerId, 'eventsForUser' => $eventsForUser]);
@@ -87,7 +86,7 @@ class CoreController extends Controller
 
         } catch(\Illuminate\Database\QueryException $e)
         {
-            return redirect('events/categories')->with('message', 'Record Update Failed');
+            return redirect('dashboard')->with('message', 'Error occured while getting data from the database')->with('type', 'error')->with('title', 'Error');
         }
 
         return view('allfeedback', ['customerId' => $customerId, 'allFeedBackList' => $allFeedBackList]);
@@ -106,15 +105,17 @@ class CoreController extends Controller
        
         $subject = $this->request->input('subject');
         $message = $this->request->input('message');
-    
+        
+        //return $this->request;
 
         try {    
+           $eventCatlist = \DB::select('select * from event_types' );    
             \DB::insert('insert into contactus (name, email, phone,service,subject,message) values (?, ?, ?, ?,?,?)',[$name,$email, $phone,$services,$subject,$message]);
         } catch(\Illuminate\Database\QueryException $e)
         {
-            return redirect('events/categories')->with('message', 'Record Update Failed');
+            return view('website.contact')->with('message', 'Error occured while inserting data to the database')->with('type', 'error')->with('title', 'Error')->with('eventCatlist', $eventCatlist);
         }
-        return view('dashboard');
+        return view('website.contact')->with('message', 'Message Sent Successfully!')->with('type', 'success')->with('title', 'Message Sent Successfully!')->with('eventCatlist', $eventCatlist);
     } 
 
     public function ViewContacts()
@@ -122,30 +123,31 @@ class CoreController extends Controller
         $customerId =  Auth::user()->id;
 
         try {    
+            $eventCatlist = \DB::select('select * from event_types' );  
             $contactuslist = \DB::select('select * from contactus');    
 
         } catch(\Illuminate\Database\QueryException $e)
         {
-            return redirect('events/categories')->with('message', 'Record Update Failed');
+            return view('website.contact')->with('message', 'Error occured while getting data from the database')->with('type', 'error')->with('title', 'Error')->with('eventCatlist', $eventCatlist);
         }
 
-        return view('allcontactus', ['customerId' => $customerId, 'contactuslist' => $contactuslist]);
+        return view('allcontactus', ['customerId' => $customerId, 'contactuslist' => $contactuslist])->with('eventCatlist', $eventCatlist);
 
 
     }   
 
 
-     public function ContactUs()
+    public function ContactUs()
     {
          try {    
-            $eventlist = \DB::select('select * from event_types' );    
+            $eventCatlist = \DB::select('select * from event_types' );    
                
         } catch(\Illuminate\Database\QueryException $e)
         {
-            return redirect('events/categories')->with('message', 'Record Update Failed');
+            return redirect('website.contact')->with('message', 'Error occured while getting data from the database')->with('type', 'error')->with('title', 'Error');
         }
 
-        return view('website.contact', [ 'eventlist' => $eventlist]);
+        return view('website.contact')->with('eventCatlist', $eventCatlist);
         
     }
  

@@ -10,31 +10,6 @@ use Carbon\Carbon;
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
 
-@section('header-js')
-<script>
-
-    var ModalEffects = (function() 
-    {
-
-    function init2() 
-    {
-        var type = "<?php echo Session::get('type'); ?>";
-        var title = "<?php echo Session::get('title'); ?>";
-        var message = "<?php echo Session::get('message'); ?>";
-        sweetAlert(title, message, type);
-    }
-
-    @if(Session::has('message'))
-        window.onload  = function() {
-            init2(); 
-        };
-    @endif       
-
-    })();
-
-    </script>
-@endsection
-
 @section('content')
 <div class="content">
     <div class="container">
@@ -152,12 +127,12 @@ use Carbon\Carbon;
                                         <h4 class="text-white">30°C<i class="wi-degrees"></i></h4>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <h4 class="text-white m-t-0">SAT</h4>
+                                        <h4 class="text-white m-t-0">{{ strtoupper(Carbon::tomorrow()->addDays(1)->format('D')) }}</h4>
                                         <canvas id="rain" width="35" height="35"></canvas>
                                         <h4 class="text-white">28°C<i class="wi-degrees"></i></h4>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <h4 class="text-white m-t-0">SUN</h4>
+                                        <h4 class="text-white m-t-0">{{ strtoupper(Carbon::tomorrow()->addDays(2)->format('D')) }}</h4>
                                         <canvas id="sleet" width="35" height="35"></canvas>
                                         <h4 class="text-white">29°C<i class="wi-degrees"></i></h4>
                                     </div>
@@ -328,7 +303,7 @@ use Carbon\Carbon;
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div id="calendar"></div>
+                                <div id="calendar"><h3 style="text-align: center;"><span id="calLoad">Loading...</span></h3></div>
                             </div>
                         </div>
                     </div>
@@ -358,6 +333,8 @@ use Carbon\Carbon;
 
 
 <script>
+var VIEW = 'MONTH';
+
 /* BEGIN SVG WEATHER ICON */
 if (typeof Skycons !== 'undefined'){
 var icons = new Skycons(
@@ -400,6 +377,12 @@ function sendTodoEmail(){
 
     }
 </script>
+
+<!-- Calendar -->
+<script src="{{asset('assets/fullcalendar/moment.min.js')}}"></script>
+<script src="{{asset('assets/fullcalendar/fullcalendar.min.js')}}"></script>
+<script src="{{asset('assets/fullcalendar/fullcalendar.js')}}"></script>
+
 
 <script>
 function emailToggle(){

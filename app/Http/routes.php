@@ -37,14 +37,17 @@ Route::group(['middleware' => ['web']], function () {
     |--------------------------------------------------------------------------
     */
         Route::get('/', 'PageController@index');
-        Route::get('/contact-us', 'PageController@ContactUs');
-        Route::get('dashboard/permission-denied', 'PageController@PermissionDenied');
+        Route::get('/contact-us', 'CoreController@ContactUs');
+        Route::post('contact-us', 'CoreController@Addcontactus');
+        
     
     /*
     |--------------------------------------------------------------------------
     | Dashboard Routes
     |--------------------------------------------------------------------------
-    */
+    */  
+        Route::get('dashboard/permission-denied', 'PageController@PermissionDenied');
+
         Route::any('dashboard', 'AdminPageController@Dashboard');
         Route::get('dashboard/todo', 'AdminPageController@ToDo'); 
         Route::get('todoList','AdminPageController@todoList');
@@ -121,8 +124,6 @@ Route::group(['middleware' => ['web', 'App\Http\Middleware\AdminMiddleware']], f
         Route::post('dashboard/viewfeedback', 'CoreController@ViewFeedback');
         Route::get('dashboard/viewcontactus', 'CoreController@ViewContacts');
         Route::post('dashboard/viewcontactus', 'CoreController@ViewContacts');
-        Route::get('dashboard/contact-us', 'CoreController@ContactUs');
-        Route::post('dashboard/contact-us', 'CoreController@ContactUs');
 
         Route::get('dashboard/events/categories/add','EveCategoryControllerU@AddEventCategoriesLoad');   
         Route::post('dashboard/events/categories/add','EveCategoryControllerU@AddEventCategoriesPost');   

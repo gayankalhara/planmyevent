@@ -20,9 +20,7 @@
                                                 <input name ="Name" type="text" value="{{ $userDetail->name }}" id="FullName" class="form-control" style="cursor: auto;">
                                             </div>
                                             @if ($errors->first('Name'))
-                                                    <div class="col-lg-9 col-lg-offset-3">
                                                     <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('Name')}}</div>
-                                                    </div>
                                             @endif
 
                                             <div class="form-group">
@@ -30,9 +28,7 @@
                                                 <input name="Email" type="email" value="{{ $userDetail->email }}" id="Email" class="form-control">
                                             </div>
                                             @if ($errors->first('Email'))
-                                                    <div class="col-lg-9 col-lg-offset-3">
                                                     <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('Email')}}</div>
-                                                    </div>
                                             @endif
 
 
@@ -41,31 +37,24 @@
                                                 <input name = "Telephone" type="text" value="{{ $userDetail->telephone }}" id="Telephone" class="form-control">
                                             </div>
                                             @if ($errors->first('Telephone'))
-                                                    <div class="col-lg-9 col-lg-offset-3">
                                                     <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('Telephone')}}</div>
-                                                    </div>
+                                            @endif
+                                            
+                                            <div class="form-group">
+                                                <label for="password">New Password</label>
+                                                <input name="password" type="password" placeholder="" id="Password" class="form-control" style="cursor: auto; background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
+                                            </div>
+                                            @if ($errors->first('password'))
+                                                    <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('password')}}</div>
                                             @endif
 
 
                                             <div class="form-group">
-                                                <label for="Password">Password</label>
-                                                <input name="Password" type="password" placeholder="" id="Password" class="form-control" style="cursor: auto; background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
+                                                <label for="password_confirmation">Re-enter New Password</label>
+                                                <input name="password_confirmation" type="password" placeholder="" id="RePassword" class="form-control" style=" background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
                                             </div>
-                                            @if ($errors->first('Password'))
-                                                    <div class="col-lg-9 col-lg-offset-3">
-                                                    <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('Password')}}</div>
-                                                    </div>
-                                            @endif
-
-
-                                            <div class="form-group">
-                                                <label for="RePassword">Re-Password</label>
-                                                <input name="RePassword" type="password" placeholder="" id="RePassword" class="form-control" style=" background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
-                                            </div>
-                                            @if ($errors->first('RePassword'))
-                                                    <div class="col-lg-9 col-lg-offset-3">
-                                                    <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('RePassword')}}</div>
-                                                    </div>
+                                            @if ($errors->first('password_confirmation'))
+                                                    <div class="alert alert-danger"  style="margin-bottom:0; margin-top:5px; padding:6px;">{{$errors->first('password_confirmation')}}</div>
                                             @endif
 
                                             
@@ -131,4 +120,12 @@ function deactivateConfirm() {
   }
 }
 </script>
+@endsection
+
+@section('header-css')
+<style>
+.alert-danger{
+   margin-bottom: 20px !important; 
+}
+</style>
 @endsection

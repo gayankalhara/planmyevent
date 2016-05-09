@@ -1,5 +1,10 @@
 {{-- Home Page --}}
 
+<?php
+use Carbon\Carbon;
+
+?>
+
 @extends('master')
 
 @section('content')
@@ -40,36 +45,43 @@
                                                 <div class="about-info-p">
                                                     <strong>Mobile</strong>
                                                     <br/>
-                                                    <p class="text-muted">(123) 123 1234</p>
+                                                    <p class="text-muted">{{ $userDetails[0]->telephone }}</p>
                                                 </div>
                                                 <div class="about-info-p">
                                                     <strong>Email</strong>
                                                     <br/>
-                                                    <p class="text-muted">johnathandeon @moltran.com</p>
+                                                    <p class="text-muted">{{ $userDetails[0]->email }}</p>
+                                                </div>
+                                                <div class="about-info-p">
+                                                    <strong>Address</strong>
+                                                    <br/>
+                                                    <p class="text-muted">{{ $userDetails[0]->address }}</p>
+                                                </div>
+                                                <div class="about-info-p">
+                                                    <strong>City</strong>
+                                                    <br/>
+                                                    <p class="text-muted">{{ $userDetails[0]->city }}</p>
+                                                </div>
+                                                <div class="about-info-p">
+                                                    <strong>ZIP</strong>
+                                                    <br/>
+                                                    <p class="text-muted">{{ $userDetails[0]->zip }}</p>
+                                                </div>
+                                                <div class="about-info-p">
+                                                    <strong>Email Confirmed</strong>
+                                                    <br/>
+                                                    <p class="text-muted"><?php echo ($userDetails[0]->emailConfirmed == "1") ? "True" : "False"; ?></p>
                                                 </div>
                                                 <div class="about-info-p m-b-0">
-                                                    <strong>Location</strong>
+                                                    <strong>Last Login</strong>
                                                     <br/>
-                                                    <p class="text-muted">USA</p>
+                                                    <?php $timeAgo = Carbon::createFromTimeStamp(strtotime($userDetails[0]->updated_at))->diffForHumans(); ?>
+                                                    <p class="text-muted">{{ $timeAgo }}</p>
                                                 </div>
                                             </div> 
                                         </div>
                                         <!-- Personal-Information -->
 
-                                        <!-- Languages -->
-                                        <div class="panel panel-default panel-fill">
-                                            <div class="panel-heading"> 
-                                                <h3 class="panel-title">Languages</h3> 
-                                            </div> 
-                                            <div class="panel-body"> 
-                                                <ul>
-                                                    <li>English</li>
-                                                    <li>Franch</li>
-                                                    <li>Greek</li>
-                                                </ul>
-                                            </div> 
-                                        </div>
-                                        <!-- Languages -->
 
                                     </div>
 
@@ -78,61 +90,29 @@
                                         <!-- Personal-Information -->
                                         <div class="panel panel-default panel-fill">
                                             <div class="panel-heading"> 
-                                                <h3 class="panel-title">Biography</h3> 
+                                                <h3 class="panel-title">Recent Activity</h3> 
                                             </div> 
                                             <div class="panel-body"> 
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <span class="badge badge-primary">3 minutes ago</span>
+                                                        Added new todo item (Test todo item)
+                                                    </li>
 
-                                                <p><strong>But also the leap into electronic typesetting, remaining essentially unchanged.</strong></p>
+                                                    <li class="list-group-item">
+                                                        <span class="badge badge-primary">4 minutes ago</span>
+                                                        Removed an todo item (Reply to Ms. Thanuja #4265)
+                                                    </li>
 
-                                                <p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                                    <li class="list-group-item">
+                                                        <span class="badge badge-primary">{{ $timeAgo }}</span>
+                                                        Logged in to the system
+                                                    </li>
+                                                </ul>
                                             </div> 
                                         </div>
                                         <!-- Personal-Information -->
 
-                                        <div class="panel panel-default panel-fill">
-                                            <div class="panel-heading"> 
-                                                <h3 class="panel-title">Skills</h3> 
-                                            </div> 
-                                            <div class="panel-body"> 
-                                                <div class="m-b-15">
-                                                    <h5>Angular Js <span class="pull-right">60%</span></h5>
-                                                    <div class="progress">
-                                                        <div class="progress-bar progress-bar-primary wow animated progress-animated" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                                                            <span class="sr-only">60% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="m-b-15">
-                                                    <h5>Javascript <span class="pull-right">90%</span></h5>
-                                                    <div class="progress">
-                                                        <div class="progress-bar progress-bar-pink wow animated progress-animated" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
-                                                            <span class="sr-only">90% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="m-b-15">
-                                                    <h5>Wordpress <span class="pull-right">80%</span></h5>
-                                                    <div class="progress">
-                                                        <div class="progress-bar progress-bar-purple wow animated progress-animated" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
-                                                            <span class="sr-only">80% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="m-b-0">
-                                                    <h5>HTML5 &amp; CSS3 <span class="pull-right">95%</span></h5>
-                                                    <div class="progress">
-                                                        <div class="progress-bar progress-bar-info wow animated progress-animated" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%;">
-                                                            <span class="sr-only">95% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div> 
-                                        </div>
 
                                     </div>
 
